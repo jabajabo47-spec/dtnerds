@@ -7421,6 +7421,17 @@ html[data-theme="dark"] #fullscreen-view .dn-quiz-choice.wrong .dn-choice-indica
 .dn-price-old{font-size:.8rem;font-weight:500;color:var(--text-muted,#94a3b8);text-decoration:line-through;text-decoration-color:#ef4444}
 .dn-price-new{font-size:1.25rem;font-weight:900;color:var(--primary-light)}
 .dn-price-row .dn-promo-tag{margin:0 0 0 auto}
+/* Mobile / tablet activation bar */
+.dn-mobile-activation-bar{display:none}
+@media(max-width:900px){
+  .dn-mobile-activation-bar{display:flex;align-items:center;gap:12px;width:calc(100% - 28px);margin:10px 14px 0;padding:10px 14px;border:1px solid rgba(123,136,255,.35);border-radius:16px;background:linear-gradient(135deg,rgba(79,70,229,.22),rgba(124,58,237,.18));color:var(--text-main);font:inherit;text-align:left;cursor:pointer}
+  .dn-mobile-activation-bar .dn-mab-icon{font-size:1.2rem}
+  .dn-mobile-activation-bar .dn-mab-text{display:flex;flex-direction:column;flex:1;min-width:0}
+  .dn-mobile-activation-bar strong{font-size:.86rem;font-weight:800}
+  .dn-mobile-activation-bar small{font-size:.68rem;color:var(--text-secondary);margin-top:2px}
+  .dn-mobile-activation-bar .dn-mab-arrow{font-size:1.4rem;color:var(--primary-light)}
+  body[data-tab="abonnement"] .dn-mobile-activation-bar{display:none}
+}
 </style>
 
 
@@ -7809,6 +7820,11 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
                     </div>
                 </div>
             </header>
+            <button type="button" id="dn-mobile-activation-bar" class="dn-mobile-activation-bar" onclick="switchTab('abonnement')">
+                <span class="dn-mab-icon">🔑</span>
+                <span class="dn-mab-text"><strong>Activer mon compte</strong><small>CCP / BaridiMob · PROMO 500 DA par année</small></span>
+                <span class="dn-mab-arrow">›</span>
+            </button>
             <div class="dn-notification-panel" id="dn-notification-panel" role="dialog" aria-label="Notifications">
                 <div class="dn-notification-head"><div class="dn-notification-title">🔔 Notifications</div><button class="dn-notification-clear" onclick="markNotificationsRead()">Tout marquer comme lu</button></div>
                 <div id="dn-notification-list"></div>
@@ -12896,6 +12912,25 @@ function renderQuizScreen() {
     <button type="button" class="dn-report-choice-cancel" onclick="dnCloseReportChoiceModal()">Annuler</button>
   </div>
 </div>
+<script id="dn-mobile-activation-bar-js">
+(function(){
+  function hook(){
+    if(typeof window.switchTab!=='function'){return false;}
+    if(window.__dnMabHooked) return true;
+    window.__dnMabHooked=true;
+    var orig=window.switchTab;
+    window.switchTab=function(tab){
+      try{document.body.setAttribute('data-tab',tab);}catch(e){}
+      return orig.apply(this,arguments);
+    };
+    return true;
+  }
+  if(!hook()){
+    var t=setInterval(function(){if(hook())clearInterval(t);},200);
+    setTimeout(function(){clearInterval(t);},8000);
+  }
+})();
+</script>
 </body>
 </html>
 <script id="dn-notif-toast-engine">
