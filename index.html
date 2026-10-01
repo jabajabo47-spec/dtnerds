@@ -7670,32 +7670,8 @@ button.dn-price-card.active .dn-price-check{display:flex}
   #dn-mobile-dock .dn-dock-ico{width:34px!important}
   #dn-mobile-dock .dn-mobile-dock-item span:last-child{font-size:.54rem!important}
 }
-/* === v6: smooth app-style dock icons + symmetric header (phone/tablet) === */
+/* === v7: symmetric header (phone/tablet) === */
 @media(max-width:900px){
-  #dn-mobile-dock{min-height:74px!important;padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px))!important}
-  #dn-mobile-dock .dn-mobile-dock-item{height:60px!important;gap:5px!important}
-  #dn-mobile-dock .dn-dock-ico{
-    width:36px!important;height:36px!important;border-radius:12px!important;color:#fff!important;
-    background:var(--ic,linear-gradient(145deg,#818cf8,#4f46e5))!important;
-    box-shadow:0 4px 10px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.35),inset 0 -2px 4px rgba(0,0,0,.12)!important;
-    opacity:.82;transition:transform .2s ease,opacity .2s ease,box-shadow .2s ease!important}
-  #dn-mobile-dock .dn-dock-ico svg{width:20px!important;height:20px!important;stroke-width:2!important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.25))}
-  #dn-mobile-dock .dn-mobile-dock-item.active .dn-dock-ico{
-    opacity:1;transform:translateY(-3px) scale(1.07);
-    background:var(--ic,linear-gradient(145deg,#818cf8,#4f46e5))!important;
-    box-shadow:0 10px 20px var(--ig,rgba(79,70,229,.5)),inset 0 1px 0 rgba(255,255,255,.4)!important}
-  #dn-mobile-dock .dn-mobile-dock-item.active span:last-child{color:#fff;font-weight:800!important}
-  :root[data-theme="light"] #dn-mobile-dock .dn-mobile-dock-item.active span:last-child{color:#312e81}
-  #dn-mobile-dock [data-dock-tab="accueil"]{--ic:linear-gradient(145deg,#60a5fa,#2563eb);--ig:rgba(37,99,235,.5)}
-  #dn-mobile-dock [data-dock-tab="examens"]{--ic:linear-gradient(145deg,#a78bfa,#6d28d9);--ig:rgba(109,40,217,.5)}
-  #dn-mobile-dock [data-dock-tab="simulation"]{--ic:linear-gradient(145deg,#f472b6,#db2777);--ig:rgba(219,39,119,.5)}
-  #dn-mobile-dock [data-dock-tab="resumes"]{--ic:linear-gradient(145deg,#38bdf8,#0284c7);--ig:rgba(2,132,199,.5)}
-  #dn-mobile-dock [data-dock-tab="progression"]{--ic:linear-gradient(145deg,#fb923c,#ea580c);--ig:rgba(234,88,12,.5)}
-  #dn-mobile-dock [data-dock-tab="abonnement"]{--ic:linear-gradient(145deg,#fcd34d,#d97706);--ig:rgba(217,119,6,.5)}
-  #dn-mobile-dock [data-dock-tab="abonnement"] .dn-dock-ico{color:#fff!important}
-  .floating-timer-container{bottom:98px!important}
-  main{padding-bottom:108px!important}
-
   /* symmetric header: avatar | centered title | toggle + bell */
   header{display:grid!important;grid-template-columns:96px minmax(0,1fr) 96px!important;align-items:center!important;column-gap:6px!important;padding:10px 14px!important}
   header .dn-header-shell{grid-column:2!important;grid-row:1!important;display:flex!important;justify-content:center!important;min-width:0!important;gap:0!important}
@@ -7714,7 +7690,6 @@ html body button.dn-activation-year-card.active{background:linear-gradient(135de
 html body button.dn-activation-year-card.active strong,html body button.dn-activation-year-card.active span{color:#fff!important}
 html body button.dn-activation-year-card.active .dn-old-price{color:rgba(255,255,255,.75)!important}
 html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!important;color:#dc2626!important}
-@media(max-width:520px){.dn-activation-year-card{min-height:0!important;padding:10px 14px!important}}
 </style>
 </head>
 <body>
@@ -7917,7 +7892,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             <div class="content-body" id="main-content-area"></div>
 
             <footer>
-                <div>&copy; 2026 <strong>Dentist Nerds</strong> — Propulsé pour l'élite dentaire. <span style="opacity:.45;font-size:.7em">v6 · promo</span></div>
+                <div>&copy; 2026 <strong>Dentist Nerds</strong> — Propulsé pour l'élite dentaire. <span style="opacity:.45;font-size:.7em">v7 · promo</span></div>
                 <div>Contact: contact@dentistnerds.dz | +213 698 984 293</div>
             </footer>
         </main>
@@ -7944,9 +7919,9 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                     <div class="dn-fw-sessions-today" id="dn-fw-sessions-today">0 session terminée aujourd'hui</div>
                 </div>
                 <div class="timer-actions dn-fw-actions">
-                    <button class="timer-btn-small timer-btn-play" id="floating-timer-play" onclick="toggleCustomTimer();event.stopPropagation()" title="Démarrer / pause" aria-label="Démarrer ou mettre en pause">▶</button>
-                    <button class="timer-btn-small" onclick="promptSetTimer();event.stopPropagation()" title="Régler la durée" aria-label="Régler la durée">⚙</button>
-                    <button class="timer-btn-small" onclick="resetCustomTimer();event.stopPropagation()" title="Réinitialiser" aria-label="Réinitialiser">↺</button>
+                    <button class="timer-btn-small timer-btn-play" id="floating-timer-play" onclick="toggleCustomTimer();event.stopPropagation()" title="Démarrer / pause" aria-label="Démarrer ou mettre en pause"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6z" fill="currentColor"/></svg></button>
+                    <button class="timer-btn-small" onclick="promptSetTimer();event.stopPropagation()" title="Régler la durée" aria-label="Régler la durée"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h8M18 7h2M4 17h2M12 17h8"/><circle cx="15" cy="7" r="2.4"/><circle cx="9" cy="17" r="2.4"/></svg></button>
+                    <button class="timer-btn-small" onclick="resetCustomTimer();event.stopPropagation()" title="Réinitialiser" aria-label="Réinitialiser"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.2v4.6h4.6"/></svg></button>
                 </div>
             </div>
             <div class="timer-progress" style="display:none"><span id="floating-timer-progress"></span></div>
@@ -8759,7 +8734,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             const ringEl = document.getElementById('dn-ring-progress');
             if (textEl) textEl.innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
             if (statusEl) statusEl.innerText = customTimerSeconds <= 0 ? 'Terminé' : (isTimerRunning ? 'En cours' : 'Prêt');
-            if (playEl) playEl.innerText = isTimerRunning ? 'Ⅱ' : '▶';
+            if (playEl) playEl.innerHTML = isTimerRunning ? '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.2" y="5" width="4.2" height="14" rx="1.4" fill="currentColor"/><rect x="13.6" y="5" width="4.2" height="14" rx="1.4" fill="currentColor"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6z" fill="currentColor"/></svg>';
             if (ringEl) {
                 const total = Math.max(1, timerDurationMinutes * 60);
                 const ratio = Math.max(0, Math.min(1, customTimerSeconds / total));
@@ -10827,10 +10802,9 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                             <div class="form-group">
                                 <label>Sélectionnez votre année d'études</label>
                                 <select id="bm-selected-year" class="dn-visually-hidden-select" tabindex="-1" aria-hidden="true">
-                                    <option value="" selected>—</option>
                                     <option value="1ère année">1ère année</option>
                                     <option value="2ème année">2ème année</option>
-                                    <option value="3ème année">3ème année</option>
+                                    <option value="3ème année" selected>3ème année</option>
                                     <option value="4ème année">4ème année</option>
                                     <option value="5ème année">5ème année</option>
                                     <option value="6ème année / Résidanat">6ème année / Résidanat</option>
@@ -10838,7 +10812,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                                 <div class="dn-activation-years" id="dn-activation-years">
                                     <button type="button" class="dn-activation-year-card" data-year="1ère année" onclick="dnPickActivationYear('1ère année')"><strong>1ère année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1200 DA</s><b class="dn-new-price">500 DA</b></span></button>
                                     <button type="button" class="dn-activation-year-card" data-year="2ème année" onclick="dnPickActivationYear('2ème année')"><strong>2ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">800 DA</s><b class="dn-new-price">500 DA</b></span></button>
-                                    <button type="button" class="dn-activation-year-card" data-year="3ème année" onclick="dnPickActivationYear('3ème année')"><strong>3ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">700 DA</s><b class="dn-new-price">500 DA</b></span></button>
+                                    <button type="button" class="dn-activation-year-card active" data-year="3ème année" onclick="dnPickActivationYear('3ème année')"><strong>3ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">700 DA</s><b class="dn-new-price">500 DA</b></span></button>
                                     <button type="button" class="dn-activation-year-card" data-year="4ème année" onclick="dnPickActivationYear('4ème année')"><strong>4ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1500 DA</s><b class="dn-new-price">500 DA</b></span></button>
                                     <button type="button" class="dn-activation-year-card" data-year="5ème année" onclick="dnPickActivationYear('5ème année')"><strong>5ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1600 DA</s><b class="dn-new-price">500 DA</b></span></button>
                                     <button type="button" class="dn-activation-year-card" data-year="6ème année / Résidanat" onclick="dnPickActivationYear('6ème année / Résidanat')"><strong>6ème année / Résidanat</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1800 DA</s><b class="dn-new-price">500 DA</b></span></button>
@@ -12988,6 +12962,180 @@ function renderQuizScreen() {
     <button type="button" class="dn-report-choice-cancel" onclick="dnCloseReportChoiceModal()">Annuler</button>
   </div>
 </div>
+
+<style id="dn-fix-auth-timer-v13">
+/* =========================================================
+   v13 — Mobile sign-in/sign-up layout + redesigned Focus timer
+   (placed last so it wins over the older overrides)
+   ========================================================= */
+
+/* ---------- AUTH: phone + tablet ---------- */
+@media(max-width:820px){
+  html body #auth-screen{
+    align-items:flex-start!important;justify-content:center!important;
+    overflow-y:auto!important;overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+    padding:max(12px,env(safe-area-inset-top)) 12px max(18px,env(safe-area-inset-bottom))!important;
+    box-sizing:border-box!important;
+  }
+  html body #auth-screen .auth-wrapper{
+    position:relative;margin:auto!important;flex:0 0 auto;
+    width:100%!important;max-width:520px!important;
+    border-radius:26px!important;overflow:hidden;
+  }
+  /* compact hero */
+  html body #auth-screen .auth-left-pane{
+    min-height:0!important;padding:1rem 1.1rem 1.1rem!important;
+    display:flex;flex-direction:column;gap:.7rem;justify-content:flex-start;
+  }
+  html body #auth-screen .auth-left-pane:after{font-size:54px;right:14px;bottom:10px}
+  html body #auth-screen .auth-logo{gap:10px;padding-right:72px}
+  html body #auth-screen .logo-icon-box{width:40px!important;height:40px!important;border-radius:13px!important;flex:none}
+  html body #auth-screen .logo-icon-box svg{width:21px;height:21px}
+  html body #auth-screen .auth-logo span{font-size:1.15rem!important;color:#fff!important;-webkit-text-fill-color:#fff}
+  html body #auth-screen .auth-quote-box{margin:.2rem 0 0!important}
+  html body #auth-screen .auth-quote-box>div:first-child{font-size:.62rem!important;margin-bottom:.3rem!important}
+  html body #auth-screen .auth-quote-text{font-size:1.02rem!important;line-height:1.35!important}
+  /* benefits: one compact swipeable strip instead of three stacked cards */
+  html body #auth-screen .auth-benefits{
+    display:flex!important;gap:8px;margin-top:.4rem!important;
+    overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;padding-bottom:2px;margin-right:-1.1rem!important;padding-right:1.1rem;
+  }
+  html body #auth-screen .auth-benefits::-webkit-scrollbar{display:none}
+  html body #auth-screen .auth-benefit{
+    flex:0 0 min(74%,250px);scroll-snap-align:start;padding:8px 10px;
+    font-size:.7rem;line-height:1.3;border-radius:13px;
+  }
+  /* theme switch sits in the hero's top-right corner, clear of the form title */
+  html body #auth-screen .auth-right-pane{position:static!important}
+  html body #auth-screen .auth-top-actions{top:14px!important;right:14px!important;z-index:6}
+  /* form: no inner scroll box, comfortable spacing */
+  html body #auth-screen .auth-right-pane{
+    max-height:none!important;overflow:visible!important;
+    padding:1.4rem 1.2rem 1.6rem!important;
+  }
+  html body #auth-screen .auth-title{font-size:1.5rem!important;margin:.15rem 0 .8rem!important;line-height:1.2}
+  html body #auth-screen .auth-title+.auth-subtitle{margin-top:-.45rem!important}
+  html body #auth-screen .auth-subtitle{font-size:.86rem;margin-bottom:1rem}
+  html body #auth-screen .auth-right-pane .form-group{margin-bottom:.9rem!important}
+  html body #auth-screen .auth-right-pane .form-control{font-size:16px!important;min-height:50px}
+}
+@media(max-width:380px){
+  html body #auth-screen{padding-left:8px!important;padding-right:8px!important}
+  html body #auth-screen .auth-right-pane{padding:1.2rem 1rem 1.4rem!important}
+  html body #auth-screen .auth-quote-text{font-size:.95rem!important}
+}
+@media(max-height:640px) and (max-width:820px){
+  html body #auth-screen .auth-quote-box,html body #auth-screen .auth-benefits{display:none!important}
+}
+
+/* ---------- FOCUS TIMER: redesigned card ---------- */
+#focus-timer-dock{pointer-events:none}
+html[data-theme="dark"] #focus-timer-dock,html[data-theme="light"] #focus-timer-dock{background:transparent!important;box-shadow:none!important;border:0!important;backdrop-filter:none!important}
+#focus-timer-dock .dn-fw-card{
+  pointer-events:auto;box-sizing:border-box;
+  gap:12px;padding:10px 12px 10px 10px;border-radius:26px;
+  background:
+    radial-gradient(120% 140% at 0% 0%,rgba(99,102,241,.16),transparent 55%),
+    color-mix(in srgb,var(--card-bg) 94%,transparent);
+  border:1px solid rgba(124,92,255,.24);
+  box-shadow:0 18px 44px rgba(15,23,42,.20),0 2px 0 rgba(255,255,255,.04) inset;
+}
+.floating-timer-container.running .dn-fw-card{
+  border-color:rgba(124,92,255,.5);
+  box-shadow:0 18px 48px rgba(99,102,241,.32),0 0 0 3px rgba(124,92,255,.10);
+}
+/* ring */
+#focus-timer-dock .dn-fw-ring,#focus-timer-dock .dn-fw-ring svg{width:54px;height:54px}
+#focus-timer-dock .dn-fw-ring{flex:0 0 54px}
+#focus-timer-dock .dn-fw-ring:before{
+  content:"";position:absolute;inset:6px;border-radius:50%;
+  background:radial-gradient(circle at 30% 25%,rgba(124,92,255,.30),rgba(79,114,255,.10) 70%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+}
+#focus-timer-dock .dn-fw-ring circle{stroke-width:3.6}
+#focus-timer-dock .dn-fw-ring .dn-fw-ring-icon{font-size:18px;z-index:1;color:#dfe5ff;border-radius:50%;inset:6px}
+.floating-timer-container.running .dn-fw-ring:after{content:"";position:absolute;inset:2px;border-radius:50%;box-shadow:0 0 16px rgba(124,92,255,.6);pointer-events:none}
+/* text */
+#focus-timer-dock .dn-fw-copy{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"label label" "time tag" "sess sess";align-items:center;column-gap:8px;min-width:0}
+#focus-timer-dock .timer-topline{display:contents}
+#focus-timer-dock .timer-label{grid-area:label}
+#focus-timer-dock .timer-time{grid-area:time}
+#focus-timer-dock .dn-fw-mode-tag{grid-area:tag;justify-self:start;margin-top:4px}
+#focus-timer-dock .dn-fw-sessions-today{grid-area:sess}
+#focus-timer-dock .timer-label{font-size:.58rem;letter-spacing:.9px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#focus-timer-dock .dn-fw-mode-tag{
+  display:inline-flex;align-items:center;gap:5px;flex:none;max-width:100%;
+  font-size:.56rem;padding:2px 7px;background:rgba(124,92,255,.14);color:var(--primary-light);
+}
+.floating-timer-container.running .dn-fw-mode-tag:before{
+  content:"";width:5px;height:5px;border-radius:50%;background:currentColor;animation:dnTagPulse 1.4s ease-in-out infinite;
+}
+@keyframes dnTagPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+#focus-timer-dock .timer-time{
+  font-size:1.6rem!important;font-weight:900!important;letter-spacing:-.6px!important;
+  line-height:1.05!important;margin-top:4px;font-variant-numeric:tabular-nums;color:var(--text-main);
+}
+#focus-timer-dock .dn-fw-sessions-today{
+  font-size:.62rem;font-weight:700;margin-top:3px;line-height:1.25;color:var(--text-secondary);
+  white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+/* buttons */
+#focus-timer-dock .dn-fw-actions{gap:7px;align-items:center}
+#focus-timer-dock .dn-fw-actions .timer-btn-small{
+  width:38px!important;height:38px!important;flex:0 0 38px!important;padding:0!important;
+  border-radius:14px!important;display:grid!important;place-items:center;font-size:0!important;
+  background:color-mix(in srgb,var(--input-bg) 85%,transparent)!important;
+  border:1px solid var(--border-glass)!important;color:var(--text-secondary)!important;
+  box-shadow:none!important;transition:transform .15s ease,background .15s ease,color .15s ease,border-color .15s ease;
+}
+#focus-timer-dock .dn-fw-actions .timer-btn-small svg{width:18px;height:18px;display:block}
+#focus-timer-dock .dn-fw-actions .timer-btn-small:hover{color:var(--primary-light)!important;border-color:rgba(124,92,255,.5)!important;transform:translateY(-1px)}
+#focus-timer-dock .dn-fw-actions .timer-btn-small:active{transform:scale(.92)}
+#focus-timer-dock .dn-fw-actions .timer-btn-play{
+  width:46px!important;height:46px!important;flex:0 0 46px!important;border-radius:17px!important;
+  background:linear-gradient(135deg,#4f72ff,#9a55ee)!important;color:#fff!important;border:0!important;
+  box-shadow:0 10px 22px rgba(99,102,241,.42),inset 0 1px 0 rgba(255,255,255,.3)!important;
+}
+#focus-timer-dock .dn-fw-actions .timer-btn-play:hover{color:#fff!important;transform:translateY(-1px) scale(1.03)}
+#focus-timer-dock .dn-fw-actions .timer-btn-play svg{width:21px;height:21px}
+/* collapse chip: above the card, never over the buttons */
+#focus-timer-dock .dn-fw-collapse-btn{top:-14px!important;right:20px!important;width:22px!important;height:22px!important;min-width:0!important;min-height:0!important;font-size:9px!important;padding:0!important;pointer-events:auto}
+
+/* ---------- FOCUS TIMER: placement, never wider than the screen ---------- */
+@media(min-width:561px){
+  #focus-timer-dock .dn-fw-card{max-width:calc(100vw - 32px)}
+}
+@media(max-width:560px){
+  #focus-timer-dock,.dn-art-focus-dock{
+    left:10px!important;right:10px!important;width:auto!important;max-width:calc(100vw - 20px)!important;
+  }
+  #focus-timer-dock .dn-fw-card{width:100%;padding:9px 10px 9px 9px;gap:10px;border-radius:24px}
+  #focus-timer-dock .dn-fw-ring,#focus-timer-dock .dn-fw-ring svg{width:50px;height:50px}
+  #focus-timer-dock .dn-fw-ring{flex:0 0 50px}
+  #focus-timer-dock .timer-time{font-size:1.45rem!important}
+  #focus-timer-dock .dn-fw-actions{gap:6px}
+  #focus-timer-dock .dn-fw-actions .timer-btn-small{width:36px!important;height:36px!important;flex:0 0 36px!important;border-radius:13px!important}
+  #focus-timer-dock .dn-fw-actions .timer-btn-play{width:44px!important;height:44px!important;flex:0 0 44px!important;border-radius:16px!important}
+  /* collapsed bubble stays bottom-right, wide dock stays click-through */
+  #focus-timer-dock .dn-fw-card.dn-fw-collapsed{width:56px!important;height:56px!important;min-height:56px!important;margin-left:auto;padding:0!important;border-radius:50%!important}
+  #focus-timer-dock .dn-fw-card.dn-fw-collapsed .dn-fw-ring,
+  #focus-timer-dock .dn-fw-card.dn-fw-collapsed .dn-fw-ring svg{width:56px!important;height:56px!important;flex:0 0 56px!important}
+  #focus-timer-dock .dn-fw-card.dn-fw-collapsed .dn-fw-collapse-btn{top:-6px!important;right:-4px!important}
+}
+@media(max-width:350px){
+  #focus-timer-dock .dn-fw-sessions-today{display:none}
+  #focus-timer-dock .dn-fw-card{gap:8px;padding:8px 8px 8px 8px}
+  #focus-timer-dock .dn-fw-ring,#focus-timer-dock .dn-fw-ring svg{width:42px;height:42px}
+  #focus-timer-dock .dn-fw-ring{flex:0 0 42px}
+  #focus-timer-dock .timer-time{font-size:1.25rem!important}
+  #focus-timer-dock .dn-fw-mode-tag{font-size:.5rem;padding:2px 5px;letter-spacing:.2px}
+  #focus-timer-dock .dn-fw-actions{gap:5px}
+  #focus-timer-dock .dn-fw-actions .timer-btn-small{width:32px!important;height:32px!important;flex:0 0 32px!important;border-radius:11px!important}
+  #focus-timer-dock .dn-fw-actions .timer-btn-play{width:40px!important;height:40px!important;flex:0 0 40px!important;border-radius:14px!important}
+}
+</style>
 </body>
 </html>
 <script id="dn-notif-toast-engine">
