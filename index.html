@@ -7432,6 +7432,12 @@ html[data-theme="dark"] #fullscreen-view .dn-quiz-choice.wrong .dn-choice-indica
   .dn-mobile-activation-bar .dn-mab-arrow{font-size:1.4rem;color:var(--primary-light)}
   body[data-tab="abonnement"] .dn-mobile-activation-bar{display:none}
 }
+/* Mobile dock icons */
+.dn-dock-ico{display:flex;align-items:center;justify-content:center;width:36px;height:30px;border-radius:12px;font-size:0}
+.dn-mobile-dock-item.active .dn-dock-ico{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+.dn-mobile-dock-item.active{color:#fff}
+.dn-mobile-dock-item .dn-dock-ico svg{width:19px;height:19px}
+@media(max-width:380px){.dn-dock-ico{width:30px}}
 </style>
 
 
@@ -7833,7 +7839,7 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
             <div class="content-body" id="main-content-area"></div>
 
             <footer>
-                <div>&copy; 2026 <strong>Dentist Nerds</strong> — Propulsé pour l'élite dentaire.</div>
+                <div>&copy; 2026 <strong>Dentist Nerds</strong> — Propulsé pour l'élite dentaire. <span style="opacity:.45;font-size:.7em">v2 · promo</span></div>
                 <div>Contact: contact@dentistnerds.dz | +213 698 984 293</div>
             </footer>
         </main>
@@ -7869,12 +7875,12 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
         </div>
 
         <nav id="dn-mobile-dock" aria-label="Navigation mobile">
-            <button type="button" class="dn-mobile-dock-item active" data-dock-tab="accueil" onclick="switchTab('accueil')"><span aria-hidden="true">⌂</span><span>Accueil</span></button>
-            <button type="button" class="dn-mobile-dock-item" data-dock-tab="examens" onclick="switchTab('examens')"><span aria-hidden="true">▤</span><span>Modules</span></button>
-            <button type="button" class="dn-mobile-dock-item" data-dock-tab="simulation" onclick="switchTab('simulation')"><span aria-hidden="true">✓</span><span>Session</span></button>
-            <button type="button" class="dn-mobile-dock-item" data-dock-tab="resumes" onclick="switchTab('resumes')"><span aria-hidden="true">▥</span><span>Résumés</span></button>
-            <button type="button" class="dn-mobile-dock-item" data-dock-tab="progression" onclick="switchTab('progression')"><span aria-hidden="true">↗</span><span>Progrès</span></button>
-            <button type="button" class="dn-mobile-dock-item" data-dock-tab="abonnement" onclick="switchTab('abonnement')"><span aria-hidden="true">🔑</span><span>Activation</span></button>
+            <button type="button" class="dn-mobile-dock-item active" data-dock-tab="accueil" onclick="switchTab('accueil')"><span aria-hidden="true" class="dn-dock-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg></span><span>Accueil</span></button>
+            <button type="button" class="dn-mobile-dock-item" data-dock-tab="examens" onclick="switchTab('examens')"><span aria-hidden="true" class="dn-dock-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 8h6"/></svg></span><span>Modules</span></button>
+            <button type="button" class="dn-mobile-dock-item" data-dock-tab="simulation" onclick="switchTab('simulation')"><span aria-hidden="true" class="dn-dock-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg></span><span>Session</span></button>
+            <button type="button" class="dn-mobile-dock-item" data-dock-tab="resumes" onclick="switchTab('resumes')"><span aria-hidden="true" class="dn-dock-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg></span><span>Résumés</span></button>
+            <button type="button" class="dn-mobile-dock-item" data-dock-tab="progression" onclick="switchTab('progression')"><span aria-hidden="true" class="dn-dock-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-4 3 3 5-6"/></svg></span><span>Progrès</span></button>
+            <button type="button" class="dn-mobile-dock-item" data-dock-tab="abonnement" onclick="switchTab('abonnement')"><span aria-hidden="true" class="dn-dock-ico"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8"/><path d="M15 8l3 3"/></svg></span><span>Activation</span></button>
         </nav>
     </div>
 
