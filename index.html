@@ -7411,6 +7411,16 @@ html[data-theme="dark"] #fullscreen-view .dn-quiz-choice.wrong .dn-choice-indica
 .dn-new-price{font-weight:800;font-size:1.08em}
 /* 6 items in mobile dock */
 @media(max-width:900px){#dn-mobile-dock .dn-mobile-dock-item{min-width:0!important;flex:1 1 0!important}}
+/* Price grid (promo) */
+.dn-price-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media(max-width:900px){.dn-price-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.dn-price-grid{grid-template-columns:1fr}}
+.dn-price-card{padding:12px 14px;border-radius:14px;border:1px solid rgba(123,136,255,.28);background:rgba(99,102,241,.08)}
+.dn-price-year{font-size:.78rem;font-weight:800;color:var(--text-secondary);margin-bottom:6px}
+.dn-price-row{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px}
+.dn-price-old{font-size:.8rem;font-weight:500;color:var(--text-muted,#94a3b8);text-decoration:line-through;text-decoration-color:#ef4444}
+.dn-price-new{font-size:1.25rem;font-weight:900;color:var(--primary-light)}
+.dn-price-row .dn-promo-tag{margin:0 0 0 auto}
 </style>
 
 
@@ -10688,13 +10698,13 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
 
                         <div style="background: rgba(37,99,235,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius-md); padding: 1.2rem 1.5rem; margin-bottom: 1.8rem;">
                             <div style="font-size: 0.78rem; font-weight: 800; color: var(--primary-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">🏷️ Grille Tarifaire par Année (1 An d'accès)</div>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; font-size: 0.88rem; font-weight: 700; color: var(--text-main);">
-                                <div>• 1ère année : <s style="opacity:.55;font-weight:500;margin-right:4px;">1200 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
-                                <div>• 2ème année : <s style="opacity:.55;font-weight:500;margin-right:4px;">800 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
-                                <div>• 3ème année : <s style="opacity:.55;font-weight:500;margin-right:4px;">700 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
-                                <div>• 4ème année : <s style="opacity:.55;font-weight:500;margin-right:4px;">1500 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
-                                <div>• 5ème année : <s style="opacity:.55;font-weight:500;margin-right:4px;">1600 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
-                                <div>• 6ème année / Résidanat : <s style="opacity:.55;font-weight:500;margin-right:4px;">1800 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
+                            <div class="dn-price-grid">
+                                <div class="dn-price-card"><div class="dn-price-year">1ère année</div><div class="dn-price-row"><s class="dn-price-old">1200 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
+                                <div class="dn-price-card"><div class="dn-price-year">2ème année</div><div class="dn-price-row"><s class="dn-price-old">800 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
+                                <div class="dn-price-card"><div class="dn-price-year">3ème année</div><div class="dn-price-row"><s class="dn-price-old">700 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
+                                <div class="dn-price-card"><div class="dn-price-year">4ème année</div><div class="dn-price-row"><s class="dn-price-old">1500 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
+                                <div class="dn-price-card"><div class="dn-price-year">5ème année</div><div class="dn-price-row"><s class="dn-price-old">1600 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
+                                <div class="dn-price-card"><div class="dn-price-year">6ème année / Résidanat</div><div class="dn-price-row"><s class="dn-price-old">1800 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
                             </div>
                         </div>
 
