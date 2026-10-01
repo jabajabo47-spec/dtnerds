@@ -7409,6 +7409,8 @@ html[data-theme="dark"] #fullscreen-view .dn-quiz-choice.wrong .dn-choice-indica
 .dn-promo-tag{display:inline-block;background:#ef4444;color:#fff!important;font-size:9px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:999px;margin-right:6px;font-style:normal;vertical-align:middle}
 .dn-old-price{text-decoration:line-through;text-decoration-color:#ef4444;opacity:.6;font-weight:500;margin-right:6px}
 .dn-new-price{font-weight:800;font-size:1.08em}
+/* 6 items in mobile dock */
+@media(max-width:900px){#dn-mobile-dock .dn-mobile-dock-item{min-width:0!important;flex:1 1 0!important}}
 </style>
 
 
@@ -7846,6 +7848,7 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
             <button type="button" class="dn-mobile-dock-item" data-dock-tab="simulation" onclick="switchTab('simulation')"><span aria-hidden="true">✓</span><span>Session</span></button>
             <button type="button" class="dn-mobile-dock-item" data-dock-tab="resumes" onclick="switchTab('resumes')"><span aria-hidden="true">▥</span><span>Résumés</span></button>
             <button type="button" class="dn-mobile-dock-item" data-dock-tab="progression" onclick="switchTab('progression')"><span aria-hidden="true">↗</span><span>Progrès</span></button>
+            <button type="button" class="dn-mobile-dock-item" data-dock-tab="abonnement" onclick="switchTab('abonnement')"><span aria-hidden="true">🔑</span><span>Activation</span></button>
         </nav>
     </div>
 
