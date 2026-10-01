@@ -7404,6 +7404,11 @@ html[data-theme="dark"] #fullscreen-view .dn-quiz-choice.wrong .dn-choice-indica
   .dn-notification-clear{font-size:.62rem!important}
 }
 
+
+/* PROMO prices */
+.dn-promo-tag{display:inline-block;background:#ef4444;color:#fff!important;font-size:9px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:999px;margin-right:6px;font-style:normal;vertical-align:middle}
+.dn-old-price{text-decoration:line-through;text-decoration-color:#ef4444;opacity:.6;font-weight:500;margin-right:6px}
+.dn-new-price{font-weight:800;font-size:1.08em}
 </style>
 
 
@@ -10681,12 +10686,12 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
                         <div style="background: rgba(37,99,235,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius-md); padding: 1.2rem 1.5rem; margin-bottom: 1.8rem;">
                             <div style="font-size: 0.78rem; font-weight: 800; color: var(--primary-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">🏷️ Grille Tarifaire par Année (1 An d'accès)</div>
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; font-size: 0.88rem; font-weight: 700; color: var(--text-main);">
-                                <div>• 1ère année : <span style="color: var(--primary-light);">1200 DA</span></div>
-                                <div>• 2ème année : <span style="color: var(--primary-light);">800 DA</span></div>
-                                <div>• 3ème année : <span style="color: var(--primary-light);">700 DA</span></div>
-                                <div>• 4ème année : <span style="color: var(--primary-light);">1500 DA</span></div>
-                                <div>• 5ème année : <span style="color: var(--primary-light);">1600 DA</span></div>
-                                <div>• 6ème année / Résidanat : <span style="color: var(--primary-light);">1800 DA</span></div>
+                                <div>• 1ère année : <s style="opacity:.55;font-weight:500;margin-right:4px;">1200 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
+                                <div>• 2ème année : <s style="opacity:.55;font-weight:500;margin-right:4px;">800 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
+                                <div>• 3ème année : <s style="opacity:.55;font-weight:500;margin-right:4px;">700 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
+                                <div>• 4ème année : <s style="opacity:.55;font-weight:500;margin-right:4px;">1500 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
+                                <div>• 5ème année : <s style="opacity:.55;font-weight:500;margin-right:4px;">1600 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
+                                <div>• 6ème année / Résidanat : <s style="opacity:.55;font-weight:500;margin-right:4px;">1800 DA</s><span style="color: var(--primary-light);">500 DA</span> <span class="dn-promo-tag">PROMO</span></div>
                             </div>
                         </div>
 
@@ -10719,20 +10724,20 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
                             <div class="form-group">
                                 <label>Sélectionnez votre année d'études</label>
                                 <select id="bm-selected-year" class="dn-visually-hidden-select" required>
-                                    <option value="1ère année">1ère année (1200 DA)</option>
-                                    <option value="2ème année">2ème année (800 DA)</option>
-                                    <option value="3ème année" selected>3ème année (700 DA)</option>
-                                    <option value="4ème année">4ème année (1500 DA)</option>
-                                    <option value="5ème année">5ème année (1600 DA)</option>
-                                    <option value="6ème année / Résidanat">6ème année / Résidanat (1800 DA)</option>
+                                    <option value="1ère année">1ère année (500 DA - PROMO au lieu de 1200 DA)</option>
+                                    <option value="2ème année">2ème année (500 DA - PROMO au lieu de 800 DA)</option>
+                                    <option value="3ème année" selected>3ème année (500 DA - PROMO au lieu de 700 DA)</option>
+                                    <option value="4ème année">4ème année (500 DA - PROMO au lieu de 1500 DA)</option>
+                                    <option value="5ème année">5ème année (500 DA - PROMO au lieu de 1600 DA)</option>
+                                    <option value="6ème année / Résidanat">6ème année / Résidanat (500 DA - PROMO au lieu de 1800 DA)</option>
                                 </select>
                                 <div class="dn-activation-years" id="dn-activation-years">
-                                    <button type="button" class="dn-activation-year-card" data-year="1ère année" onclick="dnPickActivationYear('1ère année')"><strong>1ère année</strong><span>1200 DA</span></button>
-                                    <button type="button" class="dn-activation-year-card" data-year="2ème année" onclick="dnPickActivationYear('2ème année')"><strong>2ème année</strong><span>800 DA</span></button>
-                                    <button type="button" class="dn-activation-year-card active" data-year="3ème année" onclick="dnPickActivationYear('3ème année')"><strong>3ème année</strong><span>700 DA</span></button>
-                                    <button type="button" class="dn-activation-year-card" data-year="4ème année" onclick="dnPickActivationYear('4ème année')"><strong>4ème année</strong><span>1500 DA</span></button>
-                                    <button type="button" class="dn-activation-year-card" data-year="5ème année" onclick="dnPickActivationYear('5ème année')"><strong>5ème année</strong><span>1600 DA</span></button>
-                                    <button type="button" class="dn-activation-year-card" data-year="6ème année / Résidanat" onclick="dnPickActivationYear('6ème année / Résidanat')"><strong>6ème année / Résidanat</strong><span>1800 DA</span></button>
+                                    <button type="button" class="dn-activation-year-card" data-year="1ère année" onclick="dnPickActivationYear('1ère année')"><strong>1ère année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1200 DA</s><b class="dn-new-price">500 DA</b></span></button>
+                                    <button type="button" class="dn-activation-year-card" data-year="2ème année" onclick="dnPickActivationYear('2ème année')"><strong>2ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">800 DA</s><b class="dn-new-price">500 DA</b></span></button>
+                                    <button type="button" class="dn-activation-year-card active" data-year="3ème année" onclick="dnPickActivationYear('3ème année')"><strong>3ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">700 DA</s><b class="dn-new-price">500 DA</b></span></button>
+                                    <button type="button" class="dn-activation-year-card" data-year="4ème année" onclick="dnPickActivationYear('4ème année')"><strong>4ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1500 DA</s><b class="dn-new-price">500 DA</b></span></button>
+                                    <button type="button" class="dn-activation-year-card" data-year="5ème année" onclick="dnPickActivationYear('5ème année')"><strong>5ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1600 DA</s><b class="dn-new-price">500 DA</b></span></button>
+                                    <button type="button" class="dn-activation-year-card" data-year="6ème année / Résidanat" onclick="dnPickActivationYear('6ème année / Résidanat')"><strong>6ème année / Résidanat</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1800 DA</s><b class="dn-new-price">500 DA</b></span></button>
                                 </div>
                             </div>
                             <div class="form-group">
