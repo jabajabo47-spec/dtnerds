@@ -7632,6 +7632,55 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
   #fullscreen-view .dn-fullscreen-topbar{min-height:52px!important;}
   #fs-content-area{padding-bottom:70px!important;}
 }
+/* === FINAL phone/tablet layout fix (wins over older sidebar rules) === */
+@media(max-width:900px){
+  aside{display:none!important}
+  main{margin-left:0!important;margin-right:0!important;width:100%!important;max-width:100vw!important;box-sizing:border-box!important}
+  header{box-sizing:border-box!important;width:100%!important;max-width:100vw!important}
+  .content-body{box-sizing:border-box!important;max-width:100%!important}
+  .dn-header-actions{flex-shrink:0!important}
+  .header-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+}
+/* Functional price cards */
+button.dn-price-card{position:relative;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease,background .15s ease}
+button.dn-price-card:hover{transform:translateY(-2px);border-color:rgba(123,136,255,.65)}
+button.dn-price-card.active{border-color:#7c83ff;background:linear-gradient(135deg,rgba(79,70,229,.38),rgba(124,58,237,.30));box-shadow:0 0 0 2px rgba(124,131,255,.55),0 12px 28px rgba(79,70,229,.25)}
+.dn-price-check{display:none;position:absolute;top:8px;right:10px;width:20px;height:20px;border-radius:50%;background:#22c55e;color:#fff;font-size:.72rem;font-weight:900;align-items:center;justify-content:center}
+button.dn-price-card.active .dn-price-check{display:flex}
+.dn-chosen-year{padding:12px 14px;border-radius:14px;border:1px solid rgba(34,197,94,.45);background:rgba(34,197,94,.10);font-size:.88rem;color:var(--text-main)}
+.dn-chosen-year.empty{border:1px dashed rgba(148,163,184,.5);background:rgba(148,163,184,.08);color:var(--text-secondary)}
+.dn-chosen-year .dn-promo-tag{margin-left:6px}
+/* === FINAL mobile dock polish === */
+@media(max-width:900px){
+  #dn-mobile-dock{left:10px!important;right:10px!important;bottom:10px!important;height:auto!important;min-height:68px!important;
+    padding:7px 6px calc(7px + env(safe-area-inset-bottom,0px))!important;gap:2px!important;justify-content:space-between!important;border-radius:24px!important;
+    background:rgba(11,18,34,.94)!important;border:1px solid rgba(148,163,184,.16)!important;box-shadow:0 18px 45px rgba(0,0,0,.38)!important;
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+  :root[data-theme="light"] #dn-mobile-dock{background:rgba(255,255,255,.96)!important;border-color:rgba(100,116,139,.18)!important;box-shadow:0 18px 45px rgba(15,23,42,.16)!important}
+  #dn-mobile-dock .dn-mobile-dock-item{flex:1 1 0!important;min-width:0!important;height:56px!important;padding:3px 1px!important;gap:5px!important;
+    background:transparent!important;box-shadow:none!important;border:0!important;border-radius:16px!important;color:#9aa6c0!important}
+  :root[data-theme="light"] #dn-mobile-dock .dn-mobile-dock-item{color:#64748b!important}
+  #dn-mobile-dock .dn-mobile-dock-item span:last-child{font-size:.62rem!important;font-weight:700!important;letter-spacing:.1px;line-height:1;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+  #dn-mobile-dock .dn-dock-ico{width:46px!important;height:28px!important;border-radius:14px!important;transition:background .2s ease,transform .2s ease}
+  #dn-mobile-dock .dn-dock-ico svg{width:20px!important;height:20px!important}
+  #dn-mobile-dock .dn-mobile-dock-item:active .dn-dock-ico{transform:scale(.92)}
+  #dn-mobile-dock .dn-mobile-dock-item.active{color:#fff!important}
+  :root[data-theme="light"] #dn-mobile-dock .dn-mobile-dock-item.active{color:#4f46e5!important}
+  #dn-mobile-dock .dn-mobile-dock-item.active .dn-dock-ico{background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;color:#fff!important;box-shadow:0 6px 16px rgba(79,70,229,.45)}
+  #dn-mobile-dock .dn-mobile-dock-item[data-dock-tab="abonnement"] .dn-dock-ico{color:#f59e0b}
+  #dn-mobile-dock .dn-mobile-dock-item[data-dock-tab="abonnement"].active .dn-dock-ico{color:#fff!important}
+  .floating-timer-container{bottom:92px!important}
+  main{padding-bottom:100px!important}
+}
+@media(max-width:420px){
+  #dn-mobile-dock .dn-dock-ico{width:40px!important}
+  #dn-mobile-dock .dn-mobile-dock-item span:last-child{font-size:.58rem!important}
+}
+@media(max-width:360px){
+  #dn-mobile-dock{left:6px!important;right:6px!important}
+  #dn-mobile-dock .dn-dock-ico{width:34px!important}
+  #dn-mobile-dock .dn-mobile-dock-item span:last-child{font-size:.54rem!important}
+}
 </style>
 </head>
 <body>
@@ -7839,7 +7888,7 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
             <div class="content-body" id="main-content-area"></div>
 
             <footer>
-                <div>&copy; 2026 <strong>Dentist Nerds</strong> — Propulsé pour l'élite dentaire. <span style="opacity:.45;font-size:.7em">v2 · promo</span></div>
+                <div>&copy; 2026 <strong>Dentist Nerds</strong> — Propulsé pour l'élite dentaire. <span style="opacity:.45;font-size:.7em">v5 · promo</span></div>
                 <div>Contact: contact@dentistnerds.dz | +213 698 984 293</div>
             </footer>
         </main>
@@ -10719,14 +10768,15 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
                         </div>
 
                         <div style="background: rgba(37,99,235,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius-md); padding: 1.2rem 1.5rem; margin-bottom: 1.8rem;">
-                            <div style="font-size: 0.78rem; font-weight: 800; color: var(--primary-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">🏷️ Grille Tarifaire par Année (1 An d'accès)</div>
+                            <div style="font-size: 0.78rem; font-weight: 800; color: var(--primary-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">🏷️ Choisissez votre année (1 An d'accès)</div>
+                            <div style="font-size:.78rem;color:var(--text-secondary);margin:-4px 0 10px">Touchez votre année d'études pour la sélectionner, puis remplissez le formulaire.</div>
                             <div class="dn-price-grid">
-                                <div class="dn-price-card"><div class="dn-price-year">1ère année</div><div class="dn-price-row"><s class="dn-price-old">1200 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
-                                <div class="dn-price-card"><div class="dn-price-year">2ème année</div><div class="dn-price-row"><s class="dn-price-old">800 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
-                                <div class="dn-price-card"><div class="dn-price-year">3ème année</div><div class="dn-price-row"><s class="dn-price-old">700 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
-                                <div class="dn-price-card"><div class="dn-price-year">4ème année</div><div class="dn-price-row"><s class="dn-price-old">1500 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
-                                <div class="dn-price-card"><div class="dn-price-year">5ème année</div><div class="dn-price-row"><s class="dn-price-old">1600 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
-                                <div class="dn-price-card"><div class="dn-price-year">6ème année / Résidanat</div><div class="dn-price-row"><s class="dn-price-old">1800 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div></div>
+                                <button type="button" class="dn-price-card" data-year="1ère année" onclick="dnPickActivationYear('1ère année')"><div class="dn-price-year">1ère année</div><div class="dn-price-row"><s class="dn-price-old">1200 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div><span class="dn-price-check" aria-hidden="true">✓</span></button>
+                                <button type="button" class="dn-price-card" data-year="2ème année" onclick="dnPickActivationYear('2ème année')"><div class="dn-price-year">2ème année</div><div class="dn-price-row"><s class="dn-price-old">800 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div><span class="dn-price-check" aria-hidden="true">✓</span></button>
+                                <button type="button" class="dn-price-card" data-year="3ème année" onclick="dnPickActivationYear('3ème année')"><div class="dn-price-year">3ème année</div><div class="dn-price-row"><s class="dn-price-old">700 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div><span class="dn-price-check" aria-hidden="true">✓</span></button>
+                                <button type="button" class="dn-price-card" data-year="4ème année" onclick="dnPickActivationYear('4ème année')"><div class="dn-price-year">4ème année</div><div class="dn-price-row"><s class="dn-price-old">1500 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div><span class="dn-price-check" aria-hidden="true">✓</span></button>
+                                <button type="button" class="dn-price-card" data-year="5ème année" onclick="dnPickActivationYear('5ème année')"><div class="dn-price-year">5ème année</div><div class="dn-price-row"><s class="dn-price-old">1600 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div><span class="dn-price-check" aria-hidden="true">✓</span></button>
+                                <button type="button" class="dn-price-card" data-year="6ème année / Résidanat" onclick="dnPickActivationYear('6ème année / Résidanat')"><div class="dn-price-year">6ème année / Résidanat</div><div class="dn-price-row"><s class="dn-price-old">1800 DA</s><b class="dn-price-new">500 DA</b><em class="dn-promo-tag">PROMO</em></div><span class="dn-price-check" aria-hidden="true">✓</span></button>
                             </div>
                         </div>
 
@@ -10757,23 +10807,17 @@ html[data-theme="dark"] .auth-theme-btn.dn-theme-icon-btn::after{
 
                         <form onsubmit="handleBaridiMobSubmit(event)">
                             <div class="form-group">
-                                <label>Sélectionnez votre année d'études</label>
-                                <select id="bm-selected-year" class="dn-visually-hidden-select" required>
-                                    <option value="1ère année">1ère année (500 DA - PROMO au lieu de 1200 DA)</option>
-                                    <option value="2ème année">2ème année (500 DA - PROMO au lieu de 800 DA)</option>
-                                    <option value="3ème année" selected>3ème année (500 DA - PROMO au lieu de 700 DA)</option>
-                                    <option value="4ème année">4ème année (500 DA - PROMO au lieu de 1500 DA)</option>
-                                    <option value="5ème année">5ème année (500 DA - PROMO au lieu de 1600 DA)</option>
-                                    <option value="6ème année / Résidanat">6ème année / Résidanat (500 DA - PROMO au lieu de 1800 DA)</option>
+                                <label>Année choisie</label>
+                                <select id="bm-selected-year" class="dn-visually-hidden-select" tabindex="-1" aria-hidden="true">
+                                    <option value="" selected>—</option>
+                                    <option value="1ère année">1ère année</option>
+                                    <option value="2ème année">2ème année</option>
+                                    <option value="3ème année">3ème année</option>
+                                    <option value="4ème année">4ème année</option>
+                                    <option value="5ème année">5ème année</option>
+                                    <option value="6ème année / Résidanat">6ème année / Résidanat</option>
                                 </select>
-                                <div class="dn-activation-years" id="dn-activation-years">
-                                    <button type="button" class="dn-activation-year-card" data-year="1ère année" onclick="dnPickActivationYear('1ère année')"><strong>1ère année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1200 DA</s><b class="dn-new-price">500 DA</b></span></button>
-                                    <button type="button" class="dn-activation-year-card" data-year="2ème année" onclick="dnPickActivationYear('2ème année')"><strong>2ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">800 DA</s><b class="dn-new-price">500 DA</b></span></button>
-                                    <button type="button" class="dn-activation-year-card active" data-year="3ème année" onclick="dnPickActivationYear('3ème année')"><strong>3ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">700 DA</s><b class="dn-new-price">500 DA</b></span></button>
-                                    <button type="button" class="dn-activation-year-card" data-year="4ème année" onclick="dnPickActivationYear('4ème année')"><strong>4ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1500 DA</s><b class="dn-new-price">500 DA</b></span></button>
-                                    <button type="button" class="dn-activation-year-card" data-year="5ème année" onclick="dnPickActivationYear('5ème année')"><strong>5ème année</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1600 DA</s><b class="dn-new-price">500 DA</b></span></button>
-                                    <button type="button" class="dn-activation-year-card" data-year="6ème année / Résidanat" onclick="dnPickActivationYear('6ème année / Résidanat')"><strong>6ème année / Résidanat</strong><span><em class="dn-promo-tag">PROMO</em><s class="dn-old-price">1800 DA</s><b class="dn-new-price">500 DA</b></span></button>
-                                </div>
+                                <div id="dn-chosen-year" class="dn-chosen-year empty">👆 Choisissez votre année dans la grille ci-dessus</div>
                             </div>
                             <div class="form-group">
                                 <label>Nom complet</label>
@@ -12502,9 +12546,15 @@ function renderQuizScreen() {
         function dnPickActivationYear(year) {
             const sel = document.getElementById('bm-selected-year');
             if (sel) sel.value = year;
-            document.querySelectorAll('.dn-activation-year-card').forEach(btn => {
+            document.querySelectorAll('.dn-price-card').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.year === year);
             });
+            const box = document.getElementById('dn-chosen-year');
+            if (box) {
+                box.classList.remove('empty');
+                box.innerHTML = '✅ Année choisie : <strong>' + year + '</strong> — <strong>500 DA</strong> <em class="dn-promo-tag">PROMO</em>';
+                box.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }
         }
 
         function dnReadFileAsDataUrl(file) {
@@ -12526,6 +12576,7 @@ function renderQuizScreen() {
             const phone = document.getElementById('bm-phone')?.value.trim() || '';
             const ref = document.getElementById('bm-ref')?.value.trim() || '';
             const file = document.getElementById('bm-receipt-file')?.files?.[0];
+            if (!year) return showAppModal("⚠️ Choisissez d'abord votre année d'études dans la grille.");
 
             if (!year || !name || !email || !phone || !ref || !file) {
                 return showAppModal('⚠️ Remplissez tous les champs et ajoutez la photo du reçu.');
