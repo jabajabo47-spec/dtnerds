@@ -7,7 +7,7 @@
     <title>Dentist Nerds — L'Excellence Dentaire</title>
     <meta name="description" content="Dentist Nerds — plateforme d'apprentissage pour étudiants en chirurgie dentaire : cours, QCM, planning de révision et suivi de progression.">
     <link rel="icon" type="image/png" sizes="144x144" href="favicon.png?v=2">
-    <link rel="apple-touch-icon" href="favicon.png?v=2"><text y=%22.9em%22 font-size=%2290%22>🦷</text></svg>">
+    <link rel="apple-touch-icon" href="favicon.png?v=2">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#06141B">
@@ -10292,7 +10292,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                         </div>
                         <div class="dn-dashboard-hero-side">
                             <div class="dn-dashboard-motivation" id="dn-dashboard-motivation">
-                            <div class="dn-dashboard-motivation-icon">🦷</div>
+                            <div class="dn-dashboard-motivation-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h4v4c0 3-1.5 4.5-4 5M14 7h4v4c0 3-1.5 4.5-4 5"/></svg></div>
                             <div>
                                 <div class="dn-dashboard-motivation-kicker">Pensée du jour</div>
                                 <div class="dn-dashboard-motivation-text">“${dnEscapeHtml(dashboardQuote)}”</div>
@@ -13423,6 +13423,17 @@ html body #focus-timer-dock .timer-time{font-size:1.4rem!important}
 html body #focus-timer-dock .dn-fw-mode-tag{background:var(--input-bg)!important;color:var(--text-secondary)!important}
 html body #focus-timer-dock.running .dn-fw-mode-tag{color:var(--success)!important}
 html body #focus-timer-dock .timer-progress span{box-shadow:none!important}
+
+/* --- Timer ring icon: keep it small, centered and upright --- */
+html body #focus-timer-dock .dn-fw-card .dn-fw-ring .dn-fw-ring-icon{position:absolute!important;inset:0!important;display:grid!important;place-items:center!important;background:none!important;border-radius:0!important}
+html body #focus-timer-dock .dn-fw-card .dn-fw-ring .dn-fw-ring-icon svg{width:18px!important;height:18px!important;min-width:0!important;transform:none!important;display:block!important}
+@media(max-width:560px){html body #focus-timer-dock .dn-fw-card .dn-fw-ring .dn-fw-ring-icon svg{width:16px!important;height:16px!important}}
+/* --- Timer collapse handle: flat, small, readable --- */
+html body #focus-timer-dock .dn-fw-collapse-btn{background:var(--bg-surface)!important;color:var(--text-secondary)!important;border:1px solid var(--border-glass)!important;box-shadow:none!important;width:22px!important;height:22px!important;font-size:10px!important}
+html body #focus-timer-dock .dn-fw-collapse-btn:hover{color:var(--text-main)!important}
+/* --- Pensée du jour icon --- */
+.dn-dashboard-motivation-icon svg{width:18px;height:18px;display:block;color:var(--text-secondary)}
+html body #focus-timer-dock .dn-fw-actions .timer-btn-play{box-shadow:none!important;background:var(--primary)!important}
 </style>
 </body>
 </html>
