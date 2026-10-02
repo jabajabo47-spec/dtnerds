@@ -8018,7 +8018,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             else if (/weak|easy to guess|pwned/i.test(raw)) raw = 'Ce mot de passe est trop faible ou trop courant. Choisissez-en un plus solide.';
             else if (/auth session missing|session.*(expired|missing)/i.test(raw)) raw = 'Votre session a expiré. Reconnectez-vous puis réessayez.';
             const isError = /❌|incorrect|invalide|erreur|introuvable|ne correspondent|doit contenir|doit être différent|trop faible|a expiré|Entrez votre|Veuillez|impossible|déjà utilisée|trop de demandes|invalid|failed/i.test(raw);
-            const isSuccess = !isError && /🎉|✅|succès|activé|envoyée avec succès|terminée|modifié|mis à jour|envoyé/i.test(raw);
+            const isSuccess = !isError && /🎉|✅|succès|activé|envoyée avec succès|terminée|modifié|mis à jour|enregistré|exporté|envoyé/i.test(raw);
             const ICONS = {
                 info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></svg>',
                 error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 3 19h18L12 4Z"/><path d="M12 10v4"/><circle cx="12" cy="16.6" r=".6" fill="currentColor"/></svg>',
@@ -8913,6 +8913,10 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             if (!Array.isArray(currentUser.exams)) currentUser.exams = [];
             try { const backup = JSON.parse(localStorage.getItem('dn_planner_backup') || 'null'); if (backup && Array.isArray(backup.todoList) && !currentUser.todoList.length) currentUser.todoList = backup.todoList; if (backup && Array.isArray(backup.exams) && !currentUser.exams.length) currentUser.exams = backup.exams; } catch(e) {}
             if (typeof currentUser.bio !== 'string') currentUser.bio = '';
+            if (typeof currentUser.faculty !== 'string') currentUser.faculty = '';
+            if (!currentUser.goals || typeof currentUser.goals !== 'object') currentUser.goals = { qcm: 20, minutes: 60 };
+            if (!(Number(currentUser.goals.qcm) > 0)) currentUser.goals.qcm = 20;
+            if (!(Number(currentUser.goals.minutes) > 0)) currentUser.goals.minutes = 60;
             if (currentUser.avatarType !== 'girl') currentUser.avatarType = 'boy';
             if (typeof currentUser.avatarKey !== 'string') currentUser.avatarKey = 'initial';
             if (!Array.isArray(currentUser.notifications)) currentUser.notifications = [];
@@ -9197,6 +9201,8 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                 todoList: Array.isArray(dashboard.todoList) ? dashboard.todoList : [],
                 exams: Array.isArray(dashboard.exams) ? dashboard.exams : [],
                 bio: typeof dashboard.bio === 'string' ? dashboard.bio : '',
+                faculty: typeof dashboard.faculty === 'string' ? dashboard.faculty : '',
+                goals: dashboard.goals && typeof dashboard.goals === 'object' ? dashboard.goals : { qcm: 20, minutes: 60 },
                 avatarType: dashboard.avatarType === 'girl' ? 'girl' : 'boy',
                 avatarKey: typeof dashboard.avatarKey === 'string' ? dashboard.avatarKey : 'initial',
                 notifications: Array.isArray(dashboard.notifications) ? dashboard.notifications : [],
@@ -9221,6 +9227,8 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                 todoList: Array.isArray(currentUser.todoList) ? currentUser.todoList : [],
                 exams: Array.isArray(currentUser.exams) ? currentUser.exams : [],
                 bio: currentUser.bio || '',
+                faculty: currentUser.faculty || '',
+                goals: currentUser.goals || { qcm: 20, minutes: 60 },
                 avatarType: currentUser.avatarType === 'girl' ? 'girl' : 'boy',
                 avatarKey: currentUser.avatarKey || 'initial',
                 notifications: Array.isArray(currentUser.notifications) ? currentUser.notifications.slice(-30) : [],
@@ -9755,19 +9763,94 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             if(preview) preview.innerText=getProfileAvatarGlyph();
             updateHeaderProfileUI();
         }
+        // --- Profile: study stats, goals, export ---
+        function dnProfileStats() {
+            ensureDashboardData();
+            const answeredList = Object.values(currentUser.questionProgress || {}).filter(x => x && x.answered);
+            const answered = answeredList.length;
+            const correct = answeredList.filter(x => x.correct).length;
+            const rate = answered ? Math.round(correct / answered * 100) : null;
+            const mods = {};
+            answeredList.forEach(x => {
+                const name = String(x.module || '').trim();
+                if (!name) return;
+                const m = mods[name] || (mods[name] = { a: 0, c: 0 });
+                m.a++; if (x.correct) m.c++;
+            });
+            const ranked = Object.entries(mods)
+                .filter(([, v]) => v.a >= 5)
+                .map(([name, v]) => ({ name, answered: v.a, rate: Math.round(v.c / v.a * 100) }))
+                .sort((x, y) => x.rate - y.rate);
+            let weekSeconds = 0;
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(); d.setDate(d.getDate() - i);
+                weekSeconds += Number((currentUser.studyLog || {})[dnDateKey(d)] || 0);
+            }
+            const today = dnDateKey();
+            const qcmToday = (currentUser.quizHistory || []).filter(h => h && h.date === today).reduce((t, h) => t + Number(h.total || 0), 0);
+            const minToday = Math.floor(Number((currentUser.studyLog || {})[today] || 0) / 60);
+            return {
+                answered, correct, rate, weak: ranked.filter(r => r.rate < 80).slice(0, 3), rankedCount: ranked.length,
+                best: ranked.length > 1 ? ranked[ranked.length - 1] : null,
+                weekSeconds, qcmToday, minToday,
+                saved: (currentUser.savedQuestions || []).length
+            };
+        }
+        function dnProfileGoalsLive() {
+            const gq = document.getElementById('dn-goal-qcm'), gm = document.getElementById('dn-goal-min');
+            const box = document.getElementById('dn-goals-box');
+            if (!gq || !gm || !box) return;
+            const qToday = Number(box.dataset.qcm || 0), mToday = Number(box.dataset.min || 0);
+            const setBar = (txtId, barId, done, goal, unit) => {
+                const t = document.getElementById(txtId), bar = document.getElementById(barId);
+                if (t) t.textContent = done + ' / ' + goal + unit;
+                if (bar) bar.style.width = Math.min(100, Math.round(done / Math.max(1, goal) * 100)) + '%';
+            };
+            setBar('dn-goal-qcm-txt', 'dn-goal-qcm-bar', qToday, Number(gq.value), '');
+            setBar('dn-goal-min-txt', 'dn-goal-min-bar', mToday, Number(gm.value), ' min');
+        }
+        function dnExportMyData() {
+            ensureDashboardData();
+            const payload = {
+                exportedAt: new Date().toISOString(),
+                profile: { name: currentUser.name, email: currentUser.email, faculty: currentUser.faculty, studyYear: currentUser.studyYear, bio: currentUser.bio },
+                goals: currentUser.goals,
+                streak: currentUser.streak,
+                studyLog: currentUser.studyLog,
+                quizHistory: currentUser.quizHistory,
+                questionProgress: currentUser.questionProgress,
+                savedQuestions: currentUser.savedQuestions,
+                exams: currentUser.exams,
+                todoList: currentUser.todoList
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'dentist-nerds-donnees-' + dnDateKey() + '.json';
+            document.body.appendChild(a); a.click(); a.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1500);
+            showAppModal('Vos données ont été exportées.');
+        }
         async function saveProfileSettings() {
             const nameEl=document.getElementById('dn-profile-name');
             const bioEl=document.getElementById('dn-profile-bio');
             const name=(nameEl?.value||'').trim();
-            if(name.length<4){showAppModal('⚠️ Le nom affiché doit contenir au moins 4 caractères.');return;}
+            if(name.length<4){showAppModal('Le nom affiché doit contenir au moins 4 caractères.');return;}
             currentUser.name=name.slice(0,60);
             currentUser.bio=(bioEl?.value||'').trim().slice(0,240);
+            const facEl=document.getElementById('dn-profile-faculty');
+            if (facEl) currentUser.faculty=facEl.value.trim().slice(0,80);
+            const yrEl=document.getElementById('dn-profile-year');
+            if (yrEl && yrEl.value) currentUser.studyYear=yrEl.value;
+            const gq=document.getElementById('dn-goal-qcm'), gm=document.getElementById('dn-goal-min');
+            if (gq && gm) currentUser.goals={ qcm: Number(gq.value)||20, minutes: Number(gm.value)||60 };
             ensureDashboardData();
             await persistUserData();
             updateHeaderProfileUI();
-            showAppModal('✅ Profil enregistré !');
+            showAppModal('Profil enregistré.');
             switchTab('profil');
         }
+
         // --- Password change (profile page) ---
         async function dnInitPasswordCard() {
             const wrap = document.getElementById('dn-pw-current-wrap');
@@ -10817,42 +10900,96 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                     ['initial','✨','Initiale'],['tooth','🦷','Dent'],['brain','🧠','Brain'],['cool','😎','Cool'],
                     ['dino','🦖','Dino'],['frog','🐸','Frog'],['panda','🐼','Panda'],['cat','🐱','Chat'],['sloth','🦥','Paresseux'],['fire','🔥','Flamme']
                 ];
+                const YEARS = ['1ère année','2ème année','3ème année','4ème année','5ème année','6ème année / Résidanat'];
                 const currentAvatar = currentUser.avatarKey || 'initial';
                 const avatarGlyph = getProfileAvatarGlyph();
-                area.innerHTML = `${(window.__dnProfileSnap={key:currentUser.avatarKey||'initial',type:currentUser.avatarType||'boy'},'')}<div class="dn-pf">
-                    <section class="dn-pf-hero">
-                        <div class="dn-pf-avatar" id="dn-profile-preview-avatar">${avatarGlyph}</div>
-                        <div class="dn-pf-id">
-                            <div class="dn-pf-kicker">Mon profil</div>
-                            <div class="dn-pf-name" id="dn-profile-preview-name">${escapeHtml(currentUser.name || 'Étudiant')}</div>
-                            <p class="dn-pf-bio" id="dn-profile-preview-bio">${escapeHtml(currentUser.bio || 'Ajoute une petite bio pour personnaliser ton espace.')}</p>
-                            ${currentUser.studyYear ? `<span class="dn-pf-chip">🎓 ${escapeHtml(currentUser.studyYear)}</span>` : ''}
+                const st = dnProfileStats();
+                const goals = currentUser.goals || { qcm: 20, minutes: 60 };
+                const optionList = (list, cur, fmt) => (list.includes(Number(cur)) ? list : list.concat([Number(cur)]).sort((x, y) => x - y)).map(v => `<option value="${v}" ${Number(cur) === v ? 'selected' : ''}>${fmt(v)}</option>`).join('');
+                const nowMs = Date.now();
+                const accessRows = Object.keys(currentUser.subscriptions || {}).map(yr => {
+                    const exp = Number(currentUser.subscriptions[yr]);
+                    const days = Math.max(0, Math.ceil((exp - nowMs) / 86400000));
+                    return `<div class="dn-pf2-row"><span class="dn-pf2-row-main">${escapeHtml(yr)}</span><span class="dn-pf2-row-meta${days <= 30 ? ' warn' : ''}">${days <= 30 ? 'Expire dans ' + days + ' j' : 'Jusqu’au ' + new Date(exp).toLocaleDateString('fr-FR')}</span></div>`;
+                }).join('');
+                const weakRows = st.weak.map(w => `<div class="dn-pf2-mod"><div class="dn-pf2-mod-top"><span title="${escapeAttr(w.name)}">${escapeHtml(w.name)}</span><b>${w.rate}%</b></div><div class="dn-pf2-track"><i style="width:${w.rate}%"></i></div></div>`).join('');
+                area.innerHTML = `${(window.__dnProfileSnap={key:currentUser.avatarKey||'initial',type:currentUser.avatarType||'boy'},'')}<div class="dn-pf dn-pf2">
+                    <section class="dn-pf2-hero">
+                        <div class="dn-pf2-avatar" id="dn-profile-preview-avatar">${avatarGlyph}</div>
+                        <div class="dn-pf2-id">
+                            <div class="dn-pf2-name" id="dn-profile-preview-name">${escapeHtml(currentUser.name || 'Étudiant')}</div>
+                            <div class="dn-pf2-meta">${escapeHtml(currentUser.email || '')}</div>
+                            <div class="dn-pf2-chips">
+                                ${currentUser.studyYear ? `<span class="dn-pf2-chip">${escapeHtml(currentUser.studyYear)}</span>` : ''}
+                                ${currentUser.faculty ? `<span class="dn-pf2-chip">${escapeHtml(currentUser.faculty)}</span>` : ''}
+                            </div>
+                            <p class="dn-pf2-bio" id="dn-profile-preview-bio">${escapeHtml(currentUser.bio || 'Ajoute une courte bio pour personnaliser ton espace.')}</p>
                         </div>
-                        <div class="dn-pf-stats">
-                            <div><b>${Number(currentUser.streak || 0)}</b><span>🔥 jours de streak</span></div>
-                            <div><b>${Array.isArray(currentUser.quizHistory) ? currentUser.quizHistory.length : 0}</b><span>🧠 sessions</span></div>
-                            <div><b>${currentUser.subscriptions ? Object.keys(currentUser.subscriptions).length : 0}</b><span>🔑 années actives</span></div>
+                        <div class="dn-pf2-kpis">
+                            <div><b>${Number(currentUser.streak || 0)}</b><span>jours de suite</span></div>
+                            <div><b>${st.answered}</b><span>QCM répondus</span></div>
+                            <div><b>${st.rate === null ? '—' : st.rate + '%'}</b><span>réussite</span></div>
                         </div>
                     </section>
-                    <div class="dn-pf-body">
-                        <section class="dn-pf-card">
-                            <div class="dn-pf-h">👤 Informations</div>
-                            <div class="dn-pf-field"><label for="dn-profile-name">Nom affiché <small id="dn-pf-name-count">${(currentUser.name || '').length}/60</small></label><input id="dn-profile-name" class="form-control" maxlength="60" value="${escapeAttr(currentUser.name || '')}" placeholder="Ton nom" autocomplete="name" oninput="dnProfileLive()"></div>
-                            <div class="dn-pf-field"><label for="dn-profile-bio">Bio <small id="dn-pf-bio-count">${(currentUser.bio || '').length}/240</small></label><textarea id="dn-profile-bio" class="form-control" maxlength="240" rows="4" placeholder="Ex : Étudiant en chirurgie dentaire, team QCM 😎" oninput="dnProfileLive()">${escapeHtml(currentUser.bio || '')}</textarea></div>
-                            <p class="dn-pf-hint">Ton nom et ta bio sont enregistrés dans ton profil. La bio reste visible uniquement dans ton espace.</p>
-                        </section>
-                        <section class="dn-pf-card">
-                            <div class="dn-pf-h">🎭 Avatar</div>
-                            <div class="dn-pf-seg" role="group" aria-label="Style">
-                                <button type="button" class="${currentUser.avatarType === 'boy' ? 'active' : ''}" data-gender="boy" onclick="selectProfileGender('boy')">👦 Garçon</button>
-                                <button type="button" class="${currentUser.avatarType === 'girl' ? 'active' : ''}" data-gender="girl" onclick="selectProfileGender('girl')">👧 Fille</button>
-                            </div>
-                            <div class="dn-pf-avatars">
-                                ${avatarOptions.map(([key,emoji,label])=>`<button type="button" class="dn-pf-av ${currentAvatar===key?'active':''}" data-avatar-key="${key}" onclick="selectProfileAvatar('${key}')" title="${label}" aria-label="${label}"><span>${emoji}</span></button>`).join('')}
-                            </div>
-                            <p class="dn-pf-hint">L'avatar choisi apparaît aussi dans la barre du haut.</p>
-                        </section>
-                        <section class="dn-pf-card" id="dn-pw-card" style="grid-column:1/-1">
+
+                    <div class="dn-pf2-grid">
+                        <div class="dn-pf2-col">
+                            <section class="dn-pf-card">
+                                <div class="dn-pf-h">Identité</div>
+                                <div class="dn-pf-field"><label for="dn-profile-name">Nom affiché <small id="dn-pf-name-count">${(currentUser.name || '').length}/60</small></label><input id="dn-profile-name" class="form-control" maxlength="60" value="${escapeAttr(currentUser.name || '')}" placeholder="Ton nom" autocomplete="name" oninput="dnProfileLive()"></div>
+                                <div class="dn-pf2-two dn-pf2-id-row">
+                                    <div class="dn-pf-field"><label for="dn-profile-year">Année d’études</label><select id="dn-profile-year" class="form-control">${YEARS.map(y => `<option value="${y}" ${currentUser.studyYear === y ? 'selected' : ''}>${y}</option>`).join('')}</select></div>
+                                    <div class="dn-pf-field"><label for="dn-profile-faculty">Faculté / université</label><input id="dn-profile-faculty" class="form-control" maxlength="80" value="${escapeAttr(currentUser.faculty || '')}" placeholder="Ex : Faculté de médecine dentaire d’Alger" autocomplete="organization"></div>
+                                </div>
+                                <div class="dn-pf-field"><label for="dn-profile-bio">Bio <small id="dn-pf-bio-count">${(currentUser.bio || '').length}/240</small></label><textarea id="dn-profile-bio" class="form-control" maxlength="240" rows="3" placeholder="Ex : Étudiant en 3ème année, objectif ODF et prothèse." oninput="dnProfileLive()">${escapeHtml(currentUser.bio || '')}</textarea></div>
+                                <p class="dn-pf-hint">Ces informations restent dans ton espace personnel. Elles ne sont pas visibles par les autres étudiants.</p>
+                            </section>
+
+                            <section class="dn-pf-card" id="dn-goals-box" data-qcm="${st.qcmToday}" data-min="${st.minToday}">
+                                <div class="dn-pf-h">Objectifs d’étude</div>
+                                <div class="dn-pf2-two">
+                                    <div class="dn-pf-field"><label for="dn-goal-qcm">QCM par jour</label><select id="dn-goal-qcm" class="form-control" onchange="dnProfileGoalsLive()">${optionList([10,20,30,50,100], goals.qcm, v => v + ' QCM')}</select></div>
+                                    <div class="dn-pf-field"><label for="dn-goal-min">Étude par jour</label><select id="dn-goal-min" class="form-control" onchange="dnProfileGoalsLive()">${optionList([30,60,90,120,180], goals.minutes, v => v + ' min')}</select></div>
+                                </div>
+                                <div class="dn-pf2-goal"><div class="dn-pf2-goal-top"><span>QCM aujourd’hui</span><b id="dn-goal-qcm-txt">${st.qcmToday} / ${goals.qcm}</b></div><div class="dn-pf2-track"><i id="dn-goal-qcm-bar" style="width:${Math.min(100, Math.round(st.qcmToday / Math.max(1, goals.qcm) * 100))}%"></i></div></div>
+                                <div class="dn-pf2-goal"><div class="dn-pf2-goal-top"><span>Temps d’étude aujourd’hui</span><b id="dn-goal-min-txt">${st.minToday} / ${goals.minutes} min</b></div><div class="dn-pf2-track"><i id="dn-goal-min-bar" style="width:${Math.min(100, Math.round(st.minToday / Math.max(1, goals.minutes) * 100))}%"></i></div></div>
+                            </section>
+                        </div>
+
+                        <div class="dn-pf2-col">
+                            <section class="dn-pf-card">
+                                <div class="dn-pf-h">Ma progression</div>
+                                <div class="dn-pf2-stats">
+                                    <div><b>${st.answered}</b><span>QCM répondus</span></div>
+                                    <div><b>${st.rate === null ? '—' : st.rate + '%'}</b><span>bonnes réponses</span></div>
+                                    <div><b>${dnFormatMinutes(st.weekSeconds)}</b><span>étude (7 jours)</span></div>
+                                    <div><b>${st.saved}</b><span>questions sauvegardées</span></div>
+                                </div>
+                                <div class="dn-pf2-sub">À renforcer</div>
+                                ${weakRows || (st.rankedCount ? '<p class="dn-pf-hint">Aucune discipline sous 80 % : continue comme ça.</p>' : '<p class="dn-pf-hint">Réponds à quelques QCM par discipline (5 minimum) pour voir tes points faibles.</p>')}
+                                ${st.best ? `<div class="dn-pf2-sub">Point fort</div><div class="dn-pf2-row"><span class="dn-pf2-row-main">${escapeHtml(st.best.name)}</span><span class="dn-pf2-row-meta">${st.best.rate}%</span></div>` : ''}
+                            </section>
+
+                            <section class="dn-pf-card">
+                                <div class="dn-pf-h">Mes accès</div>
+                                ${accessRows || '<p class="dn-pf-hint" style="margin:0 0 10px">Aucune année activée pour le moment.</p>'}
+                                <button type="button" class="dn-pf-btn dn-pf2-small" onclick="switchTab('abonnement')">Activer une année</button>
+                            </section>
+
+                            <section class="dn-pf-card">
+                                <div class="dn-pf-h">Avatar</div>
+                                <div class="dn-pf-seg" role="group" aria-label="Style">
+                                    <button type="button" class="${currentUser.avatarType === 'boy' ? 'active' : ''}" data-gender="boy" onclick="selectProfileGender('boy')">Garçon</button>
+                                    <button type="button" class="${currentUser.avatarType === 'girl' ? 'active' : ''}" data-gender="girl" onclick="selectProfileGender('girl')">Fille</button>
+                                </div>
+                                <div class="dn-pf2-avs">
+                                    ${avatarOptions.map(([key,emoji,label])=>`<button type="button" class="dn-pf2-av ${currentAvatar===key?'active':''}" data-avatar-key="${key}" onclick="selectProfileAvatar('${key}')" title="${label}" aria-label="${label}"><span>${emoji}</span></button>`).join('')}
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    <section class="dn-pf-card" id="dn-pw-card" style="margin-top:14px">
                             <div class="dn-pf-h" id="dn-pw-title">Mot de passe</div>
                             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 16px">
                                 <div id="dn-pw-current-wrap"><div class="dn-pf-field"><label for="dn-pw-current">Mot de passe actuel</label><div class="auth-field-wrap"><input type="password" id="dn-pw-current" class="form-control" autocomplete="current-password"><button type="button" class="auth-password-toggle" onclick="togglePassword('dn-pw-current',this)" aria-label="Afficher le mot de passe"><svg class="dn-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 12s3.4-6 9.6-6 9.6 6 9.6 6-3.4 6-9.6 6-9.6-6-9.6-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div></div></div>
@@ -10862,11 +10999,17 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                             <p class="dn-pf-hint" id="dn-pw-hint">Minimum 6 caractères ; 8 ou plus recommandé, avec lettres, chiffres et symboles.</p>
                             <div style="margin-top:14px;display:flex;justify-content:flex-end"><button type="button" class="dn-pf-btn primary" id="dn-pw-btn" onclick="dnChangePassword()">Mettre à jour le mot de passe</button></div>
                         </section>
-                    </div>
+
+                    <section class="dn-pf-card" style="margin-top:14px">
+                        <div class="dn-pf-h">Mes données</div>
+                        <p class="dn-pf-hint" style="margin:0 0 12px">Télécharge une copie de ton profil et de ta progression (QCM, historique, objectifs) au format JSON.</p>
+                        <button type="button" class="dn-pf-btn dn-pf2-small" onclick="dnExportMyData()">Exporter mes données</button>
+                    </section>
+
                     <div class="dn-pf-actions">
-                        <button type="button" class="dn-pf-btn quiet" onclick="logout()">⎋ Déconnexion</button>
+                        <button type="button" class="dn-pf-btn quiet" onclick="logout()">Déconnexion</button>
                         <button type="button" class="dn-pf-btn" onclick="dnProfileCancel()">Annuler</button>
-                        <button type="button" class="dn-pf-btn primary" onclick="saveProfileSettings()">💾 Enregistrer</button>
+                        <button type="button" class="dn-pf-btn primary" onclick="saveProfileSettings()">Enregistrer</button>
                     </div>
                 </div>`;
                 dnInitPasswordCard();
@@ -10879,52 +11022,52 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                 
                 let activeSubsHtml = "";
                 if (currentUser.subscriptions && Object.keys(currentUser.subscriptions).length > 0) {
-                    activeSubsHtml = Object.keys(currentUser.subscriptions).map(yr => {
+                    activeSubsHtml = '<div style="display:flex;flex-wrap:wrap;gap:6px">' + Object.keys(currentUser.subscriptions).map(yr => {
                         const expDate = new Date(currentUser.subscriptions[yr]).toLocaleDateString('fr-FR');
-                        return `<div style="margin-top: 4px; color: var(--success);">• <strong>${yr}</strong> (Valide jusqu'au : ${expDate})</div>`;
-                    }).join('');
+                        return `<span style="display:inline-flex;gap:6px;align-items:baseline;padding:5px 10px;border-radius:99px;border:1px solid var(--border-glass);background:var(--input-bg);font-size:0.76rem;font-weight:700;color:var(--text-main)">${escapeHtml(yr)}<span style="font-weight:600;color:var(--text-muted)">· jusqu'au ${expDate}</span></span>`;
+                    }).join('') + '</div>';
                 } else {
-                    activeSubsHtml = "<div style=\"color: var(--text-muted);\">Aucune année active pour le moment. Entrez un code ci-dessous (ex: 3333-3333-3333).</div>";
+                    activeSubsHtml = "<div style=\"font-size:0.8rem;color:var(--text-muted)\">Aucune année active pour le moment. Entrez un code ci-dessous (ex: 3333-3333-3333).</div>";
                 }
 
                 area.innerHTML = `
-                    <div class="card-box" style="max-width: 680px; margin: 0 auto; padding: 2.2rem;">
+                    <div class="card-box" style="max-width: 620px; margin: 0 auto; padding: 1.2rem;">
                         
-                        <div style="background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(124,58,237,0.15)); border: 1.5px solid var(--primary); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 2rem;">
-                            <div style="font-size: 0.85rem; font-weight: 800; color: var(--primary-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">🔑 Activer une année d'études (Valide 1 an)</div>
-                            <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">
-                                Entrez votre code d'activation unique (ex: <strong>3333-3333-3333</strong> pour la 3ème année). Usage unique et accès permanent pendant <strong>1 an entier</strong> sans retaper le code !
+                        <div style="background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(124,58,237,0.15)); border: 1.5px solid var(--primary); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem;">
+                            <div style="font-size: 0.74rem; font-weight: 800; color: var(--primary-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Activer une année d'études (valide 1 an)</div>
+                            <p style="font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                                Entrez votre code d'activation unique (ex: <strong>3333-3333-3333</strong> pour la 3ème année). Usage unique, accès pendant <strong>1 an</strong> sans retaper le code.
                             </p>
-                            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; background: var(--input-bg); padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-glass);">
-                                ✨ Vos accès valides :
+                            <div style="margin-bottom: 0.75rem;">
+                                <div style="font-size: 0.68rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Vos accès valides</div>
                                 ${activeSubsHtml}
                             </div>
                             <form onsubmit="handleActivateCode(event)" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                <input type="text" id="activation-code-input" class="form-control" placeholder="ex: 3333-3333-3333" style="flex: 1; min-width: 200px; text-transform: uppercase;" required>
-                                <button type="submit" class="btn-action-primary" style="margin-top: 0; width: auto; padding: 0.8rem 1.5rem;">Activer ➔</button>
+                                <input type="text" id="activation-code-input" class="form-control" placeholder="ex: 3333-3333-3333" style="flex: 1; min-width: 180px; text-transform: uppercase; padding: 0.65rem 0.85rem; font-size: 0.9rem;" required>
+                                <button type="submit" class="btn-action-primary" style="margin-top: 0; width: auto; padding: 0.65rem 1.3rem; font-size: 0.88rem;">Activer</button>
                             </form>
                         </div>
 
                         
 
-                        <div style="background: var(--input-bg); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 1.2rem 1.5rem; margin-bottom: 1rem;">
+                        <div style="background: var(--input-bg); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 0.8rem 1.1rem; margin-bottom: 0.6rem;">
                             <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 800;">Nom et Prénom du CCP</div>
-                            <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-top: 2px;">BOUDABIA AKRAM</div>
+                            <div style="font-size: 1rem; font-weight: 800; color: var(--text-main); margin-top: 2px;">BOUDABIA AKRAM</div>
                         </div>
 
-                        <div style="border: 1.5px dashed #9BA8AB; background: rgba(37,99,235,0.1); border-radius: var(--radius-md); padding: 1.2rem 1.5rem; margin-bottom: 1rem;">
+                        <div style="border: 1.5px dashed #9BA8AB; background: rgba(37,99,235,0.1); border-radius: var(--radius-md); padding: 0.8rem 1.1rem; margin-bottom: 0.6rem;">
                             <div style="font-size: 0.72rem; font-weight: 800; color: var(--primary-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">RIP BARIDIMOB</div>
-                            <div style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); letter-spacing: 0.5px;">00799999004126108218</div>
+                            <div style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); letter-spacing: 0.5px;">00799999004126108218</div>
                         </div>
 
-                        <div style="border: 1.5px dashed #d97706; background: rgba(217,119,6,0.1); border-radius: var(--radius-md); padding: 1.2rem 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="border: 1.5px dashed #d97706; background: rgba(217,119,6,0.1); border-radius: var(--radius-md); padding: 0.8rem 1.1rem; margin-bottom: 0.9rem;">
                             <div style="font-size: 0.72rem; font-weight: 800; color: #d97706; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">NUMÉRO CCP</div>
-                            <div style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); letter-spacing: 0.5px;">0041261082 Clé 18</div>
+                            <div style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); letter-spacing: 0.5px;">0041261082 Clé 18</div>
                         </div>
 
-                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 1.2rem 1.5rem; margin-bottom: 1.8rem; text-align: center;">
-                            <p style="font-size: 0.88rem; font-weight: 700; color: var(--success); margin-bottom: 0.8rem; line-height: 1.5;">
-                                📄 Envoyez votre reçu de paiement sur Telegram ou WhatsApp au <strong>0698984293</strong> pour obtenir votre code d'activation.
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); padding: 0.9rem 1.1rem; margin-bottom: 1.2rem; text-align: center;">
+                            <p style="font-size: 0.82rem; font-weight: 700; color: var(--success); margin-bottom: 0.7rem; line-height: 1.5;">
+                                Envoyez votre reçu de paiement sur Telegram ou WhatsApp au <strong>0698984293</strong> pour obtenir votre code d'activation.
                             </p>
                             <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                                 <a href="https://t.me/0698984293" target="_blank" style="background: var(--primary); color: #fff; padding: 0.6rem 1.2rem; border-radius: var(--radius-sm); font-weight: 700; text-decoration: none; font-size: 0.85rem;">✈️ Telegram</a>
@@ -13498,6 +13641,63 @@ html body #focus-timer-dock .dn-fw-collapse-btn:hover{color:var(--text-main)!imp
 html body #focus-timer-dock .dn-fw-actions .timer-btn-play{box-shadow:none!important;background:var(--primary)!important}
 #dn-pw-strength{height:5px!important;border-radius:9px!important;background:var(--border-glass)!important;overflow:hidden;margin-top:8px}
 #dn-pw-strength span{display:block;height:100%;width:0;border-radius:9px;background:var(--primary)!important;transition:width .2s ease}
+
+/* --- Profile (compact, professional) --- */
+.dn-pf2{max-width:1040px}
+.dn-pf2-hero{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px 18px;align-items:center;padding:16px 18px;border-radius:20px;background:var(--bg-surface);border:1px solid var(--border-glass)}
+.dn-pf2-avatar{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;font-size:1.7rem;font-weight:800;color:#fff;background:linear-gradient(135deg,#4f72ff,#8a4be8)}
+.dn-pf2-name{font-size:1.2rem;font-weight:800;color:var(--text-main);line-height:1.2;overflow-wrap:anywhere}
+.dn-pf2-meta{font-size:.76rem;color:var(--text-muted);margin-top:1px;overflow-wrap:anywhere}
+.dn-pf2-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.dn-pf2-chip{padding:3px 10px;border-radius:99px;border:1px solid var(--border-glass);background:var(--input-bg);color:var(--text-secondary);font-size:.7rem;font-weight:700}
+.dn-pf2-bio{margin:8px 0 0;font-size:.82rem;line-height:1.5;color:var(--text-secondary);overflow-wrap:anywhere}
+.dn-pf2-kpis{display:grid;grid-template-columns:repeat(3,auto);gap:8px}
+.dn-pf2-kpis>div{padding:8px 14px;border-radius:14px;background:var(--input-bg);border:1px solid var(--border-glass);text-align:center;min-width:84px}
+.dn-pf2-kpis b{display:block;font-size:1.2rem;font-weight:800;color:var(--text-main);line-height:1.15}
+.dn-pf2-kpis span{display:block;font-size:.62rem;font-weight:700;color:var(--text-muted);margin-top:2px}
+.dn-pf2-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px;margin-top:14px;align-items:start}
+.dn-pf2-col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.dn-pf2 .dn-pf-card{padding:15px 16px;border-radius:18px}
+.dn-pf2 .dn-pf-h{font-size:.88rem;margin-bottom:12px}
+.dn-pf2 .dn-pf-field{margin-bottom:11px}
+.dn-pf2 .dn-pf-field select.form-control{width:100%;box-sizing:border-box;font-size:16px}
+.dn-pf2 .dn-pf-field textarea.form-control{min-height:74px}
+.dn-pf2-two{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.dn-pf2-sub{font-size:.66rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin:14px 0 8px}
+.dn-pf2-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dn-pf2-stats>div{padding:10px 12px;border-radius:12px;background:var(--input-bg);border:1px solid var(--border-glass)}
+.dn-pf2-stats b{display:block;font-size:1.05rem;font-weight:800;color:var(--text-main)}
+.dn-pf2-stats span{display:block;font-size:.66rem;font-weight:700;color:var(--text-muted);margin-top:1px}
+.dn-pf2-mod{margin-bottom:9px}
+.dn-pf2-mod-top{display:flex;justify-content:space-between;gap:10px;font-size:.78rem;color:var(--text-secondary);margin-bottom:4px}
+.dn-pf2-mod-top span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dn-pf2-mod-top b{color:var(--text-main)}
+.dn-pf2-track{height:6px;border-radius:9px;background:var(--border-glass);overflow:hidden}
+.dn-pf2-track i{display:block;height:100%;border-radius:9px;background:var(--primary);transition:width .25s ease}
+.dn-pf2-goal{margin-top:10px}
+.dn-pf2-goal-top{display:flex;justify-content:space-between;font-size:.76rem;color:var(--text-secondary);margin-bottom:5px}
+.dn-pf2-goal-top b{color:var(--text-main)}
+.dn-pf2-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border-glass);font-size:.82rem}
+.dn-pf2-row:last-of-type{border-bottom:0}
+.dn-pf2-row-main{font-weight:700;color:var(--text-main)}
+.dn-pf2-row-meta{color:var(--text-muted);font-size:.74rem;text-align:right}
+.dn-pf2-row-meta.warn{color:#d97706;font-weight:700}
+.dn-pf2-small{padding:9px 14px!important;min-height:0!important;font-size:.8rem!important;margin-top:8px}
+.dn-pf2-avs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin-top:10px}
+.dn-pf2-av{height:38px;border-radius:11px;border:1px solid var(--border-glass);background:var(--input-bg);cursor:pointer;display:grid;place-items:center;font-size:1.1rem;padding:0}
+.dn-pf2-av span{pointer-events:none;line-height:1}
+.dn-pf2-av.active{border-color:var(--primary);background:rgba(99,102,241,.16);box-shadow:0 0 0 2px rgba(99,102,241,.25)}
+@media(max-width:900px){
+  .dn-pf2-hero{grid-template-columns:auto minmax(0,1fr)}
+  .dn-pf2-kpis{grid-column:1/-1;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .dn-pf2-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){.dn-pf2-two{grid-template-columns:1fr}.dn-pf2-kpis>div{padding:8px 6px;min-width:0}}
+html body .dn-pf2 .dn-pf-seg{padding:3px;border-radius:12px}
+html body .dn-pf2 .dn-pf-seg button{padding:7px 8px!important;font-size:.76rem!important}
+html body .dn-pf2 .dn-pf-seg button.active{background:var(--primary)!important;box-shadow:none!important}
+@media(min-width:481px){.dn-pf2-id-row{grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr)}}
+@media(max-width:900px){.dn-pf2-hero{align-items:start}}
 </style>
 </body>
 </html>
