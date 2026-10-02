@@ -8014,8 +8014,11 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             else if (/user already registered/i.test(raw)) raw = 'Cette adresse email est déjà utilisée. Connectez-vous ou réinitialisez votre mot de passe.';
             else if (/password should be at least (\d+)/i.test(raw)) raw = `Le mot de passe doit contenir au moins ${raw.match(/at least (\d+)/i)[1]} caractères.`;
             else if (/email rate limit exceeded/i.test(raw)) raw = 'Trop de demandes. Réessayez dans quelques minutes.';
-            const isError = /❌|incorrect|invalide|erreur|introuvable|ne correspondent|doit contenir|Veuillez|impossible|déjà utilisée|trop de demandes|invalid|failed/i.test(raw);
-            const isSuccess = !isError && /🎉|✅|succès|activé|envoyée avec succès|terminée|modifié|envoyé/i.test(raw);
+            else if (/different from the old password/i.test(raw)) raw = 'Le nouveau mot de passe doit être différent de l’actuel.';
+            else if (/weak|easy to guess|pwned/i.test(raw)) raw = 'Ce mot de passe est trop faible ou trop courant. Choisissez-en un plus solide.';
+            else if (/auth session missing|session.*(expired|missing)/i.test(raw)) raw = 'Votre session a expiré. Reconnectez-vous puis réessayez.';
+            const isError = /❌|incorrect|invalide|erreur|introuvable|ne correspondent|doit contenir|doit être différent|trop faible|a expiré|Entrez votre|Veuillez|impossible|déjà utilisée|trop de demandes|invalid|failed/i.test(raw);
+            const isSuccess = !isError && /🎉|✅|succès|activé|envoyée avec succès|terminée|modifié|mis à jour|envoyé/i.test(raw);
             const ICONS = {
                 info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></svg>',
                 error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 3 19h18L12 4Z"/><path d="M12 10v4"/><circle cx="12" cy="16.6" r=".6" fill="currentColor"/></svg>',
@@ -9396,7 +9399,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             event.preventDefault();
             const email = document.getElementById('forgot-email').value.trim().toLowerCase();
             if (!email) return;
-            const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: getAuthRedirectUrl() });
+            const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: new URL('reset-password.html', getAuthRedirectUrl()).href });
             if (error) {
                 showAppModal(error.message);
                 return;
@@ -9764,6 +9767,54 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             updateHeaderProfileUI();
             showAppModal('✅ Profil enregistré !');
             switchTab('profil');
+        }
+        // --- Password change (profile page) ---
+        async function dnInitPasswordCard() {
+            const wrap = document.getElementById('dn-pw-current-wrap');
+            if (!wrap) return;
+            try {
+                const { data } = await sb.auth.getUser();
+                const providers = ((data && data.user && data.user.identities) || []).map(i => i.provider);
+                // Account created with Google only: no current password exists, so let them set one.
+                if (providers.length && !providers.includes('email')) {
+                    wrap.style.display = 'none';
+                    const t = document.getElementById('dn-pw-title'); if (t) t.textContent = 'Définir un mot de passe';
+                    const h = document.getElementById('dn-pw-hint'); if (h) h.textContent = 'Vous vous connectez avec Google. Définissez un mot de passe pour pouvoir aussi vous connecter avec votre email.';
+                    const b = document.getElementById('dn-pw-btn'); if (b) b.textContent = 'Définir le mot de passe';
+                }
+            } catch (e) { /* keep the default form */ }
+        }
+        async function dnChangePassword() {
+            const cur = document.getElementById('dn-pw-current');
+            const n1 = document.getElementById('dn-pw-new');
+            const n2 = document.getElementById('dn-pw-confirm');
+            const btn = document.getElementById('dn-pw-btn');
+            const wrap = document.getElementById('dn-pw-current-wrap');
+            if (!n1 || !n2 || !btn) return;
+            const needCurrent = !!wrap && wrap.style.display !== 'none';
+            const MIN_PASSWORD = 6;
+            if (needCurrent && !cur.value) return showAppModal('Entrez votre mot de passe actuel.');
+            if (n1.value.length < MIN_PASSWORD) return showAppModal('Le mot de passe doit contenir au moins ' + MIN_PASSWORD + ' caractères.');
+            if (n1.value !== n2.value) return showAppModal('Les mots de passe ne correspondent pas.');
+            if (needCurrent && n1.value === cur.value) return showAppModal('Le nouveau mot de passe doit être différent de l’actuel.');
+            const oldLabel = btn.textContent;
+            btn.disabled = true; btn.textContent = 'Enregistrement…';
+            try {
+                if (needCurrent) {
+                    const email = (currentUser && currentUser.email) || '';
+                    const { error: checkError } = await sb.auth.signInWithPassword({ email, password: cur.value });
+                    if (checkError) return showAppModal('Mot de passe actuel incorrect.');
+                }
+                const { error } = await sb.auth.updateUser({ password: n1.value });
+                if (error) return showAppModal(error.message);
+                [cur, n1, n2].forEach(el => { if (el) el.value = ''; });
+                const bar = document.getElementById('dn-pw-strength')?.querySelector('span'); if (bar) bar.style.width = '0%';
+                showAppModal('Mot de passe mis à jour.');
+            } catch (e) {
+                showAppModal('Impossible de modifier le mot de passe pour le moment. Réessayez.');
+            } finally {
+                btn.disabled = false; btn.textContent = oldLabel;
+            }
         }
         function ensureNotifications() {
             ensureDashboardData();
@@ -10801,6 +10852,16 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                             </div>
                             <p class="dn-pf-hint">L'avatar choisi apparaît aussi dans la barre du haut.</p>
                         </section>
+                        <section class="dn-pf-card" id="dn-pw-card" style="grid-column:1/-1">
+                            <div class="dn-pf-h" id="dn-pw-title">Mot de passe</div>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 16px">
+                                <div id="dn-pw-current-wrap"><div class="dn-pf-field"><label for="dn-pw-current">Mot de passe actuel</label><div class="auth-field-wrap"><input type="password" id="dn-pw-current" class="form-control" autocomplete="current-password"><button type="button" class="auth-password-toggle" onclick="togglePassword('dn-pw-current',this)" aria-label="Afficher le mot de passe"><svg class="dn-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 12s3.4-6 9.6-6 9.6 6 9.6 6-3.4 6-9.6 6-9.6-6-9.6-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div></div></div>
+                                <div class="dn-pf-field"><label for="dn-pw-new">Nouveau mot de passe</label><div class="auth-field-wrap"><input type="password" id="dn-pw-new" class="form-control" autocomplete="new-password" oninput="updatePasswordStrength(this,'dn-pw-strength')"><button type="button" class="auth-password-toggle" onclick="togglePassword('dn-pw-new',this)" aria-label="Afficher le mot de passe"><svg class="dn-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 12s3.4-6 9.6-6 9.6 6 9.6 6-3.4 6-9.6 6-9.6-6-9.6-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div><div class="auth-strength" id="dn-pw-strength"><span></span></div></div>
+                                <div class="dn-pf-field"><label for="dn-pw-confirm">Confirmer</label><div class="auth-field-wrap"><input type="password" id="dn-pw-confirm" class="form-control" autocomplete="new-password"><button type="button" class="auth-password-toggle" onclick="togglePassword('dn-pw-confirm',this)" aria-label="Afficher le mot de passe"><svg class="dn-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 12s3.4-6 9.6-6 9.6 6 9.6 6-3.4 6-9.6 6-9.6-6-9.6-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div></div>
+                            </div>
+                            <p class="dn-pf-hint" id="dn-pw-hint">Minimum 6 caractères ; 8 ou plus recommandé, avec lettres, chiffres et symboles.</p>
+                            <div style="margin-top:14px;display:flex;justify-content:flex-end"><button type="button" class="dn-pf-btn primary" id="dn-pw-btn" onclick="dnChangePassword()">Mettre à jour le mot de passe</button></div>
+                        </section>
                     </div>
                     <div class="dn-pf-actions">
                         <button type="button" class="dn-pf-btn quiet" onclick="logout()">⎋ Déconnexion</button>
@@ -10808,6 +10869,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                         <button type="button" class="dn-pf-btn primary" onclick="saveProfileSettings()">💾 Enregistrer</button>
                     </div>
                 </div>`;
+                dnInitPasswordCard();
             } else if (tab === 'preferences') {
                 headerTitle.innerText = "Mon espace";
                 const savedFocus=localStorage.getItem('dn_focus_minutes')||'25';
@@ -13434,6 +13496,8 @@ html body #focus-timer-dock .dn-fw-collapse-btn:hover{color:var(--text-main)!imp
 /* --- Pensée du jour icon --- */
 .dn-dashboard-motivation-icon svg{width:18px;height:18px;display:block;color:var(--text-secondary)}
 html body #focus-timer-dock .dn-fw-actions .timer-btn-play{box-shadow:none!important;background:var(--primary)!important}
+#dn-pw-strength{height:5px!important;border-radius:9px!important;background:var(--border-glass)!important;overflow:hidden;margin-top:8px}
+#dn-pw-strength span{display:block;height:100%;width:0;border-radius:9px;background:var(--primary)!important;transition:width .2s ease}
 </style>
 </body>
 </html>
