@@ -10417,7 +10417,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                                     <div class="dn-resume-lesson-list">
                                         ${(exam.lessons || []).slice(0, 8).map(lesson => {
                                             const hasSummary = !!dnSummaryText(lesson);
-                                            return `<button type="button" class="dn-resume-lesson ${hasSummary ? 'is-ready' : 'is-pending'}" onclick="dnOpenResume(${JSON.stringify(exam.id)}, ${JSON.stringify(lesson.id)})">
+                                            return `<button type="button" class="dn-resume-lesson ${hasSummary ? 'is-ready' : 'is-pending'}" onclick="dnOpenResume(${escapeHtml(JSON.stringify(exam.id))}, ${escapeHtml(JSON.stringify(lesson.id))})">
                                                 <span class="dn-resume-lesson-dot">${hasSummary ? '✓' : '•'}</span>
                                                 <span><strong>${escapeHtml(lesson.title || 'Leçon')}</strong><small>${hasSummary ? 'Ouvrir la fiche de révision' : 'Résumé à venir'}</small></span>
                                                 <span class="dn-resume-arrow">→</span>
@@ -11027,7 +11027,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             const sel=document.getElementById('sim-year');
             if(!wrap||!sel)return;
             const opts=[...sel.options].filter(o=>o.value);
-            wrap.innerHTML=opts.map((o,i)=>`<button type="button" class="dn-choice-card ${sel.value===o.value?'active':''}" onclick="dnPickSimYear(${JSON.stringify(o.value)})"><strong><span class="choice-num">${i+1}</span>${o.textContent}</strong><small>${i<2?'Fondamentaux':'Programme dentaire'}</small></button>`).join('');
+            wrap.innerHTML=opts.map((o,i)=>`<button type="button" class="dn-choice-card ${sel.value===o.value?'active':''}" onclick="dnPickSimYear(${escapeHtml(JSON.stringify(o.value))})"><strong><span class="choice-num">${i+1}</span>${o.textContent}</strong><small>${i<2?'Fondamentaux':'Programme dentaire'}</small></button>`).join('');
         }
         function dnRenderSimModuleCards() {
             const wrap=document.getElementById('dn-sim-module-cards');
@@ -12279,7 +12279,7 @@ function renderQuizScreen() {
                             <summary>${escapeHtml(userYear)}</summary>
                             <div class="dn-modules-year-list">
                                 ${['1ère année','2ème année','3ème année','4ème année','5ème année','6ème année / Résidanat'].map((yr,i)=>`
-                                    <button type="button" class="dn-modules-year-card ${userYear===yr?'active':''}" onclick="changeUserYear(${JSON.stringify(yr)})">
+                                    <button type="button" class="dn-modules-year-card ${userYear===yr?'active':''}" onclick="changeUserYear(${escapeHtml(JSON.stringify(yr))})">
                                         <strong>${escapeHtml(yr)}</strong>
                                         <span>${userYear===yr?'Active':'Choisir'}</span>
                                     </button>
@@ -12348,7 +12348,7 @@ function renderQuizScreen() {
 
         function changeUserYear(newYear) {
             currentUser.studyYear = newYear;
-            saveUserData();
+            saveUserData(true);
             renderExamsList();
         }
 
