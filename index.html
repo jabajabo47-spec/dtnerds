@@ -10957,36 +10957,10 @@ body{--dn-sb-w:var(--dn-sb-open)}
                                 <p class="dn-pf-hint">Ces informations restent dans ton espace personnel. Elles ne sont pas visibles par les autres étudiants.</p>
                             </section>
 
-                            <section class="dn-pf-card" id="dn-goals-box" data-qcm="${st.qcmToday}" data-min="${st.minToday}">
-                                <div class="dn-pf-h">Objectifs d’étude</div>
-                                <div class="dn-pf2-two">
-                                    <div class="dn-pf-field"><label for="dn-goal-qcm">QCM par jour</label><select id="dn-goal-qcm" class="form-control" onchange="dnProfileGoalsLive()">${optionList([10,20,30,50,100], goals.qcm, v => v + ' QCM')}</select></div>
-                                    <div class="dn-pf-field"><label for="dn-goal-min">Étude par jour</label><select id="dn-goal-min" class="form-control" onchange="dnProfileGoalsLive()">${optionList([30,60,90,120,180], goals.minutes, v => v + ' min')}</select></div>
-                                </div>
-                                <div class="dn-pf2-goal"><div class="dn-pf2-goal-top"><span>QCM aujourd’hui</span><b id="dn-goal-qcm-txt">${st.qcmToday} / ${goals.qcm}</b></div><div class="dn-pf2-track"><i id="dn-goal-qcm-bar" style="width:${Math.min(100, Math.round(st.qcmToday / Math.max(1, goals.qcm) * 100))}%"></i></div></div>
-                                <div class="dn-pf2-goal"><div class="dn-pf2-goal-top"><span>Temps d’étude aujourd’hui</span><b id="dn-goal-min-txt">${st.minToday} / ${goals.minutes} min</b></div><div class="dn-pf2-track"><i id="dn-goal-min-bar" style="width:${Math.min(100, Math.round(st.minToday / Math.max(1, goals.minutes) * 100))}%"></i></div></div>
-                            </section>
                         </div>
 
                         <div class="dn-pf2-col">
-                            <section class="dn-pf-card">
-                                <div class="dn-pf-h">Ma progression</div>
-                                <div class="dn-pf2-stats">
-                                    <div><b>${st.answered}</b><span>QCM répondus</span></div>
-                                    <div><b>${st.rate === null ? '—' : st.rate + '%'}</b><span>bonnes réponses</span></div>
-                                    <div><b>${dnFormatMinutes(st.weekSeconds)}</b><span>étude (7 jours)</span></div>
-                                    <div><b>${st.saved}</b><span>questions sauvegardées</span></div>
-                                </div>
-                                <div class="dn-pf2-sub">À renforcer</div>
-                                ${weakRows || (st.rankedCount ? '<p class="dn-pf-hint">Aucune discipline sous 80 % : continue comme ça.</p>' : '<p class="dn-pf-hint">Réponds à quelques QCM par discipline (5 minimum) pour voir tes points faibles.</p>')}
-                                ${st.best ? `<div class="dn-pf2-sub">Point fort</div><div class="dn-pf2-row"><span class="dn-pf2-row-main">${escapeHtml(st.best.name)}</span><span class="dn-pf2-row-meta">${st.best.rate}%</span></div>` : ''}
-                            </section>
 
-                            <section class="dn-pf-card">
-                                <div class="dn-pf-h">Mes accès</div>
-                                ${accessRows || '<p class="dn-pf-hint" style="margin:0 0 10px">Aucune année activée pour le moment.</p>'}
-                                <button type="button" class="dn-pf-btn dn-pf2-small" onclick="switchTab('abonnement')">Activer une année</button>
-                            </section>
 
                             <section class="dn-pf-card">
                                 <div class="dn-pf-h">Avatar</div>
@@ -11012,11 +10986,6 @@ body{--dn-sb-w:var(--dn-sb-open)}
                             <div style="margin-top:14px;display:flex;justify-content:flex-end"><button type="button" class="dn-pf-btn primary" id="dn-pw-btn" onclick="dnChangePassword()">Mettre à jour le mot de passe</button></div>
                         </section>
 
-                    <section class="dn-pf-card" style="margin-top:14px">
-                        <div class="dn-pf-h">Mes données</div>
-                        <p class="dn-pf-hint" style="margin:0 0 12px">Télécharge une copie de ton profil et de ta progression (QCM, historique, objectifs) au format JSON.</p>
-                        <button type="button" class="dn-pf-btn dn-pf2-small" onclick="dnExportMyData()">Exporter mes données</button>
-                    </section>
 
                     <div class="dn-pf-actions">
                         <button type="button" class="dn-pf-btn quiet" onclick="logout()">Déconnexion</button>
