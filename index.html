@@ -2,8 +2,6 @@
 <html lang="fr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; connect-src 'self' https://ikumldzyebcgeorbvlju.supabase.co wss://ikumldzyebcgeorbvlju.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
-    <script>try{if(window.top!==window.self){window.top.location=window.self.location;}}catch(e){document.documentElement.innerHTML='';}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Dentist Nerds — L'Excellence Dentaire</title>
@@ -17,7 +15,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     
 <style>
@@ -7693,56 +7691,6 @@ html body button.dn-activation-year-card.active strong,html body button.dn-activ
 html body button.dn-activation-year-card.active .dn-old-price{color:rgba(255,255,255,.75)!important}
 html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!important;color:#dc2626!important}
 </style>
-<style id="dn-comfy">
-/* ===== Dentist Nerds — calmer, flatter study theme ===== */
-:root[data-theme="light"]{
-  --bg-deep:#f5f4ef;--bg-sidebar:#fbfaf7;--bg-surface:#ffffff;--bg-card:#ffffff;
-  --border-glass:#e1ded5;--border-color:#e1ded5;
-  --text-main:#1f2a30;--text-secondary:#515f66;--text-muted:#8a949a;
-  --input-bg:#f0eee8;--profile-bg:#ffffff;
-  --primary:#2e6f73;--primary-light:#2e6f73;--accent-violet:#2e6f73;--accent-cyan:#2e6f73;
-  --primary-glow:transparent;--success:#3f8f5f;--error:#b5524b;--warning:#b98a2e;
-}
-:root[data-theme="dark"]{
-  --bg-deep:#15191c;--bg-sidebar:#1a2024;--bg-surface:#1e252a;--bg-card:#1e252a;
-  --border-glass:#2f3a40;--border-color:#2f3a40;
-  --text-main:#e7e9e6;--text-secondary:#a9b3b7;--text-muted:#6f7b81;
-  --input-bg:#171d21;--profile-bg:#15191c;
-  --primary:#5fa8ab;--primary-light:#5fa8ab;--accent-violet:#5fa8ab;--accent-cyan:#5fa8ab;
-  --primary-glow:transparent;--success:#5fb07f;--error:#d07a72;--warning:#d4a94f;
-}
-body,button,input,select,textarea{font-family:'Source Sans 3',system-ui,-apple-system,'Segoe UI',sans-serif!important}
-body{font-size:16px;line-height:1.6;background:var(--bg-deep)}
-*{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-/* flat surfaces instead of gradients / glow */
-aside,.dn-smart-card,.dn-review-card,.dn-session-summary-card,.dn-profile-stat,
-.dn-sidebar-quote,.sidebar-brand-row,.dn-dashboard-motivation,.dn-launch-bar,
-.floating-timer-container,.dn-notification-panel{
-  background:var(--bg-surface)!important;border:1px solid var(--border-glass)!important;box-shadow:none!important}
-.dn-premium-hero,.dn-exam-hero{
-  background:var(--primary)!important;color:#fff!important;box-shadow:none!important;border:0!important}
-:root[data-theme="dark"] .dn-premium-hero,:root[data-theme="dark"] .dn-exam-hero{background:#244a4d!important}
-.dn-profile-big-avatar{background:var(--input-bg)!important;box-shadow:none!important;border:1px solid var(--border-glass)!important}
-.nav-item.active{background:var(--input-bg)!important;color:var(--primary)!important;box-shadow:inset 3px 0 0 var(--primary)!important}
-.dn-session-lesson.is-selected{background:var(--input-bg)!important;border-color:var(--primary)!important}
-.dn-session-lesson:hover{transform:none!important;box-shadow:none!important}
-.dn-session-lesson.is-selected .dn-session-check,.timer-icon-box,.timer-btn-play,.dn-notification-dot{box-shadow:none!important}
-/* softer shapes */
-.card-box,.dn-smart-card,.dn-review-card,.dn-session-summary-card,.dn-premium-hero,.dn-exam-hero{border-radius:12px!important}
-.dn-session-lesson,.dn-session-tool,.btn-action-primary,button,input,select,textarea{border-radius:8px}
-.dn-profile-big-avatar,.dn-session-lesson-main{border-radius:12px}
-/* no heavy weights, no tight tracking */
-.dn-session-big-number{letter-spacing:0!important;font-weight:700!important}
-[class*="dn-"] strong,.dn-session-lesson-title{font-weight:700!important}
-/* no lifting / bouncing hover effects */
-*:hover{transform:none!important}
-/* reading comfort in the QCM view */
-#fullscreen-view{line-height:1.7}
-#fullscreen-view [class*="option"]{padding:12px 14px}
-:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
-</style>
 </head>
 <body>
 
@@ -9604,7 +9552,7 @@ aside,.dn-smart-card,.dn-review-card,.dn-session-summary-card,.dn-profile-stat,
 
         function readCatalogCache() {
             try {
-                const raw = sessionStorage.getItem(DN_CATALOG_CACHE_KEY);
+                const raw = localStorage.getItem(DN_CATALOG_CACHE_KEY);
                 if (!raw) return null;
                 const parsed = JSON.parse(raw);
                 if (!parsed || !Array.isArray(parsed.dbCatalog) || !parsed.ts) return null;
@@ -9613,27 +9561,11 @@ aside,.dn-smart-card,.dn-review-card,.dn-session-summary-card,.dn-profile-stat,
         }
         function writeCatalogCache(dbCatalog) {
             try {
-                sessionStorage.setItem(DN_CATALOG_CACHE_KEY, JSON.stringify({ ts: Date.now(), dbCatalog }));
+                localStorage.setItem(DN_CATALOG_CACHE_KEY, JSON.stringify({ ts: Date.now(), dbCatalog }));
             } catch (e) { /* storage full/unavailable: silently skip caching */ }
         }
 
-        async function dnFetchQuestionsRpc(pageSize = 500) {
-            const all = [];
-            let offset = 0;
-            while (true) {
-                const { data, error } = await sb.rpc('get_questions_page', { p_offset: offset, p_limit: pageSize });
-                if (error) throw error;
-                const rows = data || [];
-                all.push(...rows);
-                if (rows.length < pageSize) break;
-                offset += pageSize;
-                if (offset > 200000) throw new Error('Trop de lignes.');
-            }
-            return all;
-        }
-
         async function loadCatalogFromSupabase() {
-            if (navigator.webdriver) throw new Error('automation_blocked');
             // Serve an instant catalog from cache when we have a fresh one, so
             // most logins skip the network wait entirely. We still refresh in
             // the background so content updates (new QCMs, edits) show up soon
@@ -9680,10 +9612,14 @@ aside,.dn-smart-card,.dn-review-card,.dn-session-summary-card,.dn-profile-stat,
             const [exams, lessons, questions] = await Promise.all([
                 fetchAllRows('exams', '*', 'id', 500),
                 fetchAllRows('lessons', '*', 'id', 500),
-                dnFetchQuestionsRpc(500)
+                fetchAllRows('questions', '*', 'id', 500)
             ]);
 
-            
+            console.info('[Dentist Nerds] Catalogue Supabase chargé:', {
+                exams: exams.length,
+                lessons: lessons.length,
+                questions: questions.length
+            });
 
             const qByLesson = {};
             (questions || []).forEach(q => {
@@ -9757,7 +9693,7 @@ aside,.dn-smart-card,.dn-review-card,.dn-session-summary-card,.dn-profile-stat,
 
         async function initApp() {
             ensureDashboardData();
-            try { await loadCatalogFromSupabase(); } catch (e) { console.error('Catalogue Supabase indisponible, secours local utilisé:', e); if (String(e && e.message).includes('rate_limited')) showAppModal('Trop de chargements en peu de temps. Réessayez dans quelques minutes.'); }
+            try { await loadCatalogFromSupabase(); } catch (e) { console.error('Catalogue Supabase indisponible, secours local utilisé:', e); }
             updateHeaderProfileUI();
             ensureNotifications();
             document.getElementById('auth-screen').style.display = 'none';
@@ -9786,8 +9722,6 @@ aside,.dn-smart-card,.dn-review-card,.dn-session-summary-card,.dn-profile-stat,
             stopDNDeviceWatcher();
             await persistUserData();
             await sb.auth.signOut();
-            try { sessionStorage.removeItem(DN_CATALOG_CACHE_KEY); localStorage.removeItem(DN_CATALOG_CACHE_KEY); } catch (e) {}
-            DENTAL_EXAMS = [];
             currentUser = null;
             document.getElementById('app-layout').style.display = 'none';
             document.getElementById('auth-screen').style.display = 'flex';
@@ -13765,45 +13699,6 @@ html body .dn-pf2 .dn-pf-seg button.active{background:var(--primary)!important;b
 @media(min-width:481px){.dn-pf2-id-row{grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr)}}
 @media(max-width:900px){.dn-pf2-hero{align-items:start}}
 </style>
-<style id="dn-protect-css">
-#fullscreen-view,#fullscreen-view *,.dn-resumes-page,.dn-resumes-page *,.dn-review-card,.dn-review-card *{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none}
-#fullscreen-view input,#fullscreen-view textarea{-webkit-user-select:text!important;user-select:text!important}
-@media print{body *{display:none!important}body::before{content:"Impression désactivée";display:block;padding:40px;font:20px sans-serif}}
-</style>
-<script id="dn-protect">
-(function(){
-  var SEL='#fullscreen-view,.dn-resumes-page,.dn-review-card,.dn-question-text';
-  function guarded(t){
-    if(!t||!t.closest) return false;
-    if(t.closest('input,textarea,[contenteditable="true"]')) return false;
-    return !!t.closest(SEL);
-  }
-  ['copy','cut','dragstart','selectstart','contextmenu'].forEach(function(ev){
-    document.addEventListener(ev,function(e){ if(guarded(e.target)) e.preventDefault(); },true);
-  });
-  document.addEventListener('keydown',function(e){
-    if((e.ctrlKey||e.metaKey)&&['p','s'].indexOf((e.key||'').toLowerCase())>-1 && typeof currentUser!=='undefined' && currentUser){ e.preventDefault(); }
-  },true);
-
-  // Faint personal watermark: makes leaked screenshots traceable.
-  var ID='dn-watermark';
-  function build(){
-    var label=((currentUser.email||currentUser.name||'')+' · '+String(currentUser.id||'').slice(0,8)).replace(/[<>&"']/g,'');
-    var svg='<svg xmlns="http://www.w3.org/2000/svg" width="360" height="200"><text x="20" y="110" transform="rotate(-24 180 100)" font-family="sans-serif" font-size="14" fill="#888" fill-opacity="0.13">'+label+'</text></svg>';
-    var d=document.createElement('div'); d.id=ID;
-    d.style.cssText='position:fixed;inset:0;z-index:2147483000;pointer-events:none;background-image:url("data:image/svg+xml,'+encodeURIComponent(svg)+'");background-repeat:repeat';
-    return d;
-  }
-  function tick(){
-    var on=false;
-    try{ on=typeof currentUser!=='undefined' && currentUser && currentUser.id; }catch(e){}
-    var el=document.getElementById(ID);
-    if(on&&!el) document.body.appendChild(build());
-    if(!on&&el) el.remove();
-  }
-  setInterval(tick,1000); tick();
-})();
-</script>
 </body>
 </html>
 <script id="dn-notif-toast-engine">
