@@ -7750,7 +7750,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                         <div class="form-group">
                             <label>Mot de passe</label>
                             <div class="auth-field-wrap"><input type="password" id="reg-password" class="form-control" placeholder="Choisissez votre mot de passe" autocomplete="new-password" oninput="updatePasswordStrength(this,'reg-strength')" required><button type="button" class="auth-password-toggle" onclick="togglePassword('reg-password',this)" aria-label="Afficher le mot de passe"><svg class="dn-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 12s3.4-6 9.6-6 9.6 6 9.6 6-3.4 6-9.6 6-9.6-6-9.6-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div>
-                            <div class="auth-strength" id="reg-strength"><span></span></div><div class="auth-password-hint">Choisissez la longueur que vous voulez. Aucun plafond de 6 caractères.</div>
+                            <div class="auth-strength" id="reg-strength"><span></span></div><div class="auth-password-hint">Minimum 6 caractères ; 8 ou plus recommandé, avec lettres, chiffres et symboles.</div>
                         </div>
                         <div class="form-group"><label>Confirmer le mot de passe</label><div class="auth-field-wrap"><input type="password" id="reg-password-confirm" class="form-control" placeholder="Retapez votre mot de passe" autocomplete="new-password" required><button type="button" class="auth-password-toggle" onclick="togglePassword('reg-password-confirm',this)" aria-label="Afficher le mot de passe"><svg class="dn-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 12s3.4-6 9.6-6 9.6 6 9.6 6-3.4 6-9.6 6-9.6-6-9.6-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div></div>
                         
@@ -8126,7 +8126,29 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
         // Never put the "service_role" secret key here; that one must stay server-side only.
         const SUPABASE_URL = "https://ikumldzyebcgeorbvlju.supabase.co";
         const SUPABASE_ANON_KEY = "sb_publishable_CKJrw_dYWeEoOaQgIzBalA_fvb1XH8y";
+        // Remember (before supabase-js touches the URL) whether we are coming back from a
+        // Google/OAuth redirect. Password-recovery links are excluded on purpose.
+        const DN_OAUTH_RETURN = (() => {
+            try {
+                const raw = (window.location.hash || '') + '&' + (window.location.search || '');
+                const hasAuthParams = /(access_token=|refresh_token=|[?&]code=)/.test(raw);
+                const isRecovery = /type=recovery/.test(raw);
+                const flagged = sessionStorage.getItem('dn_oauth_pending') === '1';
+                return !isRecovery && (hasAuthParams || flagged);
+            } catch (e) { return false; }
+        })();
         const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // supabase-js clears the OAuth tokens from the URL after reading them, which can leave
+        // a bare "#" (https://dtnerds.com/#). Remove it, but only once there is no real
+        // fragment content left (so tokens still being processed are never touched).
+        function dnCleanEmptyHash() {
+            try {
+                if (window.location.href.endsWith('#') && !window.location.hash.replace('#', '')) {
+                    history.replaceState(null, document.title, window.location.pathname + window.location.search);
+                }
+            } catch (e) { /* non-critical */ }
+        }
         let userSaveTimer = null;
         let catalogLoadedFromSupabase = false;
 
@@ -8237,6 +8259,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
 
         sb.auth.onAuthStateChange(async (event, session) => {
             if (event === 'PASSWORD_RECOVERY' && session?.user) switchAuthMode('reset');
+            if (event === 'SIGNED_IN') setTimeout(dnCleanEmptyHash, 0);
         });
 
         window.addEventListener('DOMContentLoaded', async () => {
@@ -8259,7 +8282,20 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
 
             try {
                 const { data: { session } } = await sb.auth.getSession();
+                // Session (and any OAuth tokens in the URL) are processed by now: safe to tidy the URL.
+                dnCleanEmptyHash();
                 if (session?.user) {
+                    // Fresh Google login: claim this device exactly like the email/password login does,
+                    // otherwise the one-device check below would sign the user out immediately.
+                    if (DN_OAUTH_RETURN) {
+                        try { sessionStorage.removeItem('dn_oauth_pending'); } catch (e) {}
+                        const claimed = await claimDNDevice();
+                        if (!claimed) {
+                            await sb.auth.signOut();
+                            showAppModal('❌ Impossible de prendre le contrôle de cette session. Veuillez réessayer.');
+                            return;
+                        }
+                    }
                     const deviceStillActive = await isCurrentDevice();
 
                     if (deviceStillActive === false) {
@@ -9211,6 +9247,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             buttons.forEach(btn => { btn.disabled = true; btn.classList.add('is-loading'); });
             try {
                 const redirectTo = getAuthRedirectUrl();
+                try { sessionStorage.setItem('dn_oauth_pending', '1'); } catch (e) {}
                 const { error } = await sb.auth.signInWithOAuth({
                     provider: 'google',
                     options: {
@@ -9219,6 +9256,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                     }
                 });
                 if (error) {
+                    try { sessionStorage.removeItem('dn_oauth_pending'); } catch (e) {}
                     const raw = String(error.message || '');
                     if (/provider.*not.*enabled|unsupported provider|google/i.test(raw)) {
                         showAppModal('🔧 Google n’est pas encore activé dans Supabase. Activez le fournisseur Google avec votre Client ID et Client Secret, puis ajoutez cette adresse dans les URL autorisées.');
@@ -9283,9 +9321,17 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                 if (loginEmail) loginEmail.value = email;
                 return;
             }
+            const deviceAllowed = await claimDNDevice();
+            if (!deviceAllowed) {
+                await sb.auth.signOut();
+                showAppModal('❌ Impossible de prendre le contrôle de cette session. Veuillez réessayer.');
+                return;
+            }
             await loadCurrentUserFromSupabase(data.user);
+            await checkAndUpdateSubscriptions();
             await checkAndUpdateStreakAndDailyTimer();
             await initApp();
+            startDNDeviceWatcher();
         }
 
         async function handleLogin(event) {
@@ -9312,10 +9358,6 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                     }
                     return;
                 }
-                if (data.user && data.user.email_confirmed_at === null) {
-                    showAppModal('📧 Confirmez votre adresse email depuis le message reçu avant de vous connecter.');
-                    return;
-                }
                 const deviceAllowed = await claimDNDevice();
 
                 if (!deviceAllowed) {
@@ -9338,7 +9380,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             event.preventDefault();
             const email = document.getElementById('forgot-email').value.trim().toLowerCase();
             if (!email) return;
-            const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.href });
+            const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: getAuthRedirectUrl() });
             if (error) {
                 showAppModal('❌ ' + error.message);
                 return;
