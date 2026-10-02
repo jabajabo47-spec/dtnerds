@@ -6,7 +6,7 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Dentist Nerds — L'Excellence Dentaire</title>
     <meta name="description" content="Dentist Nerds — plateforme d'apprentissage pour étudiants en chirurgie dentaire : cours, QCM, planning de révision et suivi de progression.">
-    <link rel="icon" type="image/png" href="tooth.png">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦷</text></svg>">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#06141B">
@@ -3262,7 +3262,7 @@ body.dn-theme-transitioning *{
 .auth-wrapper{position:relative;z-index:1;max-width:1120px;grid-template-columns:1.03fr .97fr;border-radius:30px;background:rgba(15,23,42,.90);border:1px solid rgba(148,163,184,.16);box-shadow:0 35px 100px rgba(0,0,0,.38),0 0 0 1px rgba(255,255,255,.025) inset}
 .auth-left-pane{position:relative;overflow:hidden;padding:3.2rem;background:linear-gradient(145deg,#173caa 0%,#2862e9 46%,#6945e7 100%)}
 .auth-left-pane:before{content:"";position:absolute;width:330px;height:330px;right:-130px;top:-130px;border-radius:50%;border:1px solid rgba(255,255,255,.16);box-shadow:0 0 0 35px rgba(255,255,255,.035),0 0 0 70px rgba(255,255,255,.025)}
-.auth-left-pane:after{content:"";position:absolute;right:28px;bottom:25px;width:96px;height:96px;background:url(tooth.png) center/contain no-repeat;opacity:.12;transform:rotate(-12deg)}
+.auth-left-pane:after{content:"🦷";position:absolute;right:28px;bottom:25px;font-size:92px;opacity:.12;transform:rotate(-12deg)}
 .auth-logo,.auth-quote-box,.auth-benefits{position:relative;z-index:2}
 .auth-logo{gap:13px}.logo-icon-box{box-shadow:0 10px 25px rgba(0,0,0,.14);backdrop-filter:blur(8px)}
 .auth-quote-box{margin-top:auto;margin-bottom:1.5rem}
@@ -4505,8 +4505,9 @@ html[data-theme="dark"] #fullscreen-view > div:first-child{
   font-weight:900 !important;letter-spacing:-.35px !important;
 }
 #fs-header-title::before{
-  content:"";display:block;width:32px;height:32px;
-  background:url(tooth.png) center/contain no-repeat;
+  content:'🦷';display:grid;place-items:center;width:32px;height:32px;
+  border-radius:10px;background:linear-gradient(135deg,#5368ef,#7b4fe3);
+  box-shadow:0 7px 18px rgba(83,104,239,.22);font-size:16px;
 }
 #fullscreen-view > div:first-child button{
   border-radius:12px !important;
@@ -7717,7 +7718,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             <div class="auth-left-pane">
                 <div class="auth-logo">
                     <div class="logo-icon-box">
-                        <img src="tooth.png" alt="Dentist Nerds" width="30" height="30" style="display:block;width:30px;height:30px;object-fit:contain">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4C5.34315 4 4 5.34315 4 7C4 9.33333 4.5 13 6 16C7 18 8 20 9 20C10 20 10.5 18 11.5 16C12.5 14 13 14 14 16C15 18 15.5 20 16.5 20C18.5 18 19.5 15 20.5 12C21.3 9.5 21.5 7.6 20.5 6C19.7 4.7 18.4 4 17 4C15.4 4 14 6 12 6C10 6 8.6 4 7 4Z"></path></svg>
                     </div>
                     <span>Dentist Nerds</span>
                 </div>
@@ -7802,7 +7803,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             <div class="sidebar-header">
                 <div class="sidebar-brand-row">
                     <div style="width: 36px; height: 36px; background: rgba(37,99,235,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <img src="tooth.png" alt="Dentist Nerds" width="26" height="26" style="display:block;width:26px;height:26px;object-fit:contain">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4A5C6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4C5.34315 4 4 5.34315 4 7C4 9.33333 4.5 13 6 16C7 18 8 20 9 20C10 20 10.5 18 11.5 16C12.5 14 13 14 14 16C15 18 15.5 20 16.5 20C17.5 20 18.5 18 19.5 16C21 13 21.5 9.33333 21.5 7C21.5 5.34315 20.1569 4 18.5 4C16.5 4 15 6 12 6C9 6 7.5 4 7 4Z"></path></svg>
                     </div>
                     <span style="font-size: 1.15rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Dentist Nerds</span>
                 </div>
@@ -7919,7 +7920,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                         <circle class="dn-ring-track" cx="23" cy="23" r="19.5"></circle>
                         <circle class="dn-ring-progress" id="dn-ring-progress" cx="23" cy="23" r="19.5" stroke-dasharray="122.5" stroke-dashoffset="0"></circle>
                     </svg>
-                    <div class="dn-fw-ring-icon" id="floating-timer-icon">⏱</div>
+                    <div class="dn-fw-ring-icon" id="floating-timer-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="7.5"/><path d="M12 9.5V13l2.4 1.6M9.5 3h5"/></svg></div>
                 </div>
                 <div class="timer-copy dn-fw-copy">
                     <div class="timer-topline"><span class="timer-label">Focus session</span><span class="dn-fw-mode-tag" id="floating-timer-status">Prêt</span></div>
@@ -8791,6 +8792,9 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             const playEl = document.getElementById('floating-timer-play');
             const ringEl = document.getElementById('dn-ring-progress');
             if (textEl) textEl.innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            // Show the countdown in the browser tab so it stays visible while studying elsewhere.
+            if (!window.__dnBaseTitle) window.__dnBaseTitle = document.title;
+            document.title = isTimerRunning ? `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs} · Focus — Dentist Nerds` : window.__dnBaseTitle;
             if (statusEl) statusEl.innerText = customTimerSeconds <= 0 ? 'Terminé' : (isTimerRunning ? 'En cours' : 'Prêt');
             if (playEl) playEl.innerHTML = isTimerRunning ? '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.2" y="5" width="4.2" height="14" rx="1.4" fill="currentColor"/><rect x="13.6" y="5" width="4.2" height="14" rx="1.4" fill="currentColor"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.86l10.2-6.4a1 1 0 0 0 0-1.72L9.5 4.74A1 1 0 0 0 8 5.6z" fill="currentColor"/></svg>';
             if (ringEl) {
@@ -8826,7 +8830,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                         dnIncrementFocusSessionsToday();
                         dnPlayFocusChime();
                         dnNotifyFocusDone();
-                        showAppModal("⏰ Session d'étude terminée ! Prenez une pause bien méritée.");
+                        showAppModal("Session d'étude terminée. Prenez une pause bien méritée.");
                     }
                 }, 1000);
             }
@@ -13395,12 +13399,29 @@ html body .dn-pf .dn-pf-actions{margin-bottom:96px}
 }
 
 /* --- Cleanup: flat logo, no glowing dots --- */
-.logo-icon-box{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important}
-.sidebar-brand-row>div:first-child{background:transparent!important;box-shadow:none!important}
-.sidebar-brand-row:after{display:none!important}
 .dn-eyebrow-dot,.dn-live-pulse,.dn-live-dot{display:none!important}
 .dn-session-live-dot{filter:none!important}
 .timer-status-dot,.floating-timer-container.running .timer-status-dot{box-shadow:none!important}
+
+/* --- Focus timer: solid, calm, no glow --- */
+html body #focus-timer-dock .dn-fw-card{
+  background:var(--bg-surface)!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  border:1px solid var(--border-glass)!important;
+  box-shadow:0 6px 20px rgba(0,0,0,.16)!important;
+}
+html body #focus-timer-dock .dn-fw-card:not(.dn-fw-collapsed){border-radius:18px!important;gap:10px!important;padding:8px 10px!important}
+html body #focus-timer-dock.running .dn-fw-card{border-color:var(--primary)!important;box-shadow:0 6px 20px rgba(0,0,0,.16)!important}
+html body #focus-timer-dock .dn-fw-ring:before,
+html body #focus-timer-dock .dn-fw-ring:after{display:none!important}
+html body #focus-timer-dock .dn-fw-ring .dn-fw-ring-icon{color:var(--text-secondary)!important}
+html body #focus-timer-dock .dn-fw-ring-icon,
+html body #focus-timer-dock .timer-icon-box,
+html body #focus-timer-dock .dn-art-focus-icon{animation:none!important}
+html body #focus-timer-dock .timer-time{font-size:1.4rem!important}
+html body #focus-timer-dock .dn-fw-mode-tag{background:var(--input-bg)!important;color:var(--text-secondary)!important}
+html body #focus-timer-dock.running .dn-fw-mode-tag{color:var(--success)!important}
+html body #focus-timer-dock .timer-progress span{box-shadow:none!important}
 </style>
 </body>
 </html>
