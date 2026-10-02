@@ -7692,85 +7692,97 @@ html body button.dn-activation-year-card.active .dn-old-price{color:rgba(255,255
 html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!important;color:#dc2626!important}
 </style>
 <style id="dn-sidebar-css">
-:root{--dn-sb-open:clamp(248px,18vw,284px);--dn-sb-rail:76px;--dn-nav-hover:rgba(46,111,115,.09);--dn-nav-active:rgba(46,111,115,.16)}
-@supports(color:color-mix(in srgb,red,blue)){body{--dn-nav-hover:color-mix(in srgb,var(--primary) 9%,transparent);--dn-nav-active:color-mix(in srgb,var(--primary) 16%,transparent)}}
+/* ===== Dentist Nerds sidebar v3 — 8/4pt system: 240/80 widths, 16px gutters, 40px rows, 4px gaps ===== */
+:root{--dn-sb-open:clamp(240px,16vw,272px);--dn-sb-rail:80px;--dn-g1:#6674f2;--dn-g2:#8b5cf6;--dn-nav-hover:rgba(102,116,242,.10);--dn-nav-active:rgba(102,116,242,.16)}
 body{--dn-sb-w:var(--dn-sb-open)}
-:root[data-theme] body #app-layout>main{margin-left:var(--dn-sb-w)!important;width:calc(100% - var(--dn-sb-w))!important;min-width:0!important;transition:margin-left .22s,width .22s}
+:root[data-theme] body #app-layout>main{margin-left:var(--dn-sb-w)!important;width:calc(100% - var(--dn-sb-w))!important;min-width:0!important;transition:margin-left .24s,width .24s}
 @media(max-width:900px){:root[data-theme] body #app-layout>main{margin-left:0!important;width:100%!important}}
-#dn-sidebar{position:fixed;top:0;left:0;bottom:0;z-index:200;display:flex;flex-direction:column;width:var(--dn-sb-open);box-sizing:border-box;background:var(--bg-surface);border-right:1px solid var(--border-glass);color:var(--text-main);overflow:hidden;font-size:15px;line-height:1.35;transition:width .22s,transform .24s}
+#dn-sidebar{position:fixed;top:0;left:0;bottom:0;z-index:200;display:flex;flex-direction:column;width:var(--dn-sb-open);box-sizing:border-box;background:var(--bg-surface);border-right:1px solid var(--border-glass);color:var(--text-main);font-size:14px;line-height:1.4;transition:width .24s,transform .26s}
 #dn-sidebar *{box-sizing:border-box}
 #dn-sidebar[data-mode=rail]{width:var(--dn-sb-rail)}
-#dn-sidebar.is-peek{box-shadow:14px 0 40px rgba(0,0,0,.25)}
-#dn-sidebar .dn-sb-head{display:flex;align-items:center;gap:10px;padding:16px 14px 12px 16px;min-height:68px}
-#dn-sidebar .dn-sb-logo{width:38px;height:38px;flex:0 0 38px;border-radius:10px;background:var(--dn-nav-active);display:grid;place-items:center}
-#dn-sidebar .dn-sb-logo svg{width:22px;height:22px;stroke:var(--primary)!important}
-#dn-sidebar .dn-sb-brand{flex:1;min-width:0;font-size:1.08rem;font-weight:700;color:var(--text-main)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#dn-sidebar .dn-sb-collapse{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;padding:0;border:1px solid var(--border-glass);border-radius:9px;cursor:pointer;background:transparent!important;color:var(--text-secondary)!important}
-#dn-sidebar .dn-sb-collapse:hover,#dn-sidebar .dn-nav-link:hover{background:var(--dn-nav-hover)!important;color:var(--text-main)!important}
-#dn-sidebar .dn-sb-collapse svg{display:none;width:18px;height:18px}
+#dn-sidebar.is-peek{box-shadow:16px 0 48px rgba(0,0,0,.3)}
+#dn-sidebar .dn-sb-head{display:flex;align-items:center;gap:12px;padding:24px 48px 16px 16px;min-height:72px}
+#dn-sidebar .dn-sb-logo{width:36px;height:36px;flex:0 0 36px;border-radius:12px;background:linear-gradient(135deg,var(--dn-g1),var(--dn-g2));display:grid;place-items:center;box-shadow:0 6px 16px rgba(102,116,242,.35)}
+#dn-sidebar .dn-sb-logo svg{width:20px;height:20px;stroke:#fff!important}
+#dn-sidebar .dn-sb-brand{flex:1;min-width:0;font-size:18px;font-weight:700;letter-spacing:-.01em;color:var(--text-main)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dn-sidebar .dn-sb-collapse{position:absolute;z-index:2;top:30px;right:-14px;width:28px;height:28px;display:grid;place-items:center;padding:0;border:1px solid var(--border-glass);border-radius:50%;cursor:pointer;background:var(--bg-surface)!important;color:var(--text-secondary)!important;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:transform .15s,color .15s}
+#dn-sidebar .dn-sb-collapse:hover{color:var(--text-main)!important;transform:scale(1.1)}
+#dn-sidebar .dn-sb-collapse svg{display:none;width:16px;height:16px}
 #dn-sidebar[data-mode=full] .i-l,#dn-sidebar[data-mode=rail] .i-r,#dn-sidebar[data-mode=drawer] .i-x{display:block}
-#dn-sidebar .dn-sb-user{display:none;align-items:center;gap:12px;margin:0 12px 8px;padding:10px 12px;border:1px solid var(--border-glass);border-radius:12px;background:var(--input-bg);cursor:pointer}
-#dn-sidebar .dn-sb-avatar{width:40px;height:40px;flex:0 0 40px;border-radius:50%;background:var(--primary);color:var(--bg-deep)!important;display:grid;place-items:center;font-weight:700}
-#dn-sidebar .dn-sb-userinfo{display:flex;flex-direction:column;min-width:0}
-#dn-sidebar .dn-sb-userinfo strong{color:var(--text-main);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#dn-sidebar .dn-sb-userinfo small{font-size:.8rem;color:var(--text-secondary)}
-#dn-sidebar .dn-sb-search{display:flex;align-items:center;gap:10px;width:calc(100% - 24px);height:42px;margin:4px 12px 6px;padding:0 12px;border:1px solid var(--border-glass);border-radius:10px;font:inherit;font-size:.93rem;cursor:pointer;text-align:left;background:var(--input-bg)!important;color:var(--text-secondary)!important}
-#dn-sidebar .dn-sb-search:hover{border-color:var(--primary);color:var(--text-main)!important}
-#dn-sidebar .dn-sb-search svg{width:19px;height:19px;flex:0 0 19px}
-#dn-sidebar .dn-sb-scroll{flex:1;min-height:0;overflow:auto;overflow-x:hidden;padding:2px 12px 12px;overscroll-behavior:contain;scrollbar-width:thin}
-#dn-sidebar .dn-sb-label{padding:16px 12px 6px;font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-secondary)}
-#dn-sidebar .dn-sb-label:first-child{padding-top:8px}
-#dn-sidebar .dn-nav-link{position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:44px;margin:2px 0;padding:0 12px;border:0;border-radius:10px;font:inherit;font-size:.97rem;font-weight:600;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;background:transparent!important;color:var(--text-secondary)!important}
-#dn-sidebar .dn-nav-link svg{width:21px;height:21px;flex:0 0 21px;fill:none!important;stroke:currentColor!important;stroke-width:1.9;padding:0!important;background:none!important;box-shadow:none!important;filter:none!important}
+#dn-sidebar .dn-sb-user{display:flex;align-items:center;gap:12px;margin:0 16px 8px;padding:8px 12px 8px 8px;border:1px solid var(--border-glass);border-radius:14px;background:var(--input-bg);cursor:pointer;transition:border-color .15s}
+#dn-sidebar .dn-sb-user:hover{border-color:var(--dn-g1)}
+#dn-sidebar .dn-sb-avatar{width:40px;height:40px;flex:0 0 40px;border-radius:12px;background:linear-gradient(135deg,var(--dn-g1),var(--dn-g2));color:#fff!important;display:grid;place-items:center;font-weight:700;font-size:16px}
+#dn-sidebar .dn-sb-userinfo{display:flex;flex-direction:column;min-width:0;flex:1}
+#dn-sidebar .dn-sb-userinfo strong{font-size:14px;font-weight:700;color:var(--text-main);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dn-sidebar .dn-sb-userinfo small{font-size:12px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dn-sidebar .dn-sb-go{width:16px;height:16px;flex:0 0 16px;color:var(--text-secondary)}
+#dn-sidebar .dn-sb-search{display:flex;align-items:center;gap:12px;width:calc(100% - 32px);height:40px;margin:0 16px 8px;padding:0 12px;border:1px solid var(--border-glass);border-radius:12px;font:inherit;font-size:14px;cursor:pointer;text-align:left;background:var(--input-bg)!important;color:var(--text-secondary)!important}
+#dn-sidebar .dn-sb-search:hover{border-color:var(--dn-g1);color:var(--text-main)!important}
+#dn-sidebar .dn-sb-search svg{width:18px;height:18px;flex:0 0 18px}
+#dn-sidebar .dn-kbd{margin-left:auto;padding:2px 6px;font:inherit;font-size:11px;font-weight:700;border:1px solid var(--border-glass);border-radius:6px;color:var(--text-secondary);background:var(--bg-surface)}
+#dn-sidebar .dn-sb-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 16px 8px;overscroll-behavior:contain;scrollbar-width:thin}
+#dn-sidebar .dn-sb-scroll::-webkit-scrollbar{width:6px}
+#dn-sidebar .dn-sb-scroll::-webkit-scrollbar-thumb{background:var(--border-glass);border-radius:6px}
+#dn-sidebar .dn-sb-label{display:flex;align-items:center;justify-content:space-between;width:100%;height:32px;margin-top:12px;padding:0 12px;border:0;border-radius:8px;font:inherit;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;background:transparent!important;color:var(--text-secondary)!important}
+#dn-sidebar .dn-sb-label:hover{color:var(--text-main)!important}
+#dn-sidebar .dn-sb-label svg{width:14px;height:14px;transition:transform .2s}
+#dn-sidebar .dn-sb-label[aria-expanded=false] svg{transform:rotate(-90deg)}
+#dn-sidebar .dn-sb-group{display:grid;grid-template-rows:1fr;transition:grid-template-rows .22s ease}
+#dn-sidebar .dn-sb-group.is-closed{grid-template-rows:0fr}
+#dn-sidebar .dn-sb-gin{overflow:hidden;min-height:0;padding-top:4px}
+#dn-sidebar .dn-nav-link{position:relative;display:flex;align-items:center;gap:12px;width:100%;height:40px;margin:0 0 4px;padding:0 12px;border:0;border-radius:12px;font:inherit;font-size:14px;font-weight:600;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;background:transparent!important;color:var(--text-secondary)!important;transition:background .15s,color .15s,transform .15s}
+#dn-sidebar .dn-nav-link svg{width:20px;height:20px;flex:0 0 20px;fill:none!important;stroke:currentColor!important;stroke-width:1.9;padding:0!important;background:none!important;box-shadow:none!important;filter:none!important}
 #dn-sidebar .dn-nav-text{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:inherit!important}
-#dn-sidebar .dn-nav-link.active{background:var(--dn-nav-active)!important;color:var(--primary)!important;font-weight:700}
-#dn-sidebar .dn-nav-link.active:before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:var(--primary)}
-#dn-sidebar .dn-nav-link[data-tab=abonnement]:not(.active) svg{color:var(--warning)}
+#dn-sidebar .dn-nav-link:hover{background:var(--dn-nav-hover)!important;color:var(--text-main)!important;transform:translateX(2px)}
+#dn-sidebar .dn-nav-link.active{background:linear-gradient(135deg,var(--dn-g1),var(--dn-g2))!important;color:#fff!important;font-weight:700;box-shadow:0 4px 10px rgba(102,116,242,.28);transform:none}
+#dn-sidebar .dn-nav-link[data-tab=abonnement]:not(.active) svg{color:#d4a94f}
 #dn-sidebar .dn-nav-link.is-danger{color:var(--error)!important}
-#dn-sidebar .dn-nav-link.is-danger:hover{background:rgba(181,82,75,.12)!important}
-#dn-sidebar :focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
-#dn-sidebar .dn-sb-foot{padding:8px 12px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border-glass)}
-#dn-sidebar[data-mode=rail] .dn-sb-brand,#dn-sidebar[data-mode=rail] .dn-nav-text{display:none}
-#dn-sidebar[data-mode=rail] .dn-sb-head{flex-direction:column;gap:10px;padding:14px 0 8px;min-height:0}
-#dn-sidebar[data-mode=rail] .dn-nav-link,#dn-sidebar[data-mode=rail] .dn-sb-search{width:48px;height:46px;min-height:46px;margin:2px auto;padding:0;justify-content:center}
-#dn-sidebar[data-mode=rail] .dn-sb-scroll{padding:2px 0 12px}
-#dn-sidebar[data-mode=rail] .dn-sb-label{height:1px;margin:10px 20px;padding:0;font-size:0;background:var(--border-glass)}
+#dn-sidebar .dn-nav-link.is-danger:hover{background:rgba(220,38,38,.12)!important}
+#dn-sidebar .dn-badge{padding:2px 8px;border-radius:99px;background:#d4a94f;color:#1b1b1b;font-size:11px;font-weight:800}
+#dn-sidebar .dn-badge[hidden]{display:none}
+#dn-sidebar .dn-nav-link.active .dn-badge{background:#fff;color:#4f46e5}
+#dn-sidebar :focus-visible{outline:2px solid var(--dn-g1);outline-offset:2px}
+#dn-sidebar .dn-sb-plan{display:flex;align-items:center;gap:12px;width:calc(100% - 32px);margin:8px 16px;padding:12px;border:1px solid rgba(102,116,242,.3);border-radius:14px;font:inherit;text-align:left;cursor:pointer;background:linear-gradient(135deg,rgba(102,116,242,.14),rgba(139,92,246,.08))!important;color:var(--text-main)!important}
+#dn-sidebar .dn-sb-plan:hover{border-color:var(--dn-g1)}
+#dn-sidebar .dn-sb-plan .pdot{display:block;width:10px;height:10px;flex:0 0 10px;border-radius:50%;background:#d4a94f;box-shadow:0 0 0 4px rgba(212,169,79,.18)}
+#dn-sidebar .dn-sb-plan.ok .pdot{background:#3fb97a;box-shadow:0 0 0 4px rgba(63,185,122,.18)}
+#dn-sidebar .dn-sb-plan .t{display:flex;flex-direction:column;min-width:0;flex:1}
+#dn-sidebar .dn-sb-plan strong{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dn-sidebar .dn-sb-plan small{font-size:12px;color:var(--text-secondary)}
+#dn-sidebar .dn-sb-plan>svg{width:16px;height:16px;color:var(--text-secondary)}
+#dn-sidebar .dn-sb-foot{padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border-glass)}
+/* rail (80px) */
+#dn-sidebar[data-mode=rail] .dn-sb-brand,#dn-sidebar[data-mode=rail] .dn-nav-text,#dn-sidebar[data-mode=rail] .dn-kbd,#dn-sidebar[data-mode=rail] .dn-sb-userinfo,#dn-sidebar[data-mode=rail] .dn-sb-go,#dn-sidebar[data-mode=rail] .dn-sb-plan,#dn-sidebar[data-mode=rail] .dn-sb-label span,#dn-sidebar[data-mode=rail] .dn-sb-label svg{display:none}
+#dn-sidebar[data-mode=rail] .dn-sb-head{justify-content:center;padding:24px 0 16px}
+#dn-sidebar[data-mode=rail] .dn-sb-user{width:48px;height:48px;margin:0 auto 8px;padding:0;justify-content:center;border-radius:14px}
+#dn-sidebar[data-mode=rail] .dn-sb-avatar{width:40px;height:40px}
+#dn-sidebar[data-mode=rail] .dn-nav-link,#dn-sidebar[data-mode=rail] .dn-sb-search{width:48px;height:44px;margin:0 auto 4px;padding:0;justify-content:center}
+#dn-sidebar[data-mode=rail] .dn-sb-scroll{padding:0 0 8px}
+#dn-sidebar[data-mode=rail] .dn-sb-label{height:1px;margin:12px 24px;padding:0;background:var(--border-glass)!important;border-radius:0;pointer-events:none}
+#dn-sidebar[data-mode=rail] .dn-sb-group{grid-template-rows:1fr!important}
+#dn-sidebar[data-mode=rail] .dn-badge{position:absolute;top:6px;right:8px;width:10px;height:10px;padding:0;font-size:0}
 #dn-sidebar[data-mode=rail] .dn-sb-foot{padding-left:0;padding-right:0}
-#dn-sidebar[data-mode=drawer]{width:min(86vw,320px);transform:translateX(-105%);visibility:hidden;padding-top:env(safe-area-inset-top,0px);transition:transform .24s,visibility 0s .24s}
-#dn-sidebar[data-mode=drawer].is-open{transform:none;visibility:visible;transition:transform .24s;box-shadow:0 0 44px rgba(0,0,0,.4)}
-#dn-sidebar[data-mode=drawer] .dn-sb-user{display:flex}
-#dn-sidebar[data-mode=drawer] .dn-nav-link{min-height:48px;font-size:1rem}
-@media(max-height:700px){#dn-sidebar .dn-nav-link{min-height:38px}#dn-sidebar .dn-sb-label{padding-top:10px}#dn-sidebar .dn-sb-head{min-height:56px;padding-top:10px;padding-bottom:6px}}
-#dn-sb-backdrop{position:fixed;inset:0;z-index:190;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:opacity .2s,visibility 0s .2s}
+/* drawer (phone / small tablet) */
+#dn-sidebar[data-mode=drawer]{width:min(86vw,320px);transform:translateX(-105%);visibility:hidden;padding-top:env(safe-area-inset-top,0px);transition:transform .26s,visibility 0s .26s}
+#dn-sidebar[data-mode=drawer].is-open{transform:none;visibility:visible;transition:transform .26s;box-shadow:0 0 48px rgba(0,0,0,.45)}
+#dn-sidebar[data-mode=drawer] .dn-sb-collapse{top:calc(20px + env(safe-area-inset-top,0px));right:16px;width:36px;height:36px;border-radius:10px;box-shadow:none}
+#dn-sidebar[data-mode=drawer] .dn-kbd{display:none}
+#dn-sidebar[data-mode=drawer] .dn-nav-link{height:48px;font-size:15px}
+@media(max-height:920px){#dn-sidebar .dn-sb-plan{display:none}}
+@media(max-height:700px){#dn-sidebar .dn-nav-link{height:36px}#dn-sidebar .dn-sb-head{min-height:56px;padding-top:14px;padding-bottom:8px}#dn-sidebar .dn-sb-collapse{top:20px}}
+#dn-sb-backdrop{position:fixed;inset:0;z-index:190;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;transition:opacity .2s,visibility 0s .2s}
 #dn-sb-backdrop.on{opacity:1;visibility:visible;transition:opacity .2s}
-#dn-sb-tip{position:fixed;z-index:500;left:0;top:0;padding:6px 10px;border-radius:8px;background:var(--text-main);color:var(--bg-surface);font-size:.84rem;font-weight:600;white-space:nowrap;pointer-events:none;opacity:0}
+#dn-sb-tip{position:fixed;z-index:500;left:0;top:0;padding:6px 10px;border-radius:8px;background:var(--text-main);color:var(--bg-surface);font-size:13px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:0}
 #dn-sb-tip.show{opacity:1}
-.dn-menu-btn{display:none;width:42px;height:42px;place-items:center;padding:0;border:1px solid var(--border-glass);border-radius:10px;cursor:pointer;background:var(--bg-surface)!important;color:var(--text-main)!important}
+.dn-menu-btn{display:none;width:42px;height:42px;place-items:center;padding:0;border:1px solid var(--border-glass);border-radius:12px;cursor:pointer;background:var(--bg-surface)!important;color:var(--text-main)!important}
 .dn-menu-btn svg{width:22px;height:22px}
 @media(max-width:900px){.dn-menu-btn{display:grid}}
-
+@media(prefers-reduced-motion:reduce){#dn-sidebar,#dn-sidebar *,#dn-sb-backdrop,:root[data-theme] body #app-layout>main{transition:none!important}}
 /* --- tablet fix: Modules search box was 360px tall in column layout --- */
 @media(max-width:900px){
   .dn-modules-intro{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:12px!important;height:auto!important}
   .dn-modern-search{flex:0 0 auto!important;width:100%!important;max-width:none!important;min-width:0!important;height:54px!important;min-height:54px!important;max-height:54px!important}
 }
-/* --- desktop sidebar polish --- */
-#dn-sidebar .dn-nav-link,#dn-sidebar .dn-sb-search,#dn-sidebar .dn-sb-plan{transition:background .15s,color .15s,border-color .15s}
-#dn-sidebar .dn-nav-link svg{transition:transform .15s}
-#dn-sidebar .dn-nav-link:hover svg{transform:scale(1.08)}
-#dn-sidebar .dn-kbd{margin-left:auto;padding:2px 7px;font:inherit;font-size:.68rem;font-weight:700;border:1px solid var(--border-glass);border-radius:6px;color:var(--text-secondary);background:var(--bg-surface);white-space:nowrap}
-#dn-sidebar .dn-sb-plan{display:flex;align-items:center;gap:10px;width:calc(100% - 24px);margin:0 12px 10px;padding:10px 12px;border:1px solid var(--border-glass);border-radius:12px;font:inherit;text-align:left;cursor:pointer;background:var(--input-bg)!important;color:var(--text-main)!important}
-#dn-sidebar .dn-sb-plan:hover{border-color:var(--primary)}
-#dn-sidebar .dn-sb-plan .pdot{display:block;width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:#d4a94f}
-#dn-sidebar .dn-sb-plan.ok .pdot{background:#3f9f6a}
-#dn-sidebar .dn-sb-plan .t{display:flex;flex-direction:column;min-width:0}
-#dn-sidebar .dn-sb-plan strong{font-size:.9rem;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#dn-sidebar .dn-sb-plan small{font-size:.76rem;color:var(--text-secondary)}
-#dn-sidebar[data-mode=rail] .dn-kbd,#dn-sidebar[data-mode=rail] .dn-sb-plan,#dn-sidebar[data-mode=drawer] .dn-kbd{display:none}
-#dn-sidebar .dn-sb-scroll::-webkit-scrollbar{width:6px}
-#dn-sidebar .dn-sb-scroll::-webkit-scrollbar-thumb{background:var(--border-glass);border-radius:6px}
-@media(max-height:700px){#dn-sidebar .dn-sb-plan{display:none}}
-@media(prefers-reduced-motion:reduce){#dn-sidebar,#dn-sb-backdrop,:root[data-theme] body #app-layout>main{transition:none!important}}
 </style>
 </head>
 <body>
@@ -7882,16 +7894,16 @@ body{--dn-sb-w:var(--dn-sb-open)}
 
     <div id="app-layout">
         <div id="dn-sidebar" data-mode="full">
-            <div class="dn-sb-head"><span class="dn-sb-logo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="#4A5C6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4C5.34315 4 4 5.34315 4 7C4 9.33333 4.5 13 6 16C7 18 8 20 9 20C10 20 10.5 18 11.5 16C12.5 14 13 14 14 16C15 18 15.5 20 16.5 20C17.5 20 18.5 18 19.5 16C21 13 21.5 9.33333 21.5 7C21.5 5.34315 20.1569 4 18.5 4C16.5 4 15 6 12 6C9 6 7.5 4 7 4Z"></path></svg></span><span class="dn-sb-brand">Dentist Nerds</span>
-            <button type="button" class="dn-sb-collapse" id="dn-sb-toggle" aria-label="Réduire le menu" data-label="Agrandir le menu"><svg class="i-l" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg><svg class="i-r" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg><svg class="i-x" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-            <div class="dn-sb-user" onclick="switchTab('profil')" role="button" tabindex="0" aria-label="Ouvrir mon profil"><span class="dn-sb-avatar" id="dn-sb-avatar">A</span><span class="dn-sb-userinfo"><strong id="dn-sb-name">Étudiant</strong><small id="dn-sb-year"></small></span></div>
+            <div class="dn-sb-head"><span class="dn-sb-logo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="#4A5C6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4C5.34315 4 4 5.34315 4 7C4 9.33333 4.5 13 6 16C7 18 8 20 9 20C10 20 10.5 18 11.5 16C12.5 14 13 14 14 16C15 18 15.5 20 16.5 20C17.5 20 18.5 18 19.5 16C21 13 21.5 9.33333 21.5 7C21.5 5.34315 20.1569 4 18.5 4C16.5 4 15 6 12 6C9 6 7.5 4 7 4Z"></path></svg></span><span class="dn-sb-brand">Dentist Nerds</span></div>
+            <button type="button" class="dn-sb-collapse" id="dn-sb-toggle" aria-label="Réduire le menu" data-label="Agrandir le menu"><svg class="i-l" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg><svg class="i-r" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg><svg class="i-x" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <div class="dn-sb-user" onclick="switchTab('profil')" role="button" tabindex="0" aria-label="Ouvrir mon profil" data-label="Mon profil"><span class="dn-sb-avatar" id="dn-sb-avatar">A</span><span class="dn-sb-userinfo"><strong id="dn-sb-name">Étudiant</strong><small id="dn-sb-year">Chirurgie dentaire</small></span><svg class="dn-sb-go" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></div>
             <button type="button" class="dn-sb-search" data-label="Rechercher" onclick="dnSbSearch()"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><span class="dn-nav-text">Rechercher…</span><kbd class="dn-kbd">Ctrl K</kbd></button>
             <nav class="dn-sb-scroll" aria-label="Navigation principale">
-                <div class="dn-sb-label">Étudier</div><button type="button" class="dn-nav-link" data-tab="accueil" data-label="Accueil" onclick="switchTab('accueil')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span class="dn-nav-text">Accueil</span></button><button type="button" class="dn-nav-link" data-tab="examens" data-label="Les Modules" onclick="switchTab('examens')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 8h6"/></svg><span class="dn-nav-text">Les Modules</span></button><button type="button" class="dn-nav-link" data-tab="simulation" data-label="Session QCM" onclick="switchTab('simulation')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg><span class="dn-nav-text">Session QCM</span></button><button type="button" class="dn-nav-link" data-tab="resumes" data-label="Les Résumés" onclick="switchTab('resumes')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg><span class="dn-nav-text">Les Résumés</span></button>
-                <div class="dn-sb-label">Suivi</div><button type="button" class="dn-nav-link" data-tab="progression" data-label="Ma Progression" onclick="switchTab('progression')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-4 3 3 5-6"/></svg><span class="dn-nav-text">Ma Progression</span></button><button type="button" class="dn-nav-link" data-tab="communaute" data-label="Communauté" onclick="switchTab('communaute')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/><path d="M16 5.2a3 3 0 0 1 0 5.6"/><path d="M18 14.3a5 5 0 0 1 3 4.7v1"/></svg><span class="dn-nav-text">Communauté</span></button>
-                <div class="dn-sb-label">Mon compte</div><button type="button" class="dn-nav-link" data-tab="abonnement" data-label="Activation" onclick="switchTab('abonnement')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8"/><path d="M15 8l3 3"/></svg><span class="dn-nav-text">Activation</span></button><button type="button" class="dn-nav-link" data-tab="profil" data-label="Profil" onclick="switchTab('profil')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="dn-nav-text">Profil</span></button><button type="button" class="dn-nav-link" data-tab="preferences" data-label="Mon espace" onclick="switchTab('preferences')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span class="dn-nav-text">Mon espace</span></button>
+                <button type="button" class="dn-sb-label" data-g="study" aria-expanded="true"><span>Étudier</span><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="dn-sb-group" data-gbody="study"><div class="dn-sb-gin"><button type="button" class="dn-nav-link" data-tab="accueil" data-label="Accueil" onclick="switchTab('accueil')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span class="dn-nav-text">Accueil</span></button><button type="button" class="dn-nav-link" data-tab="examens" data-label="Les Modules" onclick="switchTab('examens')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 8h6"/></svg><span class="dn-nav-text">Les Modules</span></button><button type="button" class="dn-nav-link" data-tab="simulation" data-label="Session QCM" onclick="switchTab('simulation')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg><span class="dn-nav-text">Session QCM</span></button><button type="button" class="dn-nav-link" data-tab="resumes" data-label="Les Résumés" onclick="switchTab('resumes')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg><span class="dn-nav-text">Les Résumés</span></button></div></div>
+                <button type="button" class="dn-sb-label" data-g="track" aria-expanded="true"><span>Suivi</span><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="dn-sb-group" data-gbody="track"><div class="dn-sb-gin"><button type="button" class="dn-nav-link" data-tab="progression" data-label="Ma Progression" onclick="switchTab('progression')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-4 3 3 5-6"/></svg><span class="dn-nav-text">Ma Progression</span></button><button type="button" class="dn-nav-link" data-tab="communaute" data-label="Communauté" onclick="switchTab('communaute')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/><path d="M16 5.2a3 3 0 0 1 0 5.6"/><path d="M18 14.3a5 5 0 0 1 3 4.7v1"/></svg><span class="dn-nav-text">Communauté</span></button></div></div>
+                <button type="button" class="dn-sb-label" data-g="acct" aria-expanded="true"><span>Mon compte</span><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><div class="dn-sb-group" data-gbody="acct"><div class="dn-sb-gin"><button type="button" class="dn-nav-link" data-tab="abonnement" data-label="Activation" onclick="switchTab('abonnement')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8"/><path d="M15 8l3 3"/></svg><span class="dn-nav-text">Activation</span><span class="dn-badge" id="dn-sb-act-badge" hidden>Activer</span></button><button type="button" class="dn-nav-link" data-tab="profil" data-label="Profil" onclick="switchTab('profil')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="dn-nav-text">Profil</span></button><button type="button" class="dn-nav-link" data-tab="preferences" data-label="Mon espace" onclick="switchTab('preferences')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span class="dn-nav-text">Mon espace</span></button></div></div>
             </nav>
-            <button type="button" class="dn-sb-plan" id="dn-sb-plan" onclick="switchTab('abonnement')" aria-label="Voir mon activation"><span class="pdot"></span><span class="t"><strong id="dn-sb-plan-year">Mon année</strong><small id="dn-sb-plan-state">Activation</small></span></button>
+            <button type="button" class="dn-sb-plan" id="dn-sb-plan" onclick="switchTab('abonnement')" aria-label="Voir mon activation"><span class="pdot"></span><span class="t"><strong id="dn-sb-plan-year">Mon année</strong><small id="dn-sb-plan-state">Activation</small></span><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
             <div class="dn-sb-foot"><button type="button" class="dn-nav-link" data-label="Signaler des bugs" onclick="showAppModal('Support bugs Dentist Nerds : dentistnerds@gmail.com')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5v.5"/></svg><span class="dn-nav-text">Signaler des bugs</span></button><button type="button" class="dn-nav-link is-danger" data-label="Déconnexion" onclick="logout()"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3"/><path d="M16 8l4 4-4 4"/><path d="M20 12H9"/></svg><span class="dn-nav-text">Déconnexion</span></button></div>
         </div>
         <div id="dn-sb-backdrop"></div><div id="dn-sb-tip" role="tooltip"></div>
@@ -13707,15 +13719,15 @@ html body .dn-pf2 .dn-pf-seg button.active{background:var(--primary)!important;b
 (function(){
   var sb=document.getElementById('dn-sidebar'); if(!sb) return;
   var bd=document.getElementById('dn-sb-backdrop'),tip=document.getElementById('dn-sb-tip'),tog=document.getElementById('dn-sb-toggle'),mb=document.getElementById('dn-menu-btn');
-  var KEY='dn_sb_collapsed',collapsed=false,peek=false,drawer=false;
-  try{collapsed=localStorage.getItem(KEY)==='1'}catch(e){}
+  var KEY='dn_sb_collapsed',GK='dn_sb_groups',collapsed=false,peek=false,drawer=false,closed={};
+  try{collapsed=localStorage.getItem(KEY)==='1';closed=JSON.parse(localStorage.getItem(GK)||'{}')||{}}catch(e){}
   function mode(){var w=innerWidth;return w<=900?'drawer':w<=1100?(peek?'full':'rail'):(collapsed?'rail':'full')}
   function apply(){
     var w=innerWidth,m=mode();
     sb.setAttribute('data-mode',m);
     sb.classList.toggle('is-peek',w>900&&w<=1100&&peek);
     sb.classList.toggle('is-open',m==='drawer'&&drawer);
-    document.body.style.setProperty('--dn-sb-w',m==='drawer'?'0px':(w<=1100||collapsed)?'76px':'var(--dn-sb-open)');
+    document.body.style.setProperty('--dn-sb-w',m==='drawer'?'0px':(w<=1100||collapsed)?'80px':'var(--dn-sb-open)');
     bd.classList.toggle('on',(m==='drawer'&&drawer)||sb.classList.contains('is-peek'));
     var l=m==='drawer'?'Fermer le menu':m==='full'?'Réduire le menu':'Agrandir le menu';
     tog.setAttribute('aria-label',l);tog.setAttribute('data-label',l);
@@ -13724,13 +13736,27 @@ html body .dn-pf2 .dn-pf-seg button.active{background:var(--primary)!important;b
     tip.classList.remove('show');
   }
   function close(f){var was=drawer||peek;drawer=peek=false;apply();if(f&&was&&mb&&mode()==='drawer')mb.focus()}
-  tog.onclick=function(){var m=mode();if(m==='drawer')return close(true);if(innerWidth<=1100){peek=!peek}else{collapsed=!collapsed;try{localStorage.setItem(KEY,collapsed?'1':'0')}catch(e){}}apply()};
+  tog.onclick=function(){if(mode()==='drawer')return close(true);if(innerWidth<=1100){peek=!peek}else{collapsed=!collapsed;try{localStorage.setItem(KEY,collapsed?'1':'0')}catch(e){}}apply()};
   if(mb)mb.onclick=function(){if(drawer)return close(true);syncUser();drawer=true;apply();setTimeout(function(){(sb.querySelector('.dn-nav-link.active')||tog).focus()},60)};
   bd.onclick=function(){close(true)};
+  // collapsible groups
+  function setGroup(id,open){
+    var b=sb.querySelector('[data-g="'+id+'"]'),g=sb.querySelector('[data-gbody="'+id+'"]'); if(!b||!g)return;
+    b.setAttribute('aria-expanded',open?'true':'false');g.classList.toggle('is-closed',!open);
+    if(open)delete closed[id];else closed[id]=1;
+  }
+  [].slice.call(sb.querySelectorAll('.dn-sb-label')).forEach(function(b){
+    var id=b.getAttribute('data-g'); if(closed[id])setGroup(id,false);
+    b.addEventListener('click',function(){setGroup(id,b.getAttribute('aria-expanded')!=='true');try{localStorage.setItem(GK,JSON.stringify(closed))}catch(e){}});
+  });
   document.addEventListener('keydown',function(e){
-    if(e.key==='Escape'&&(drawer||peek))close(true);
+    if(e.key==='Escape'&&(drawer||peek))return close(true);
     if(e.key==='Tab'&&drawer){var f=[].slice.call(sb.querySelectorAll('button,[tabindex="0"]')).filter(function(x){return x.offsetParent}),a=f[0],z=f[f.length-1];
       if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+    if((e.ctrlKey||e.metaKey)&&!e.altKey&&(sb.offsetParent||mode()==='drawer')){
+      var k=e.key.toLowerCase();
+      if(k==='k'){e.preventDefault();window.dnSbSearch()}else if(k==='b'&&mode()!=='drawer'){e.preventDefault();tog.onclick()}
+    }
   });
   var tx=null;
   sb.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
@@ -13738,33 +13764,33 @@ html body .dn-pf2 .dn-pf-seg button.active{background:var(--primary)!important;b
   sb.addEventListener('click',function(e){if(e.target.closest('.dn-nav-link,.dn-sb-user,.dn-sb-search,.dn-sb-plan'))setTimeout(function(){close(false)},0)});
   var u=sb.querySelector('.dn-sb-user');u.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();u.click()}});
   addEventListener('resize',function(){if(innerWidth>900)drawer=false;if(innerWidth>1100)peek=false;apply()});
-  function showTip(el){if(sb.getAttribute('data-mode')!=='rail')return;var t=el.getAttribute('data-label');if(!t)return;tip.textContent=t;var r=el.getBoundingClientRect();tip.style.left=(r.right+10)+'px';tip.style.top=(r.top+(r.height-tip.offsetHeight)/2)+'px';tip.classList.add('show')}
+  function showTip(el){if(sb.getAttribute('data-mode')!=='rail')return;var t=el.getAttribute('data-label');if(!t)return;tip.textContent=t;var r=el.getBoundingClientRect();tip.style.left=(r.right+12)+'px';tip.style.top=(r.top+(r.height-tip.offsetHeight)/2)+'px';tip.classList.add('show')}
   sb.addEventListener('mouseover',function(e){var el=e.target.closest('[data-label]');el?showTip(el):tip.classList.remove('show')});
   sb.addEventListener('mouseleave',function(){tip.classList.remove('show')});
   var links=[].slice.call(sb.querySelectorAll('.dn-nav-link[data-tab]'));
-  function sync(t){if(t==='dashboard')t='accueil';links.forEach(function(l){var on=l.getAttribute('data-tab')===t;l.classList.toggle('active',on);on?l.setAttribute('aria-current','page'):l.removeAttribute('aria-current')})}
+  function sync(t){
+    if(t==='dashboard')t='accueil';
+    links.forEach(function(l){var on=l.getAttribute('data-tab')===t;l.classList.toggle('active',on);on?l.setAttribute('aria-current','page'):l.removeAttribute('aria-current');
+      if(on){var g=l.closest('.dn-sb-group');if(g&&g.classList.contains('is-closed'))setGroup(g.getAttribute('data-gbody'),true)}});
+  }
   function syncUser(){
     if(typeof currentUser==='undefined'||!currentUser)return;
     try{document.getElementById('dn-sb-avatar').textContent=getProfileAvatarGlyph()}catch(e){}
-    try{document.getElementById('dn-sb-name').textContent=currentUser.name||'Étudiant';document.getElementById('dn-sb-year').textContent=currentUser.studyYear||''}catch(e){}
+    try{document.getElementById('dn-sb-name').textContent=currentUser.name||'Étudiant';document.getElementById('dn-sb-year').textContent=currentUser.studyYear||'Chirurgie dentaire'}catch(e){}
     var ok=false;try{ok=!!dnIsCurrentYearActivated()}catch(e){}
-    var pl=document.getElementById('dn-sb-plan');pl.classList.toggle('ok',ok);
+    document.getElementById('dn-sb-plan').classList.toggle('ok',ok);
     document.getElementById('dn-sb-plan-year').textContent=currentUser.studyYear||'Mon année';
     document.getElementById('dn-sb-plan-state').textContent=ok?'Activée':'Non activée · Activer';
+    var bg=document.getElementById('dn-sb-act-badge');if(bg)bg.hidden=ok;
   }
   var st=window.switchTab;
   if(typeof st==='function')window.switchTab=function(t){try{return st.apply(this,arguments)}finally{try{sync(t);syncUser()}catch(e){}}};
   window.dnSbSearch=function(){close(false);switchTab('examens');setTimeout(function(){var i=document.getElementById('search-exams-input');if(i)i.focus()},150)};
-  document.addEventListener('keydown',function(e){
-    if(!(e.ctrlKey||e.metaKey)||e.altKey||!sb.offsetParent&&mode()!=='drawer')return;
-    var k=e.key.toLowerCase();
-    if(k==='k'){e.preventDefault();window.dnSbSearch()}
-    else if(k==='b'&&mode()!=='drawer'){e.preventDefault();tog.onclick()}
-  });
   tog.setAttribute('title','Ctrl B');
   apply();sync('accueil');
 })();
 </script>
+
 
 </body>
 </html>
