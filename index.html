@@ -7691,6 +7691,65 @@ html body button.dn-activation-year-card.active strong,html body button.dn-activ
 html body button.dn-activation-year-card.active .dn-old-price{color:rgba(255,255,255,.75)!important}
 html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!important;color:#dc2626!important}
 </style>
+<style id="dn-sidebar-css">
+:root{--dn-sb-open:clamp(248px,18vw,284px);--dn-sb-rail:76px;--dn-nav-hover:rgba(46,111,115,.09);--dn-nav-active:rgba(46,111,115,.16)}
+@supports(color:color-mix(in srgb,red,blue)){body{--dn-nav-hover:color-mix(in srgb,var(--primary) 9%,transparent);--dn-nav-active:color-mix(in srgb,var(--primary) 16%,transparent)}}
+body{--dn-sb-w:var(--dn-sb-open)}
+:root[data-theme] body #app-layout>main{margin-left:var(--dn-sb-w)!important;width:calc(100% - var(--dn-sb-w))!important;min-width:0!important;transition:margin-left .22s,width .22s}
+@media(max-width:900px){:root[data-theme] body #app-layout>main{margin-left:0!important;width:100%!important}}
+#dn-sidebar{position:fixed;top:0;left:0;bottom:0;z-index:200;display:flex;flex-direction:column;width:var(--dn-sb-open);box-sizing:border-box;background:var(--bg-surface);border-right:1px solid var(--border-glass);color:var(--text-main);overflow:hidden;font-size:15px;line-height:1.35;transition:width .22s,transform .24s}
+#dn-sidebar *{box-sizing:border-box}
+#dn-sidebar[data-mode=rail]{width:var(--dn-sb-rail)}
+#dn-sidebar.is-peek{box-shadow:14px 0 40px rgba(0,0,0,.25)}
+#dn-sidebar .dn-sb-head{display:flex;align-items:center;gap:10px;padding:16px 14px 12px 16px;min-height:68px}
+#dn-sidebar .dn-sb-logo{width:38px;height:38px;flex:0 0 38px;border-radius:10px;background:var(--dn-nav-active);display:grid;place-items:center}
+#dn-sidebar .dn-sb-logo svg{width:22px;height:22px;stroke:var(--primary)!important}
+#dn-sidebar .dn-sb-brand{flex:1;min-width:0;font-size:1.08rem;font-weight:700;color:var(--text-main)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dn-sidebar .dn-sb-collapse{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;padding:0;border:1px solid var(--border-glass);border-radius:9px;cursor:pointer;background:transparent!important;color:var(--text-secondary)!important}
+#dn-sidebar .dn-sb-collapse:hover,#dn-sidebar .dn-nav-link:hover{background:var(--dn-nav-hover)!important;color:var(--text-main)!important}
+#dn-sidebar .dn-sb-collapse svg{display:none;width:18px;height:18px}
+#dn-sidebar[data-mode=full] .i-l,#dn-sidebar[data-mode=rail] .i-r,#dn-sidebar[data-mode=drawer] .i-x{display:block}
+#dn-sidebar .dn-sb-user{display:none;align-items:center;gap:12px;margin:0 12px 8px;padding:10px 12px;border:1px solid var(--border-glass);border-radius:12px;background:var(--input-bg);cursor:pointer}
+#dn-sidebar .dn-sb-avatar{width:40px;height:40px;flex:0 0 40px;border-radius:50%;background:var(--primary);color:var(--bg-deep)!important;display:grid;place-items:center;font-weight:700}
+#dn-sidebar .dn-sb-userinfo{display:flex;flex-direction:column;min-width:0}
+#dn-sidebar .dn-sb-userinfo strong{color:var(--text-main);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dn-sidebar .dn-sb-userinfo small{font-size:.8rem;color:var(--text-secondary)}
+#dn-sidebar .dn-sb-search{display:flex;align-items:center;gap:10px;width:calc(100% - 24px);height:42px;margin:4px 12px 6px;padding:0 12px;border:1px solid var(--border-glass);border-radius:10px;font:inherit;font-size:.93rem;cursor:pointer;text-align:left;background:var(--input-bg)!important;color:var(--text-secondary)!important}
+#dn-sidebar .dn-sb-search:hover{border-color:var(--primary);color:var(--text-main)!important}
+#dn-sidebar .dn-sb-search svg{width:19px;height:19px;flex:0 0 19px}
+#dn-sidebar .dn-sb-scroll{flex:1;min-height:0;overflow:auto;overflow-x:hidden;padding:2px 12px 12px;overscroll-behavior:contain;scrollbar-width:thin}
+#dn-sidebar .dn-sb-label{padding:16px 12px 6px;font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-secondary)}
+#dn-sidebar .dn-sb-label:first-child{padding-top:8px}
+#dn-sidebar .dn-nav-link{position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:44px;margin:2px 0;padding:0 12px;border:0;border-radius:10px;font:inherit;font-size:.97rem;font-weight:600;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;background:transparent!important;color:var(--text-secondary)!important}
+#dn-sidebar .dn-nav-link svg{width:21px;height:21px;flex:0 0 21px;fill:none!important;stroke:currentColor!important;stroke-width:1.9;padding:0!important;background:none!important;box-shadow:none!important;filter:none!important}
+#dn-sidebar .dn-nav-text{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:inherit!important}
+#dn-sidebar .dn-nav-link.active{background:var(--dn-nav-active)!important;color:var(--primary)!important;font-weight:700}
+#dn-sidebar .dn-nav-link.active:before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:var(--primary)}
+#dn-sidebar .dn-nav-link[data-tab=abonnement]:not(.active) svg{color:var(--warning)}
+#dn-sidebar .dn-nav-link.is-danger{color:var(--error)!important}
+#dn-sidebar .dn-nav-link.is-danger:hover{background:rgba(181,82,75,.12)!important}
+#dn-sidebar :focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+#dn-sidebar .dn-sb-foot{padding:8px 12px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--border-glass)}
+#dn-sidebar[data-mode=rail] .dn-sb-brand,#dn-sidebar[data-mode=rail] .dn-nav-text{display:none}
+#dn-sidebar[data-mode=rail] .dn-sb-head{flex-direction:column;gap:10px;padding:14px 0 8px;min-height:0}
+#dn-sidebar[data-mode=rail] .dn-nav-link,#dn-sidebar[data-mode=rail] .dn-sb-search{width:48px;height:46px;min-height:46px;margin:2px auto;padding:0;justify-content:center}
+#dn-sidebar[data-mode=rail] .dn-sb-scroll{padding:2px 0 12px}
+#dn-sidebar[data-mode=rail] .dn-sb-label{height:1px;margin:10px 20px;padding:0;font-size:0;background:var(--border-glass)}
+#dn-sidebar[data-mode=rail] .dn-sb-foot{padding-left:0;padding-right:0}
+#dn-sidebar[data-mode=drawer]{width:min(86vw,320px);transform:translateX(-105%);visibility:hidden;padding-top:env(safe-area-inset-top,0px);transition:transform .24s,visibility 0s .24s}
+#dn-sidebar[data-mode=drawer].is-open{transform:none;visibility:visible;transition:transform .24s;box-shadow:0 0 44px rgba(0,0,0,.4)}
+#dn-sidebar[data-mode=drawer] .dn-sb-user{display:flex}
+#dn-sidebar[data-mode=drawer] .dn-nav-link{min-height:48px;font-size:1rem}
+@media(max-height:700px){#dn-sidebar .dn-nav-link{min-height:38px}#dn-sidebar .dn-sb-label{padding-top:10px}#dn-sidebar .dn-sb-head{min-height:56px;padding-top:10px;padding-bottom:6px}}
+#dn-sb-backdrop{position:fixed;inset:0;z-index:190;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:opacity .2s,visibility 0s .2s}
+#dn-sb-backdrop.on{opacity:1;visibility:visible;transition:opacity .2s}
+#dn-sb-tip{position:fixed;z-index:500;left:0;top:0;padding:6px 10px;border-radius:8px;background:var(--text-main);color:var(--bg-surface);font-size:.84rem;font-weight:600;white-space:nowrap;pointer-events:none;opacity:0}
+#dn-sb-tip.show{opacity:1}
+.dn-menu-btn{display:none;width:42px;height:42px;place-items:center;padding:0;border:1px solid var(--border-glass);border-radius:10px;cursor:pointer;background:var(--bg-surface)!important;color:var(--text-main)!important}
+.dn-menu-btn svg{width:22px;height:22px}
+@media(max-width:900px){.dn-menu-btn{display:grid}}
+@media(prefers-reduced-motion:reduce){#dn-sidebar,#dn-sb-backdrop,:root[data-theme] body #app-layout>main{transition:none!important}}
+</style>
 </head>
 <body>
 
@@ -7800,66 +7859,19 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
     </div>
 
     <div id="app-layout">
-        <aside>
-            <div class="sidebar-header">
-                <div class="sidebar-brand-row">
-                    <div style="width: 36px; height: 36px; background: rgba(37,99,235,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4A5C6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4C5.34315 4 4 5.34315 4 7C4 9.33333 4.5 13 6 16C7 18 8 20 9 20C10 20 10.5 18 11.5 16C12.5 14 13 14 14 16C15 18 15.5 20 16.5 20C17.5 20 18.5 18 19.5 16C21 13 21.5 9.33333 21.5 7C21.5 5.34315 20.1569 4 18.5 4C16.5 4 15 6 12 6C9 6 7.5 4 7 4Z"></path></svg>
-                    </div>
-                    <span style="font-size: 1.15rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Dentist Nerds</span>
-                </div>
-            </div>
-
-            <div class="sidebar-nav">
-                <a class="nav-item active" onclick="switchTab('accueil')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
-                    Accueil
-                </a>
-                <a class="nav-item" onclick="switchTab('examens')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 8h6"/></svg>
-                    Les Modules
-                </a>
-                <a class="nav-item" onclick="switchTab('simulation')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
-                    Session QCM
-                </a>
-                <a class="nav-item" onclick="switchTab('resumes')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg>
-                    Les Résumés
-                </a>
-                <a class="nav-item" onclick="switchTab('progression')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-4 3 3 5-6"/></svg>
-                    Ma Progression
-                </a>
-                <a class="nav-item" onclick="switchTab('communaute')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/><path d="M16 5.2a3 3 0 0 1 0 5.6"/><path d="M18 14.3a5 5 0 0 1 3 4.7v1"/></svg>
-                    Communauté
-                </a>
-                <a class="nav-item" onclick="switchTab('abonnement')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8"/><path d="M15 8l3 3"/></svg>
-                    Activation
-                </a>
-
-                <div style="margin-top: auto; border-top: 1px solid var(--border-glass); padding-top: 0.5rem;">
-                    <a class="nav-item" onclick="showAppModal('Support bugs Dentist Nerds : dentistnerds@gmail.com')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5v.5"/></svg>
-                        Signaler des bugs
-                    </a>
-                    <a class="nav-item" onclick="switchTab('profil')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-                        Profil
-                    </a>
-                    <a class="nav-item" onclick="switchTab('preferences')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
-                        Mon espace
-                    </a>
-                    <a class="nav-item" onclick="logout()" style="color: var(--error);">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3"/><path d="M16 8l4 4-4 4"/><path d="M20 12H9"/></svg>
-                        Déconnexion
-                    </a>
-                </div>
-            </div>
-        </aside>
+        <div id="dn-sidebar" data-mode="full">
+            <div class="dn-sb-head"><span class="dn-sb-logo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="#4A5C6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4C5.34315 4 4 5.34315 4 7C4 9.33333 4.5 13 6 16C7 18 8 20 9 20C10 20 10.5 18 11.5 16C12.5 14 13 14 14 16C15 18 15.5 20 16.5 20C17.5 20 18.5 18 19.5 16C21 13 21.5 9.33333 21.5 7C21.5 5.34315 20.1569 4 18.5 4C16.5 4 15 6 12 6C9 6 7.5 4 7 4Z"></path></svg></span><span class="dn-sb-brand">Dentist Nerds</span>
+            <button type="button" class="dn-sb-collapse" id="dn-sb-toggle" aria-label="Réduire le menu" data-label="Agrandir le menu"><svg class="i-l" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg><svg class="i-r" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg><svg class="i-x" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+            <div class="dn-sb-user" onclick="switchTab('profil')" role="button" tabindex="0" aria-label="Ouvrir mon profil"><span class="dn-sb-avatar" id="dn-sb-avatar">A</span><span class="dn-sb-userinfo"><strong id="dn-sb-name">Étudiant</strong><small id="dn-sb-year"></small></span></div>
+            <button type="button" class="dn-sb-search" data-label="Rechercher" onclick="dnSbSearch()"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><span class="dn-nav-text">Rechercher un module…</span></button>
+            <nav class="dn-sb-scroll" aria-label="Navigation principale">
+                <div class="dn-sb-label">Étudier</div><button type="button" class="dn-nav-link" data-tab="accueil" data-label="Accueil" onclick="switchTab('accueil')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><span class="dn-nav-text">Accueil</span></button><button type="button" class="dn-nav-link" data-tab="examens" data-label="Les Modules" onclick="switchTab('examens')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/><path d="M9 8h6"/></svg><span class="dn-nav-text">Les Modules</span></button><button type="button" class="dn-nav-link" data-tab="simulation" data-label="Session QCM" onclick="switchTab('simulation')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg><span class="dn-nav-text">Session QCM</span></button><button type="button" class="dn-nav-link" data-tab="resumes" data-label="Les Résumés" onclick="switchTab('resumes')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg><span class="dn-nav-text">Les Résumés</span></button>
+                <div class="dn-sb-label">Suivi</div><button type="button" class="dn-nav-link" data-tab="progression" data-label="Ma Progression" onclick="switchTab('progression')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-4 3 3 5-6"/></svg><span class="dn-nav-text">Ma Progression</span></button><button type="button" class="dn-nav-link" data-tab="communaute" data-label="Communauté" onclick="switchTab('communaute')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/><path d="M16 5.2a3 3 0 0 1 0 5.6"/><path d="M18 14.3a5 5 0 0 1 3 4.7v1"/></svg><span class="dn-nav-text">Communauté</span></button>
+                <div class="dn-sb-label">Mon compte</div><button type="button" class="dn-nav-link" data-tab="abonnement" data-label="Activation" onclick="switchTab('abonnement')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8"/><path d="M15 8l3 3"/></svg><span class="dn-nav-text">Activation</span></button><button type="button" class="dn-nav-link" data-tab="profil" data-label="Profil" onclick="switchTab('profil')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="dn-nav-text">Profil</span></button><button type="button" class="dn-nav-link" data-tab="preferences" data-label="Mon espace" onclick="switchTab('preferences')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span class="dn-nav-text">Mon espace</span></button>
+            </nav>
+            <div class="dn-sb-foot"><button type="button" class="dn-nav-link" data-label="Signaler des bugs" onclick="showAppModal('Support bugs Dentist Nerds : dentistnerds@gmail.com')"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5v.5"/></svg><span class="dn-nav-text">Signaler des bugs</span></button><button type="button" class="dn-nav-link is-danger" data-label="Déconnexion" onclick="logout()"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3"/><path d="M16 8l4 4-4 4"/><path d="M20 12H9"/></svg><span class="dn-nav-text">Déconnexion</span></button></div>
+        </div>
+        <div id="dn-sb-backdrop"></div><div id="dn-sb-tip" role="tooltip"></div>
 
         <main>
             <header>
@@ -7877,7 +7889,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                         <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
                         <span class="dn-notification-badge" id="dn-notification-badge">0</span>
                     </button>
-                    <div class="dn-profile-mini" onclick="switchTab('profil')" title="Ouvrir mon profil">
+                    <button type="button" class="dn-menu-btn" id="dn-menu-btn" aria-label="Ouvrir le menu" aria-expanded="false"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><div class="dn-profile-mini" onclick="switchTab('profil')" title="Ouvrir mon profil">
                         <div class="avatar-circle" id="user-avatar-initial">A</div>
                         <div><div class="dn-profile-mini-name" id="user-display-name">Akram</div><div class="dn-profile-mini-role">Chirurgie Dentaire</div></div>
                     </div>
@@ -13699,6 +13711,54 @@ html body .dn-pf2 .dn-pf-seg button.active{background:var(--primary)!important;b
 @media(min-width:481px){.dn-pf2-id-row{grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr)}}
 @media(max-width:900px){.dn-pf2-hero{align-items:start}}
 </style>
+<script id="dn-sidebar-js">
+(function(){
+  var sb=document.getElementById('dn-sidebar'); if(!sb) return;
+  var bd=document.getElementById('dn-sb-backdrop'),tip=document.getElementById('dn-sb-tip'),tog=document.getElementById('dn-sb-toggle'),mb=document.getElementById('dn-menu-btn');
+  var KEY='dn_sb_collapsed',collapsed=false,peek=false,drawer=false;
+  try{collapsed=localStorage.getItem(KEY)==='1'}catch(e){}
+  function mode(){var w=innerWidth;return w<=900?'drawer':w<=1100?(peek?'full':'rail'):(collapsed?'rail':'full')}
+  function apply(){
+    var w=innerWidth,m=mode();
+    sb.setAttribute('data-mode',m);
+    sb.classList.toggle('is-peek',w>900&&w<=1100&&peek);
+    sb.classList.toggle('is-open',m==='drawer'&&drawer);
+    document.body.style.setProperty('--dn-sb-w',m==='drawer'?'0px':(w<=1100||collapsed)?'76px':'var(--dn-sb-open)');
+    bd.classList.toggle('on',(m==='drawer'&&drawer)||sb.classList.contains('is-peek'));
+    var l=m==='drawer'?'Fermer le menu':m==='full'?'Réduire le menu':'Agrandir le menu';
+    tog.setAttribute('aria-label',l);tog.setAttribute('data-label',l);
+    if(mb)mb.setAttribute('aria-expanded',m==='drawer'&&drawer?'true':'false');
+    if(m==='drawer')sb.setAttribute('aria-hidden',drawer?'false':'true');else sb.removeAttribute('aria-hidden');
+    tip.classList.remove('show');
+  }
+  function close(f){var was=drawer||peek;drawer=peek=false;apply();if(f&&was&&mb&&mode()==='drawer')mb.focus()}
+  tog.onclick=function(){var m=mode();if(m==='drawer')return close(true);if(innerWidth<=1100){peek=!peek}else{collapsed=!collapsed;try{localStorage.setItem(KEY,collapsed?'1':'0')}catch(e){}}apply()};
+  if(mb)mb.onclick=function(){if(drawer)return close(true);syncUser();drawer=true;apply();setTimeout(function(){(sb.querySelector('.dn-nav-link.active')||tog).focus()},60)};
+  bd.onclick=function(){close(true)};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&(drawer||peek))close(true);
+    if(e.key==='Tab'&&drawer){var f=[].slice.call(sb.querySelectorAll('button,[tabindex="0"]')).filter(function(x){return x.offsetParent}),a=f[0],z=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+  });
+  var tx=null;
+  sb.addEventListener('touchstart',function(e){tx=e.touches[0].clientX},{passive:true});
+  sb.addEventListener('touchend',function(e){if(tx!==null&&drawer&&e.changedTouches[0].clientX-tx<-70)close(true);tx=null},{passive:true});
+  sb.addEventListener('click',function(e){if(e.target.closest('.dn-nav-link,.dn-sb-user,.dn-sb-search'))setTimeout(function(){close(false)},0)});
+  var u=sb.querySelector('.dn-sb-user');u.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();u.click()}});
+  addEventListener('resize',function(){if(innerWidth>900)drawer=false;if(innerWidth>1100)peek=false;apply()});
+  function showTip(el){if(sb.getAttribute('data-mode')!=='rail')return;var t=el.getAttribute('data-label');if(!t)return;tip.textContent=t;var r=el.getBoundingClientRect();tip.style.left=(r.right+10)+'px';tip.style.top=(r.top+(r.height-tip.offsetHeight)/2)+'px';tip.classList.add('show')}
+  sb.addEventListener('mouseover',function(e){var el=e.target.closest('[data-label]');el?showTip(el):tip.classList.remove('show')});
+  sb.addEventListener('mouseleave',function(){tip.classList.remove('show')});
+  var links=[].slice.call(sb.querySelectorAll('.dn-nav-link[data-tab]'));
+  function sync(t){if(t==='dashboard')t='accueil';links.forEach(function(l){var on=l.getAttribute('data-tab')===t;l.classList.toggle('active',on);on?l.setAttribute('aria-current','page'):l.removeAttribute('aria-current')})}
+  function syncUser(){try{if(!currentUser)return;document.getElementById('dn-sb-avatar').textContent=getProfileAvatarGlyph();document.getElementById('dn-sb-name').textContent=currentUser.name||'Étudiant';document.getElementById('dn-sb-year').textContent=currentUser.studyYear||''}catch(e){}}
+  var st=window.switchTab;
+  if(typeof st==='function')window.switchTab=function(t){var r=st.apply(this,arguments);try{sync(t);syncUser()}catch(e){}return r};
+  window.dnSbSearch=function(){close(false);switchTab('examens');setTimeout(function(){var i=document.getElementById('search-exams-input');if(i)i.focus()},150)};
+  apply();sync('accueil');
+})();
+</script>
+
 </body>
 </html>
 <script id="dn-notif-toast-engine">
