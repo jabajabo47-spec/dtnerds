@@ -7701,11 +7701,13 @@ body{--dn-sb-w:var(--dn-sb-open)}
 #dn-sidebar *{box-sizing:border-box}
 #dn-sidebar[data-mode=rail]{width:var(--dn-sb-rail)}
 #dn-sidebar.is-peek{box-shadow:14px 0 40px rgba(0,0,0,.25)}
-#dn-sidebar .dn-sb-head{display:flex;align-items:center;gap:12px;padding:16px;min-height:68px}
-#dn-sidebar .dn-sb-logo{width:36px;height:36px;flex:0 0 36px;border-radius:10px;background:var(--dn-nav-active);display:grid;place-items:center}
-#dn-sidebar .dn-sb-logo svg{width:22px;height:22px;stroke:var(--primary)!important}
-#dn-sidebar .dn-sb-brand{flex:1;min-width:0;font-size:17px;font-weight:700;color:var(--text-main)!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#dn-sidebar .dn-sb-collapse{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;padding:0;border:1px solid var(--border-glass);border-radius:10px;cursor:pointer;background:transparent!important;color:var(--text-secondary)!important}
+#dn-sidebar .dn-sb-head{display:flex;align-items:center;gap:12px;padding:20px 16px 16px;min-height:76px}
+#dn-sidebar .dn-sb-logo{width:40px;height:40px;flex:0 0 40px;border-radius:12px;background:linear-gradient(135deg,#6674f2,#8b5cf6);display:grid;place-items:center;box-shadow:0 6px 16px rgba(102,116,242,.28)}
+#dn-sidebar .dn-sb-logo svg{width:22px;height:22px;stroke:#fff!important}
+#dn-sidebar .dn-sb-brand{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dn-sidebar .dn-sb-brand b{font-size:17px;font-weight:800;letter-spacing:-.01em;color:var(--text-main)}
+#dn-sidebar .dn-sb-brand small{font-size:12px;font-weight:600;color:var(--text-secondary)}
+#dn-sidebar .dn-sb-collapse{display:none!important;width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;padding:0;border:1px solid var(--border-glass);border-radius:10px;cursor:pointer;background:transparent!important;color:var(--text-secondary)!important}
 #dn-sidebar .dn-sb-collapse:hover,#dn-sidebar .dn-nav-link:hover{background:var(--dn-nav-hover)!important;color:var(--text-main)!important}
 #dn-sidebar .dn-sb-collapse svg{display:none;width:18px;height:18px}
 #dn-sidebar[data-mode=full] .i-l,#dn-sidebar[data-mode=rail] .i-r,#dn-sidebar[data-mode=drawer] .i-x{display:block}
@@ -7715,12 +7717,12 @@ body{--dn-sb-w:var(--dn-sb-open)}
 #dn-sidebar .dn-sb-userinfo strong{color:var(--text-main);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #dn-sidebar .dn-sb-userinfo small{font-size:13px;color:var(--text-secondary)}
 #dn-sidebar .dn-sb-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 12px 12px;overscroll-behavior:contain;scrollbar-width:thin}
-#dn-sidebar .dn-sb-label{padding:20px 12px 8px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-secondary)}
+#dn-sidebar .dn-sb-label{padding:22px 12px 8px;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text-secondary)}
 #dn-sidebar .dn-sb-label:first-child{padding-top:8px}
 #dn-sidebar .dn-nav-link{position:relative;display:flex;align-items:center;gap:12px;width:100%;height:44px;margin:2px 0;padding:0 12px;border:0;border-radius:10px;font:inherit;font-size:15px;font-weight:600;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent;background:transparent!important;color:var(--text-secondary)!important;transition:background .15s,color .15s}
 #dn-sidebar .dn-nav-link svg{width:21px;height:21px;flex:0 0 21px;fill:none!important;stroke:currentColor!important;stroke-width:1.9;padding:0!important;background:none!important;box-shadow:none!important;filter:none!important}
 #dn-sidebar .dn-nav-text{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:inherit!important}
-#dn-sidebar .dn-nav-link.active{background:var(--dn-nav-active)!important;color:var(--primary)!important;font-weight:700}
+#dn-sidebar .dn-nav-link.active{background:linear-gradient(90deg,rgba(102,116,242,.22),rgba(102,116,242,.08))!important;color:var(--primary)!important;font-weight:700}
 #dn-sidebar .dn-nav-link.active:before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:var(--primary)}
 #dn-sidebar .dn-nav-link.is-danger{color:var(--error)!important}
 #dn-sidebar .dn-nav-link.is-danger:hover{background:rgba(220,38,38,.12)!important}
@@ -7735,6 +7737,7 @@ body{--dn-sb-w:var(--dn-sb-open)}
 #dn-sidebar[data-mode=drawer]{width:min(86vw,320px);transform:translateX(-105%);visibility:hidden;padding-top:env(safe-area-inset-top,0px);transition:transform .24s,visibility 0s .24s}
 #dn-sidebar[data-mode=drawer].is-open{transform:none;visibility:visible;transition:transform .24s;box-shadow:0 0 44px rgba(0,0,0,.4)}
 #dn-sidebar[data-mode=drawer] .dn-sb-user{display:flex}
+#dn-sidebar[data-mode=drawer] .dn-sb-collapse{display:grid!important}
 #dn-sidebar[data-mode=drawer] .dn-nav-link{height:48px;font-size:16px}
 @media(max-height:700px){#dn-sidebar .dn-nav-link{height:38px}#dn-sidebar .dn-sb-label{padding-top:12px}#dn-sidebar .dn-sb-head{min-height:56px;padding-top:10px;padding-bottom:6px}}
 #dn-sb-backdrop{position:fixed;inset:0;z-index:190;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:opacity .2s,visibility 0s .2s}
@@ -7861,7 +7864,7 @@ body{--dn-sb-w:var(--dn-sb-open)}
 
     <div id="app-layout">
         <div id="dn-sidebar" data-mode="full">
-            <div class="dn-sb-head"><span class="dn-sb-logo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="#4A5C6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4C5.34315 4 4 5.34315 4 7C4 9.33333 4.5 13 6 16C7 18 8 20 9 20C10 20 10.5 18 11.5 16C12.5 14 13 14 14 16C15 18 15.5 20 16.5 20C17.5 20 18.5 18 19.5 16C21 13 21.5 9.33333 21.5 7C21.5 5.34315 20.1569 4 18.5 4C16.5 4 15 6 12 6C9 6 7.5 4 7 4Z"></path></svg></span><span class="dn-sb-brand">Dentist Nerds</span>
+            <div class="dn-sb-head"><span class="dn-sb-logo"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="#4A5C6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4C5.34315 4 4 5.34315 4 7C4 9.33333 4.5 13 6 16C7 18 8 20 9 20C10 20 10.5 18 11.5 16C12.5 14 13 14 14 16C15 18 15.5 20 16.5 20C17.5 20 18.5 18 19.5 16C21 13 21.5 9.33333 21.5 7C21.5 5.34315 20.1569 4 18.5 4C16.5 4 15 6 12 6C9 6 7.5 4 7 4Z"></path></svg></span><span class="dn-sb-brand"><b>Dentist Nerds</b><small>Révisions QCM</small></span>
             <button type="button" class="dn-sb-collapse" id="dn-sb-toggle" aria-label="Réduire le menu" data-label="Agrandir le menu"><svg class="i-l" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg><svg class="i-r" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg><svg class="i-x" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
             <div class="dn-sb-user" onclick="switchTab('profil')" role="button" tabindex="0" aria-label="Ouvrir mon profil"><span class="dn-sb-avatar" id="dn-sb-avatar">A</span><span class="dn-sb-userinfo"><strong id="dn-sb-name">Étudiant</strong><small id="dn-sb-year"></small></span></div>
             <nav class="dn-sb-scroll" aria-label="Navigation principale">
@@ -13685,8 +13688,8 @@ html body .dn-pf2 .dn-pf-seg button.active{background:var(--primary)!important;b
   var sb=document.getElementById('dn-sidebar'); if(!sb) return;
   var bd=document.getElementById('dn-sb-backdrop'),tip=document.getElementById('dn-sb-tip'),tog=document.getElementById('dn-sb-toggle'),mb=document.getElementById('dn-menu-btn');
   var KEY='dn_sb_collapsed',collapsed=false,peek=false,drawer=false;
-  try{collapsed=localStorage.getItem(KEY)==='1'}catch(e){}
-  function mode(){var w=innerWidth;return w<=900?'drawer':w<=1100?(peek?'full':'rail'):(collapsed?'rail':'full')}
+  try{localStorage.removeItem(KEY)}catch(e){}
+  function mode(){var w=innerWidth;return w<=900?'drawer':w<=1100?'rail':'full'}
   function apply(){
     var w=innerWidth,m=mode();
     sb.setAttribute('data-mode',m);
@@ -13701,7 +13704,7 @@ html body .dn-pf2 .dn-pf-seg button.active{background:var(--primary)!important;b
     tip.classList.remove('show');
   }
   function close(f){var was=drawer||peek;drawer=peek=false;apply();if(f&&was&&mb&&mode()==='drawer')mb.focus()}
-  tog.onclick=function(){if(mode()==='drawer')return close(true);if(innerWidth<=1100){peek=!peek}else{collapsed=!collapsed;try{localStorage.setItem(KEY,collapsed?'1':'0')}catch(e){}}apply()};
+  tog.onclick=function(){close(true)};
   if(mb)mb.onclick=function(){if(drawer)return close(true);syncUser();drawer=true;apply();setTimeout(function(){(sb.querySelector('.dn-nav-link.active')||tog).focus()},60)};
   bd.onclick=function(){close(true)};
   document.addEventListener('keydown',function(e){
