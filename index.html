@@ -6,7 +6,7 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Dentist Nerds — L'Excellence Dentaire</title>
     <meta name="description" content="Dentist Nerds — plateforme d'apprentissage pour étudiants en chirurgie dentaire : cours, QCM, planning de révision et suivi de progression.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦷</text></svg>">
+    <link rel="icon" type="image/png" href="tooth.png">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#06141B">
@@ -821,16 +821,12 @@
             background: var(--bg-surface);
             border: 1px solid var(--border-glass);
             border-radius: 22px;
-            box-shadow: 0 28px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(59,130,246,.06);
+            box-shadow: 0 24px 60px rgba(0,0,0,.35);
             overflow: hidden;
             transform: translateY(12px) scale(.97);
             transition: transform .22s cubic-bezier(.2,.8,.2,1);
         }
         .app-modal-overlay.is-open .app-modal { transform: translateY(0) scale(1); }
-        .app-modal-top {
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--accent-violet), var(--accent-cyan));
-        }
         .app-modal-content { padding: 1.65rem 1.7rem 1.45rem; }
         .app-modal-head { display: flex; align-items: flex-start; gap: 13px; }
         .app-modal-icon {
@@ -839,9 +835,13 @@
             border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.25rem;
-            background: rgba(37,99,235,.14);
-            border: 1px solid rgba(59,130,246,.28);
+            background: transparent;
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
         }
+        .app-modal-icon svg { width: 22px; height: 22px; display: block; }
+        .app-modal-icon.is-error { color: #dc2626; }
+        .app-modal-icon.is-success { color: #16a34a; }
         .app-modal-title {
             margin: 2px 0 5px;
             color: var(--text-main);
@@ -862,12 +862,11 @@
             padding: .72rem 1.25rem;
             border-radius: 11px;
             color: #fff;
-            background: linear-gradient(135deg, var(--primary), var(--accent-violet));
+            background: var(--primary);
             font-family: inherit;
             font-size: .88rem;
-            font-weight: 800;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 7px 20px var(--primary-glow);
             transition: transform .18s ease, filter .18s ease;
         }
         .app-modal-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
@@ -3263,7 +3262,7 @@ body.dn-theme-transitioning *{
 .auth-wrapper{position:relative;z-index:1;max-width:1120px;grid-template-columns:1.03fr .97fr;border-radius:30px;background:rgba(15,23,42,.90);border:1px solid rgba(148,163,184,.16);box-shadow:0 35px 100px rgba(0,0,0,.38),0 0 0 1px rgba(255,255,255,.025) inset}
 .auth-left-pane{position:relative;overflow:hidden;padding:3.2rem;background:linear-gradient(145deg,#173caa 0%,#2862e9 46%,#6945e7 100%)}
 .auth-left-pane:before{content:"";position:absolute;width:330px;height:330px;right:-130px;top:-130px;border-radius:50%;border:1px solid rgba(255,255,255,.16);box-shadow:0 0 0 35px rgba(255,255,255,.035),0 0 0 70px rgba(255,255,255,.025)}
-.auth-left-pane:after{content:"🦷";position:absolute;right:28px;bottom:25px;font-size:92px;opacity:.12;transform:rotate(-12deg)}
+.auth-left-pane:after{content:"";position:absolute;right:28px;bottom:25px;width:96px;height:96px;background:url(tooth.png) center/contain no-repeat;opacity:.12;transform:rotate(-12deg)}
 .auth-logo,.auth-quote-box,.auth-benefits{position:relative;z-index:2}
 .auth-logo{gap:13px}.logo-icon-box{box-shadow:0 10px 25px rgba(0,0,0,.14);backdrop-filter:blur(8px)}
 .auth-quote-box{margin-top:auto;margin-bottom:1.5rem}
@@ -4506,9 +4505,8 @@ html[data-theme="dark"] #fullscreen-view > div:first-child{
   font-weight:900 !important;letter-spacing:-.35px !important;
 }
 #fs-header-title::before{
-  content:'🦷';display:grid;place-items:center;width:32px;height:32px;
-  border-radius:10px;background:linear-gradient(135deg,#5368ef,#7b4fe3);
-  box-shadow:0 7px 18px rgba(83,104,239,.22);font-size:16px;
+  content:"";display:block;width:32px;height:32px;
+  background:url(tooth.png) center/contain no-repeat;
 }
 #fullscreen-view > div:first-child button{
   border-radius:12px !important;
@@ -7698,10 +7696,9 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
     <div id="app-modal-overlay" class="app-modal-overlay" role="dialog" aria-modal="true"
          aria-labelledby="app-modal-title" aria-describedby="app-modal-message">
         <div class="app-modal" role="document">
-            <div class="app-modal-top"></div>
             <div class="app-modal-content">
                 <div class="app-modal-head">
-                    <div class="app-modal-icon" id="app-modal-icon">ℹ️</div>
+                    <div class="app-modal-icon" id="app-modal-icon"></div>
                     <div>
                         <div class="app-modal-title" id="app-modal-title">Information</div>
                         <div class="app-modal-message" id="app-modal-message"></div>
@@ -7720,18 +7717,18 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             <div class="auth-left-pane">
                 <div class="auth-logo">
                     <div class="logo-icon-box">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4C5.34315 4 4 5.34315 4 7C4 9.33333 4.5 13 6 16C7 18 8 20 9 20C10 20 10.5 18 11.5 16C12.5 14 13 14 14 16C15 18 15.5 20 16.5 20C18.5 18 19.5 15 20.5 12C21.3 9.5 21.5 7.6 20.5 6C19.7 4.7 18.4 4 17 4C15.4 4 14 6 12 6C10 6 8.6 4 7 4Z"></path></svg>
+                        <img src="tooth.png" alt="Dentist Nerds" width="30" height="30" style="display:block;width:30px;height:30px;object-fit:contain">
                     </div>
                     <span>Dentist Nerds</span>
                 </div>
                 <div class="auth-quote-box">
-                    <div style="font-size:.76rem;text-transform:uppercase;letter-spacing:1px;color:#b9d4ff;margin-bottom:.55rem;font-weight:800">Citation du jour 💡</div>
+                    <div style="font-size:.76rem;text-transform:uppercase;letter-spacing:1px;color:#b9d4ff;margin-bottom:.55rem;font-weight:800">Citation du jour</div>
                     <div class="auth-quote-text" id="auth-side-quote">“Keep going — every focused session makes tomorrow easier.”</div>
                 </div>
                 <div class="auth-benefits">
-                    <div class="auth-benefit"><span class="auth-benefit-icon">📚</span><span>Banques de QCM organisées par année, module et leçon</span></div>
-                    <div class="auth-benefit"><span class="auth-benefit-icon">🎯</span><span>Sessions personnalisées pour réviser efficacement</span></div>
-                    <div class="auth-benefit"><span class="auth-benefit-icon">🏆</span><span>Suivi de progression et espace étudiant personnel</span></div>
+                    <div class="auth-benefit"><span class="auth-benefit-icon">✓</span><span>Banques de QCM organisées par année, module et leçon</span></div>
+                    <div class="auth-benefit"><span class="auth-benefit-icon">✓</span><span>Sessions personnalisées pour réviser efficacement</span></div>
+                    <div class="auth-benefit"><span class="auth-benefit-icon">✓</span><span>Suivi de progression et espace étudiant personnel</span></div>
                 </div>
             </div>
 
@@ -7741,8 +7738,8 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                 </div>
 
                 <div id="signup-container">
-                    <div class="auth-mode-kicker">🎓 ESPACE ÉTUDIANT · DENTIST NERDS</div>
-                    <h1 class="auth-title">Créer votre espace 🦷</h1>
+                    <div class="auth-mode-kicker">Espace étudiant — Dentist Nerds</div>
+                    <h1 class="auth-title">Créer votre espace</h1>
                     
                     <form onsubmit="handleSignup(event)">
                         <div class="form-group"><label>Nom et Prénom</label><input type="text" id="reg-name" class="form-control" placeholder="ex. Nom Prénom" autocomplete="name" required></div>
@@ -7754,7 +7751,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                         </div>
                         <div class="form-group"><label>Confirmer le mot de passe</label><div class="auth-field-wrap"><input type="password" id="reg-password-confirm" class="form-control" placeholder="Retapez votre mot de passe" autocomplete="new-password" required><button type="button" class="auth-password-toggle" onclick="togglePassword('reg-password-confirm',this)" aria-label="Afficher le mot de passe"><svg class="dn-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 12s3.4-6 9.6-6 9.6 6 9.6 6-3.4 6-9.6 6-9.6-6-9.6-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div></div>
                         
-                        <button type="submit" class="btn-auth">Créer mon espace →</button>
+                        <button type="submit" class="btn-auth">Créer mon espace</button>
                         <div class="auth-divider"><span>ou continuer avec</span></div>
                         <button type="button" class="auth-google-btn" onclick="handleGoogleAuth()" aria-label="Continuer avec Google"><span class="auth-google-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" role="img"><path fill="#4285F4" d="M21.35 12.23c0-.7-.06-1.37-.18-2.02H12v3.82h5.22a4.46 4.46 0 0 1-1.94 2.93v2.43h3.14c1.84-1.69 2.93-4.18 2.93-7.16z"/><path fill="#34A853" d="M12 21.8c2.63 0 4.84-.87 6.45-2.4l-3.14-2.43c-.87.58-1.98.92-3.31.92-2.54 0-4.7-1.72-5.47-4.03H3.28v2.51A9.75 9.75 0 0 0 12 21.8z"/><path fill="#FBBC05" d="M6.53 13.86A5.86 5.86 0 0 1 6.22 12c0-.65.11-1.28.31-1.86V7.63H3.28A9.8 9.8 0 0 0 2.2 12c0 1.58.38 3.08 1.08 4.37l3.25-2.51z"/><path fill="#EA4335" d="M12 6.11c1.43 0 2.71.49 3.72 1.45l2.78-2.78C16.84 3.2 14.63 2.2 12 2.2a9.75 9.75 0 0 0-8.72 5.43l3.25 2.51C7.3 7.83 9.46 6.11 12 6.11z"/></svg></span><span>Continuer avec Google</span></button>
                     </form>
@@ -7762,37 +7759,37 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                 </div>
 
                 <div id="login-container" style="display:none">
-                    <div class="auth-mode-kicker">⚡ REPRENEZ LÀ OÙ VOUS VOUS ÊTES ARRÊTÉ</div>
-                    <h1 class="auth-title">Bon retour ! 👋</h1>
+                    <div class="auth-mode-kicker">Reprenez là où vous vous êtes arrêté</div>
+                    <h1 class="auth-title">Bon retour</h1>
                     <p class="auth-subtitle">Retrouvez vos banques de QCM, vos sessions et votre progression.</p>
                     <form onsubmit="handleLogin(event)">
                         <div class="form-group"><label>Adresse email</label><input type="email" id="login-email" class="form-control" placeholder="vous@exemple.com" autocomplete="email" required></div>
                         <div class="form-group"><label>Mot de passe</label><div class="auth-field-wrap"><input type="password" id="login-password" class="form-control" placeholder="Votre mot de passe" autocomplete="current-password" required><button type="button" class="auth-password-toggle" onclick="togglePassword('login-password',this)" aria-label="Afficher le mot de passe"><svg class="dn-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 12s3.4-6 9.6-6 9.6 6 9.6 6-3.4 6-9.6 6-9.6-6-9.6-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div></div>
                         <div style="display:flex;justify-content:flex-end;margin-top:-.3rem;margin-bottom:.55rem"><a onclick="switchAuthMode('forgot')" style="font-size:.82rem;color:#9ea8ff;cursor:pointer;font-weight:800">Mot de passe oublié ?</a></div>
-                        <button type="submit" class="btn-auth" id="login-submit-btn">Connexion sécurisée →</button>
-                        <div class="auth-inline-note">🔐 <span>Votre compte est protégé par l'authentification Supabase.</span></div>
+                        <button type="submit" class="btn-auth" id="login-submit-btn">Connexion sécurisée</button>
+                        <div class="auth-inline-note"><span>Votre compte est protégé par l'authentification Supabase.</span></div>
                     </form>
                     <div class="auth-switch-text">Nouveau sur la plateforme ? <a onclick="switchAuthMode('signup')">Créer un compte</a></div>
                 </div>
 
                 <div id="forgot-container" style="display:none">
-                    <h1 class="auth-title">Récupérer votre compte 🔐</h1>
+                    <h1 class="auth-title">Récupérer votre compte</h1>
                     <p class="auth-subtitle">Entrez votre adresse email. Vous recevrez un lien sécurisé pour choisir un nouveau mot de passe.</p>
                     <form onsubmit="handleSendResetCode(event)">
                         <div class="form-group"><label>Adresse email</label><input type="email" id="forgot-email" class="form-control" placeholder="vous@exemple.com" autocomplete="email" required></div>
-                        <button type="submit" class="btn-auth">Envoyer le lien de récupération →</button>
+                        <button type="submit" class="btn-auth">Envoyer le lien de récupération</button>
                     </form>
-                    <div class="auth-inline-note">📨 <span>Le message arrive dans la boîte de réception de l'adresse utilisée pour le compte. Vérifiez aussi les spams.</span></div>
+                    <div class="auth-inline-note"><span>Le message arrive dans la boîte de réception de l'adresse utilisée pour le compte. Vérifiez aussi les spams.</span></div>
                     <div class="auth-switch-text"><a onclick="switchAuthMode('login')">← Retour à la connexion</a></div>
                 </div>
 
                 <div id="reset-container" style="display:none">
-                    <h1 class="auth-title">Nouveau mot de passe 🔑</h1>
+                    <h1 class="auth-title">Nouveau mot de passe</h1>
                     <p class="auth-subtitle">Choisissez un nouveau mot de passe sans limite artificielle de 6 caractères.</p>
                     <form onsubmit="handleResetPassword(event)">
                         <div class="form-group"><label>Nouveau mot de passe</label><div class="auth-field-wrap"><input type="password" id="new-password" class="form-control" placeholder="Votre nouveau mot de passe" autocomplete="new-password" oninput="updatePasswordStrength(this,'reset-strength')" required><button type="button" class="auth-password-toggle" onclick="togglePassword('new-password',this)" aria-label="Afficher le mot de passe"><svg class="dn-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 12s3.4-6 9.6-6 9.6 6 9.6 6-3.4 6-9.6 6-9.6-6-9.6-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div><div class="auth-strength" id="reset-strength"><span></span></div></div>
                         <div class="form-group"><label>Confirmer le nouveau mot de passe</label><div class="auth-field-wrap"><input type="password" id="new-password-confirm" class="form-control" placeholder="Retapez le nouveau mot de passe" autocomplete="new-password" required><button type="button" class="auth-password-toggle" onclick="togglePassword('new-password-confirm',this)" aria-label="Afficher le mot de passe"><svg class="dn-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 12s3.4-6 9.6-6 9.6 6 9.6 6-3.4 6-9.6 6-9.6-6-9.6-6Z"></path><circle cx="12" cy="12" r="2.8"></circle></svg></button></div></div>
-                        <button type="submit" class="btn-auth">Enregistrer le nouveau mot de passe →</button>
+                        <button type="submit" class="btn-auth">Enregistrer le nouveau mot de passe</button>
                     </form>
                     <div class="auth-switch-text"><a onclick="switchAuthMode('login')">← Annuler</a></div>
                 </div>
@@ -7805,7 +7802,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             <div class="sidebar-header">
                 <div class="sidebar-brand-row">
                     <div style="width: 36px; height: 36px; background: rgba(37,99,235,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4A5C6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4C5.34315 4 4 5.34315 4 7C4 9.33333 4.5 13 6 16C7 18 8 20 9 20C10 20 10.5 18 11.5 16C12.5 14 13 14 14 16C15 18 15.5 20 16.5 20C17.5 20 18.5 18 19.5 16C21 13 21.5 9.33333 21.5 7C21.5 5.34315 20.1569 4 18.5 4C16.5 4 15 6 12 6C9 6 7.5 4 7 4Z"></path></svg>
+                        <img src="tooth.png" alt="Dentist Nerds" width="26" height="26" style="display:block;width:26px;height:26px;object-fit:contain">
                     </div>
                     <span style="font-size: 1.15rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main);">Dentist Nerds</span>
                 </div>
@@ -8007,19 +8004,33 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             }
 
             appModalLastFocused = document.activeElement;
-            const raw = String(message);
-            const isError = /❌|incorrect|invalide|erreur|introuvable|ne correspondent|doit contenir|Veuillez/i.test(raw);
-            const isSuccess = /🎉|✅|succès|activé|envoyée avec succès|terminée/i.test(raw);
-
+            let raw = String(message);
+            // Translate the most common Supabase messages (they come back in English).
+            const rate = raw.match(/only request this after (\d+) seconds?/i);
+            if (rate) raw = `Pour votre sécurité, vous pourrez refaire cette demande dans ${rate[1]} secondes.`;
+            else if (/invalid login credentials/i.test(raw)) raw = 'Email ou mot de passe incorrect.';
+            else if (/user already registered/i.test(raw)) raw = 'Cette adresse email est déjà utilisée. Connectez-vous ou réinitialisez votre mot de passe.';
+            else if (/password should be at least (\d+)/i.test(raw)) raw = `Le mot de passe doit contenir au moins ${raw.match(/at least (\d+)/i)[1]} caractères.`;
+            else if (/email rate limit exceeded/i.test(raw)) raw = 'Trop de demandes. Réessayez dans quelques minutes.';
+            const isError = /❌|incorrect|invalide|erreur|introuvable|ne correspondent|doit contenir|Veuillez|impossible|déjà utilisée|trop de demandes|invalid|failed/i.test(raw);
+            const isSuccess = !isError && /🎉|✅|succès|activé|envoyée avec succès|terminée|modifié|envoyé/i.test(raw);
+            const ICONS = {
+                info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></svg>',
+                error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 3 19h18L12 4Z"/><path d="M12 10v4"/><circle cx="12" cy="16.6" r=".6" fill="currentColor"/></svg>',
+                success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16 9.5"/></svg>'
+            };
+            icon.classList.remove('is-error', 'is-success');
             if (isError) {
                 title.textContent = 'Action impossible';
-                icon.textContent = '⚠️';
+                icon.innerHTML = ICONS.error;
+                icon.classList.add('is-error');
             } else if (isSuccess) {
-                title.textContent = 'C’est fait !';
-                icon.textContent = '✨';
+                title.textContent = 'C’est fait';
+                icon.innerHTML = ICONS.success;
+                icon.classList.add('is-success');
             } else {
                 title.textContent = 'Information';
-                icon.textContent = 'ℹ️';
+                icon.innerHTML = ICONS.info;
             }
 
             messageEl.textContent = raw;
@@ -8244,7 +8255,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                     if (authScreen) authScreen.style.display = 'flex';
 
                     showAppModal(
-                        '📱 Votre compte vient d’être ouvert sur un autre appareil. Cette session a été déconnectée.'
+                        'Votre compte vient d’être ouvert sur un autre appareil. Cette session a été déconnectée.'
                     );
                 }
             }, 5000);
@@ -8292,7 +8303,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                         const claimed = await claimDNDevice();
                         if (!claimed) {
                             await sb.auth.signOut();
-                            showAppModal('❌ Impossible de prendre le contrôle de cette session. Veuillez réessayer.');
+                            showAppModal('Impossible de prendre le contrôle de cette session. Veuillez réessayer.');
                             return;
                         }
                     }
@@ -9259,15 +9270,15 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                     try { sessionStorage.removeItem('dn_oauth_pending'); } catch (e) {}
                     const raw = String(error.message || '');
                     if (/provider.*not.*enabled|unsupported provider|google/i.test(raw)) {
-                        showAppModal('🔧 Google n’est pas encore activé dans Supabase. Activez le fournisseur Google avec votre Client ID et Client Secret, puis ajoutez cette adresse dans les URL autorisées.');
+                        showAppModal('Google n’est pas encore activé dans Supabase. Activez le fournisseur Google avec votre Client ID et Client Secret, puis ajoutez cette adresse dans les URL autorisées.');
                     } else if (/redirect/i.test(raw)) {
-                        showAppModal('🔗 L’adresse de retour Google n’est pas encore autorisée dans Supabase. Ajoutez l’URL du site dans Authentication → URL Configuration.');
+                        showAppModal('L’adresse de retour Google n’est pas encore autorisée dans Supabase. Ajoutez l’URL du site dans Authentication → URL Configuration.');
                     } else {
-                        showAppModal('❌ ' + raw);
+                        showAppModal(raw);
                     }
                 }
             } catch (err) {
-                showAppModal('❌ Connexion Google indisponible pour le moment. Vérifiez la configuration Google dans Supabase.');
+                showAppModal('Connexion Google indisponible pour le moment. Vérifiez la configuration Google dans Supabase.');
             } finally {
                 buttons.forEach(btn => { btn.disabled = false; btn.classList.remove('is-loading'); });
             }
@@ -9275,10 +9286,10 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
 
         async function resendConfirmationEmail() {
             const email = (document.getElementById('login-email')?.value || '').trim().toLowerCase();
-            if (!isPlausibleEmail(email)) { showAppModal('📧 Entrez d’abord l’adresse email utilisée lors de l’inscription.'); return; }
+            if (!isPlausibleEmail(email)) { showAppModal('Entrez d’abord l’adresse email utilisée lors de l’inscription.'); return; }
             const { error } = await sb.auth.resend({ type: 'signup', email });
-            if (error) { showAppModal('❌ Impossible de renvoyer le message pour cette adresse.'); return; }
-            showAppModal('📩 Un nouvel email de confirmation a été demandé. Vérifiez votre boîte de réception et vos spams.');
+            if (error) { showAppModal('Impossible de renvoyer le message pour cette adresse.'); return; }
+            showAppModal('Un nouvel email de confirmation a été demandé. Vérifiez votre boîte de réception et vos spams.');
         }
 
         async function handleSignup(event) {
@@ -9289,11 +9300,11 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             const confirmPassword = document.getElementById('reg-password-confirm').value;
 
             if (!isPlausibleEmail(email)) {
-                showAppModal('📧 Entrez une adresse email valide.');
+                showAppModal('Entrez une adresse email valide.');
                 return;
             }
             if (!password) {
-                showAppModal('🔐 Choisissez un mot de passe.');
+                showAppModal('Choisissez un mot de passe.');
                 return;
             }
             if (password !== confirmPassword) {
@@ -9307,15 +9318,15 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                 options: { data: { full_name: name } }
             });
             if (error) {
-                showAppModal('❌ ' + error.message);
+                showAppModal(error.message);
                 return;
             }
             if (!data.user) {
-                showAppModal('❌ Impossible de créer le compte.');
+                showAppModal('Impossible de créer le compte.');
                 return;
             }
             if (!data.session) {
-                showAppModal('📧 Compte créé. Vérifiez votre boîte mail et cliquez sur le lien de confirmation avant de vous connecter.');
+                showAppModal('Compte créé. Vérifiez votre boîte mail et cliquez sur le lien de confirmation avant de vous connecter.');
                 switchAuthMode('login');
                 const loginEmail = document.getElementById('login-email');
                 if (loginEmail) loginEmail.value = email;
@@ -9324,7 +9335,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             const deviceAllowed = await claimDNDevice();
             if (!deviceAllowed) {
                 await sb.auth.signOut();
-                showAppModal('❌ Impossible de prendre le contrôle de cette session. Veuillez réessayer.');
+                showAppModal('Impossible de prendre le contrôle de cette session. Veuillez réessayer.');
                 return;
             }
             await loadCurrentUserFromSupabase(data.user);
@@ -9338,7 +9349,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             event.preventDefault();
             const email = document.getElementById('login-email').value.trim().toLowerCase();
             const password = document.getElementById('login-password').value;
-            if (!isPlausibleEmail(email)) { showAppModal('📧 Entrez une adresse email valide et accessible.'); return; }
+            if (!isPlausibleEmail(email)) { showAppModal('Entrez une adresse email valide et accessible.'); return; }
 
             // Give instant feedback the moment the student taps — otherwise the
             // button just sits there while sign-in + data loading happen, which
@@ -9352,9 +9363,9 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                 if (error) {
                     const msg = String(error.message || '');
                     if (/email not confirmed|email.*confirm/i.test(msg)) {
-                        showAppModal('📧 Votre email n’est pas encore confirmé. Ouvrez le message reçu dans votre boîte mail puis réessayez.');
+                        showAppModal('Votre email n’est pas encore confirmé. Ouvrez le message reçu dans votre boîte mail puis réessayez.');
                     } else {
-                        showAppModal('❌ ' + msg);
+                        showAppModal(msg);
                     }
                     return;
                 }
@@ -9362,7 +9373,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
 
                 if (!deviceAllowed) {
                     await sb.auth.signOut();
-                    showAppModal('❌ Impossible de prendre le contrôle de cette session. Veuillez réessayer.');
+                    showAppModal('Impossible de prendre le contrôle de cette session. Veuillez réessayer.');
                     return;
                 }
 
@@ -9382,10 +9393,10 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             if (!email) return;
             const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: getAuthRedirectUrl() });
             if (error) {
-                showAppModal('❌ ' + error.message);
+                showAppModal(error.message);
                 return;
             }
-            showAppModal('📧 Un lien sécurisé de réinitialisation a été envoyé à votre adresse email.');
+            showAppModal('Un lien sécurisé de réinitialisation a été envoyé à votre adresse email.');
         }
 
         async function handleResetPassword(event) {
@@ -9393,7 +9404,7 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
             const newPass = document.getElementById('new-password').value;
             const newPassConfirm = document.getElementById('new-password-confirm').value;
             if (!newPass) {
-                showAppModal('🔐 Choisissez un nouveau mot de passe.');
+                showAppModal('Choisissez un nouveau mot de passe.');
                 return;
             }
             if (newPass !== newPassConfirm) {
@@ -9401,8 +9412,8 @@ html body button.dn-activation-year-card.active .dn-promo-tag{background:#fff!im
                 return;
             }
             const { error } = await sb.auth.updateUser({ password: newPass });
-            if (error) return showAppModal('❌ ' + error.message);
-            showAppModal('✅ Mot de passe modifié avec succès.');
+            if (error) return showAppModal(error.message);
+            showAppModal('Mot de passe modifié avec succès.');
             switchAuthMode('login');
         }
 
@@ -13382,6 +13393,14 @@ html body .dn-pf .dn-pf-actions{margin-bottom:96px}
   html body #auth-screen .auth-right-pane .form-group{margin-bottom:.65rem!important}
   html body #auth-screen .auth-right-pane .form-control{min-height:44px!important}
 }
+
+/* --- Cleanup: flat logo, no glowing dots --- */
+.logo-icon-box{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important}
+.sidebar-brand-row>div:first-child{background:transparent!important;box-shadow:none!important}
+.sidebar-brand-row:after{display:none!important}
+.dn-eyebrow-dot,.dn-live-pulse,.dn-live-dot{display:none!important}
+.dn-session-live-dot{filter:none!important}
+.timer-status-dot,.floating-timer-container.running .timer-status-dot{box-shadow:none!important}
 </style>
 </body>
 </html>
