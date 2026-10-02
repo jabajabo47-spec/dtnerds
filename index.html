@@ -10658,6 +10658,7 @@ body{--dn-sb-w:var(--dn-sb-open)}
                         <h2>Active ${escapeHtml(year)} pour continuer</h2>
                         <p>${expiryText}</p>
                         <button type="button" class="btn-action-primary dn-session-lock-button" onclick="switchTab('abonnement')">🔑 Activer mon compte</button>
+                        <div><button type="button" class="dn-free-btn" onclick="dnOpenFree()">🎁 Essayer 5 questions gratuites</button></div>
                     </section>
                 </div>
             `;
@@ -13735,6 +13736,67 @@ html body .dn-pf2 .dn-pf-seg button.active{background:var(--primary)!important;b
 </script>
 
 
+
+<style id="dn-free-css">
+#dn-ft{position:fixed;inset:0;z-index:12000;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.6)}
+#dn-ft.on{display:flex}
+#dn-ft .ft-box{width:100%;max-width:560px;max-height:calc(100vh - 32px);overflow:auto;padding:24px;border-radius:20px;background:var(--bg-surface);border:1px solid var(--border-glass);color:var(--text-main);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+#dn-ft .ft-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;font-size:13px;font-weight:700;color:var(--text-secondary)}
+#dn-ft .ft-x{width:36px;height:36px;border:1px solid var(--border-glass);border-radius:10px;background:transparent!important;color:var(--text-main)!important;font-size:18px;cursor:pointer}
+#dn-ft .ft-bar{height:6px;border-radius:6px;background:var(--input-bg);overflow:hidden;margin-bottom:20px}
+#dn-ft .ft-bar i{display:block;height:100%;background:linear-gradient(90deg,#6674f2,#8b5cf6);transition:width .3s}
+#dn-ft h3{margin:0 0 16px;font-size:19px;line-height:1.4;color:var(--text-main)}
+#dn-ft .ft-opt{display:block;width:100%;margin:0 0 10px;padding:14px 16px;border:1.5px solid var(--border-glass);border-radius:12px;font:inherit;font-size:15px;font-weight:600;text-align:left;cursor:pointer;background:var(--input-bg)!important;color:var(--text-main)!important}
+#dn-ft .ft-opt:hover:not(:disabled){border-color:#6674f2}
+html body #dn-ft .ft-opt.ok{border-color:#3fb97a!important;background:rgba(63,185,122,.2)!important}
+html body #dn-ft .ft-opt.no{border-color:#e05d5d!important;background:rgba(224,93,93,.18)!important}
+html body #dn-ft .ft-opt:disabled{opacity:1;cursor:default}
+#dn-ft .ft-why{margin:6px 0 16px;padding:12px 14px;border-radius:12px;background:var(--input-bg);font-size:14px;line-height:1.55;color:var(--text-secondary)}
+#dn-ft .ft-btn{display:block;width:100%;padding:14px;border:0;border-radius:12px;font:inherit;font-size:15px;font-weight:700;cursor:pointer;color:#fff!important;background:linear-gradient(135deg,#6674f2,#8b5cf6)!important}
+#dn-ft .ft-btn.ghost{margin-top:10px;background:transparent!important;color:var(--text-main)!important;border:1px solid var(--border-glass)}
+#dn-ft .ft-score{font-size:46px;font-weight:800;text-align:center;margin:8px 0}
+#dn-ft p.ft-c{text-align:center;color:var(--text-secondary);line-height:1.6;margin:0 0 20px}
+.dn-free-btn{margin-top:10px;padding:14px 20px;border:1.5px solid #6674f2;border-radius:12px;font:inherit;font-weight:700;cursor:pointer;background:transparent!important;color:var(--text-main)!important}
+</style>
+<div id="dn-ft" role="dialog" aria-modal="true" aria-label="Essai gratuit"><div class="ft-box" id="dn-ft-box"></div></div>
+<script id="dn-free-js">
+(function(){
+  var Q=[
+   {q:"Combien de dents compte une denture adulte permanente complète (dents de sagesse incluses) ?",o:["28","30","32","36"],a:2,e:"32 dents : 8 incisives, 4 canines, 8 prémolaires et 12 molaires (dont 4 dents de sagesse)."},
+   {q:"Quel est le tissu le plus dur du corps humain ?",o:["La dentine","L’émail","Le cément","L’os alvéolaire"],a:1,e:"L’émail est le tissu le plus minéralisé de l’organisme (environ 96 % de minéraux), mais il ne se régénère pas."},
+   {q:"Quelle bactérie est le principal agent de la carie dentaire ?",o:["Candida albicans","Helicobacter pylori","Staphylococcus aureus","Streptococcus mutans"],a:3,e:"Streptococcus mutans transforme les sucres en acides, qui déminéralisent l’émail et provoquent la carie."},
+   {q:"Comment le fluor protège-t-il contre la carie ?",o:["Il favorise la reminéralisation et rend l’émail plus résistant aux acides","Il blanchit l’émail","Il tue toutes les bactéries de la bouche","Il remplace la dentine perdue"],a:0,e:"Le fluor favorise la formation de fluorapatite, plus résistante aux acides que l’hydroxyapatite de l’émail."},
+   {q:"La gingivite (inflammation de la gencive) est…",o:["Toujours douloureuse","Une maladie qui détruit forcément l’os","Réversible avec une bonne hygiène et un détartrage","Une carie de la gencive"],a:2,e:"Tant que l’os n’est pas atteint, la gingivite guérit. Non traitée, elle peut évoluer vers la parodontite."}
+  ];
+  var box=document.getElementById('dn-ft-box'),wrap=document.getElementById('dn-ft'),i=0,score=0,last=null;
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function top(n){return '<div class="ft-top"><span>Essai gratuit · '+n+'</span><button class="ft-x" type="button" aria-label="Fermer" onclick="dnCloseFree()">✕</button></div>'}
+  function show(){
+    if(i>=Q.length) return end();
+    var q=Q[i];
+    box.innerHTML=top('Question '+(i+1)+' / '+Q.length)+'<div class="ft-bar"><i style="width:'+(i/Q.length*100)+'%"></i></div><h3>'+esc(q.q)+'</h3>'+
+      q.o.map(function(t,k){return '<button type="button" class="ft-opt" data-k="'+k+'">'+esc(t)+'</button>'}).join('')+'<div id="dn-ft-after"></div>';
+    box.querySelectorAll('.ft-opt').forEach(function(b){b.onclick=function(){pick(+b.dataset.k)}});
+    var f=box.querySelector('.ft-opt');if(f)f.focus();
+  }
+  function pick(k){
+    var q=Q[i],opts=box.querySelectorAll('.ft-opt');
+    opts.forEach(function(b,n){b.disabled=true;if(n===q.a)b.classList.add('ok');else if(n===k)b.classList.add('no')});
+    if(k===q.a)score++;
+    document.getElementById('dn-ft-after').innerHTML='<div class="ft-why"><b>'+(k===q.a?'✅ Bonne réponse. ':'❌ Pas tout à fait. ')+'</b>'+esc(q.e)+'</div><button type="button" class="ft-btn" id="dn-ft-next">'+(i===Q.length-1?'Voir mon résultat':'Question suivante')+'</button>';
+    var n=document.getElementById('dn-ft-next');n.onclick=function(){i++;show()};n.focus();
+  }
+  function end(){
+    var msg=score>=4?'Excellent ! Vous maîtrisez les bases. Imaginez avec des milliers de QCM par module.':score>=2?'Bon début ! Les QCM de votre année vous aideront à tout consolider.':'Pas de panique : chaque QCM avec explication vous fait progresser.';
+    box.innerHTML=top('Résultat')+'<div class="ft-bar"><i style="width:100%"></i></div><div class="ft-score">'+score+' / '+Q.length+'</div><p class="ft-c">'+msg+'</p>'+
+      '<button type="button" class="ft-btn" onclick="dnCloseFree();switchTab(\'abonnement\')">🔑 Activer mon année</button><button type="button" class="ft-btn ghost" onclick="dnOpenFree()">Recommencer</button>';
+  }
+  window.dnOpenFree=function(){i=0;score=0;last=document.activeElement;wrap.classList.add('on');show()};
+  window.dnCloseFree=function(){wrap.classList.remove('on');if(last&&last.focus)try{last.focus()}catch(e){}};
+  wrap.addEventListener('click',function(e){if(e.target===wrap)dnCloseFree()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&wrap.classList.contains('on'))dnCloseFree()});
+})();
+</script>
 
 </body>
 </html>
