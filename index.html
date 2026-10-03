@@ -7776,6 +7776,32 @@ body{--dn-sb-w:var(--dn-sb-open)}
 .dn-social-mini-btn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
 @media(max-width:560px){.dn-social-mini{gap:6px}.dn-social-mini-btn{width:32px;height:32px;border-radius:9px}.dn-social-mini-btn:before{border-radius:9px 9px 50% 50%/9px 9px 11px 11px}.dn-social-mini-btn svg{width:17px;height:17px}}
 @media(max-width:380px){.dn-social-mini-btn.ig{display:none}}
+/* --- v3: rounded header controls (match the bell / theme pills) --- */
+html body header .dn-social-mini{gap:8px;margin-right:2px}
+html body header .dn-social-mini-btn{width:32px!important;height:32px!important;min-width:32px!important;border-radius:50%!important}
+html body header .dn-social-mini-btn:before{inset:0 0 45% 0;border-radius:0 0 60% 60%/0 0 45% 45%}
+html body header .dn-social-mini-btn svg{width:17px;height:17px}
+html body header .dn-menu-btn{width:44px!important;height:32px!important;min-width:44px!important;border-radius:999px!important}
+html body header .dn-menu-btn svg{width:19px;height:19px}
+html body header .dn-profile-mini{height:40px!important;padding:3px 14px 3px 3px!important;border-radius:999px!important;gap:9px}
+html body header .dn-profile-mini .avatar-circle{width:34px!important;height:34px!important;border-radius:50%!important;flex:0 0 34px}
+@media(max-width:600px){
+  html body header{display:flex!important;align-items:center!important;gap:6px!important;padding:9px 10px!important}
+  html body header .dn-header-shell{flex:1 1 auto!important;min-width:0!important;justify-content:flex-start!important}
+  html body header .header-title{text-align:left!important;font-size:.98rem!important}
+  html body header .dn-profile-mini{order:-1;grid-column:auto!important;justify-self:auto!important;width:36px!important;min-width:36px!important;max-width:36px!important;height:36px!important;padding:0!important;border-radius:50%!important;justify-content:center}
+  html body header .dn-profile-mini .avatar-circle{width:34px!important;height:34px!important}
+  html body header .dn-theme-icon-btn,html body header .dn-icon-btn{grid-column:auto!important;justify-self:auto!important;margin:0!important}
+  html body header .dn-menu-btn{width:38px!important;min-width:38px!important}
+  html body header .dn-social-mini{gap:5px}
+}
+@media(max-width:600px){
+  html body header #theme-toggle-btn{margin:0!important}
+  html body header #dn-menu-btn{height:32px!important;width:38px!important;min-width:38px!important}
+  html body header div.dn-profile-mini{width:36px!important;min-width:36px!important;max-width:36px!important}
+  html body header div.dn-profile-mini>div:last-child{display:none!important}
+}
+html body header #dn-menu-btn{min-height:32px!important;max-height:32px!important;aspect-ratio:auto!important;padding:0!important}
 </style>
 </head>
 <body>
